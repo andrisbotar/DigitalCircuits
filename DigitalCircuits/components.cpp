@@ -11,25 +11,23 @@ component::~component(){}
 
 
 
-LogicGate::LogicGate(): type("Generic Logic Gate") {}
+LogicGate::LogicGate(){} //:type("Generic Logic Gate") {}
 
-LogicGate::LogicGate(int i1, int i2, int o) : type("Generic Logic Gate")
+LogicGate::LogicGate(int i1, int i2, int o) //: type("Generic Logic Gate")
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
-}
-
-LogicGate::LogicGate(int i1, int i2, int o, std::string type_name)
-{
-	this->inputs = std::vector<int>{ i1,i2 };
-	this->output = o;
-	this->type = type_name;
 }
 
 /*LogicGate::~LogicGate() {
 	std::cout << "Destroying " << this->type << std::endl;
 }*/
 LogicGate::~LogicGate() {}
+
+std::string LogicGate::gettype()
+{
+	return std::string("Generic Logic Gate");
+}
 
 void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
@@ -41,21 +39,25 @@ void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vect
 }
 
 void LogicGate::info() {
-	std::cout << "type: " << this->type << "\n";
+	std::cout << "type: " << this->gettype() << "\n";
 }
 
 
 
 
-ANDgate::ANDgate() : type("AND Gate") {}
+ANDgate::ANDgate(){}
 
-ANDgate::ANDgate(int i1, int i2, int o) : LogicGate(i1,  i2,  o, "AND Gate")
+ANDgate::ANDgate(int i1, int i2, int o)
 {
 	//this->inputs = std::vector<int>{i1,i2};
 	//this->output = o;
 }
 
-ANDgate::~ANDgate() { std::cout << "Destroying " << this->type << std::endl; }
+ANDgate::~ANDgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
+
+std::string ANDgate::gettype(){
+	return std::string("AND Gate");
+}
 
 void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];

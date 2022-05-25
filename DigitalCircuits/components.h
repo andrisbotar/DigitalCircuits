@@ -10,10 +10,6 @@ namespace digitalc {
 	//abstract base class for all circuit components
 	class component
 	{
-	protected:
-		std::vector<int> inputs{ 0,0 };
-		int output = 0;
-		std::string type = "Generic digital component";
 	public:
 		//component();
 		virtual ~component()=0; 
@@ -27,13 +23,12 @@ namespace digitalc {
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output = 0;
-		std::string type;
 	public:
 		LogicGate();
 		LogicGate(int i1, int i2, int o);
-		LogicGate(int i1, int i2, int o, std::string type_name);
 		~LogicGate();
-		void info();
+		virtual std::string gettype();
+		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0;
 	};
 
@@ -41,11 +36,12 @@ namespace digitalc {
 	class ANDgate:public LogicGate
 	{
 	private:
-		//std::string type;
+
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
+		std::string gettype();
 		//using LogicGate::LogicGate;
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
@@ -53,7 +49,7 @@ namespace digitalc {
 	class ORgate :LogicGate
 	{
 	private:
-		//std::string type = "OR Gate";
+		std::string type = "OR Gate";
 	public:
 		~ORgate();
 		using LogicGate::LogicGate;
