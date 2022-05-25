@@ -76,7 +76,6 @@ namespace digitalc {
 	{
 	private:
 		int output = 0;
-		bool value = true;
 		std::string gettype();
 	public:
 		constant_input();

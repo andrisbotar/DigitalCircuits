@@ -133,20 +133,20 @@ constant_input::constant_input(){}
 
 constant_input::constant_input(bool val, int out)
 {
-	this->value = val;
+	this->set_inversion(val);
 	this->output = out;
 }
 
 constant_input::~constant_input(){ std::cout << "Destroying " << this->gettype() << std::endl; }
 
-std::string constant_input::gettype(){ 	return std::string( "Constant "+ BoolToString(value) + " input"); }
+std::string constant_input::gettype(){ 	return std::string( "Constant "+ BoolToString(inverting) + " input"); }
 
 void constant_input::info() {
 	std::cout << "type: " << this->gettype() << "\n";
-	std::cout << "value: " << this->value << "\n";
+	std::cout << "value: " << this->inverting << "\n";
 }
 
 void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {
-	out_vector[output] = (inverting != value);
+	out_vector[output] = inverting;
 }
