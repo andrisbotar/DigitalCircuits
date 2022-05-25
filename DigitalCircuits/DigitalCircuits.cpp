@@ -12,28 +12,29 @@ int main()
     int n = 5;
 
     //set up variables
-    std::vector<bool> input(n);
-    std::vector<bool> output(n);
+    std::vector<bool> input(n,0);
+    std::vector<bool> output(n,0);
+
+    constant_input const1(true, 0);
+    constant_input const2(true, 1);
     ANDgate gate1(0,1,2);
     ORgate gate2(0,1,3);
 
     
 
     //initialize data
-    input[0] = true;
-    input[1] = true;
-    input[2] = false;
-
-    //gate2.update(input, output);
+    gate1.info();
 
     //print circuit contents
     //perform circuit update
-    printstate(input);
-    gate1.update(input, output);
-    gate2.update(input, output);
-    input.swap(output);
-    printstate(input);
-
+    for (int i = 0; i < 5; ++i) {
+        printstate(input);
+        const1.update(output);
+        const2.update(output);
+        gate1.update(input, output);
+        gate2.update(input, output);
+        input.swap(output);
+    }
 
 
 
