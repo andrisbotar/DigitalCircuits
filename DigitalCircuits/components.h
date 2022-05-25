@@ -7,7 +7,7 @@
 #define __COMPONENTS__
 namespace digitalc {
 	
-	//abstract base class for all circuit components
+	//Abstract base class for all circuit components
 	class component
 	{
 	public:
@@ -19,7 +19,7 @@ namespace digitalc {
 		//virtual void update() = 0;
 	};
 
-	//base class for logic gates
+	//Base class for logic gates
 	class LogicGate :public component
 	{
 	protected:
@@ -37,7 +37,7 @@ namespace digitalc {
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0; 
 	};
 
-	//Definitions of logic gates:
+	//Common logic gates:
 	class ANDgate:public LogicGate
 	{
 	private:
@@ -72,7 +72,33 @@ namespace digitalc {
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	class constant_input:public LogicGate
+	//Unitary logic gates
+	class NOTgate :public LogicGate
+	{
+	private:
+		int output = 0;
+		std::string gettype();
+	public:
+		NOTgate();
+		NOTgate(int i1, int o);
+		~NOTgate();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
+
+	class buffer :public LogicGate
+	{
+	private:
+		int output = 0;
+		std::string gettype();
+	public:
+		buffer();
+		buffer(int i1, int o);
+		~buffer();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
+
+	//Nullary constant 
+	class constant_input :public LogicGate
 	{
 	private:
 		int output = 0;
@@ -85,6 +111,18 @@ namespace digitalc {
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	//other components
+	//Other, less common components
+	//Majority function:  evaluates to false when half or more arguments are false and true otherwise
+	//i.e. the value of the function equals the value of the majority of the inputs
+	class Majorityfunction :public LogicGate
+	{
+	private:
+		std::string gettype();
+	public:
+		Majorityfunction();
+		Majorityfunction(int i1, int i2, int o);
+		~Majorityfunction();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
 }
 #endif

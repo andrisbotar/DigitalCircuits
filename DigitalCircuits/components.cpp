@@ -6,6 +6,7 @@
 using namespace digitalc;
 
 
+
 //component::component(){}
 //component::~component(){}
 
@@ -29,11 +30,12 @@ std::string LogicGate::gettype() { 	return std::string("Generic Logic Gate"); }
 void LogicGate::set_inversion(bool b) {	inverting = b; }
 
 void LogicGate::info() {
-	std::cout << "type: " << this->gettype() << "\n";
-	std::cout << "output: " << this->output << "\n";
-	std::cout << "inputs: ";
+	std::cout << "Type: " << this->gettype() << "\n";
+	std::cout << "Output: " << this->output << "\n";
+	std::cout << "Inputs: ";
 		for (auto i : this->inputs) { std::cout << i <<","; }
-	std::cout << "\b "; //delete last comma
+	std::cout << "\b \n"; //delete last comma
+	std::cout << "Inverting: " << BoolToString(this->inverting);
 	std::cout << "\n\n"; 
 }
 
@@ -47,6 +49,7 @@ void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vect
 
 
 
+//Definitions for 
 ANDgate::ANDgate(){}
 
 ANDgate::ANDgate(int i1, int i2, int o)
@@ -73,7 +76,6 @@ void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 /*void ANDgate::update() {
 	out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 }*/
-
 
 
 ORgate::ORgate() {}
@@ -124,12 +126,45 @@ void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 }
 
 
+NOTgate::NOTgate() {}
+
+NOTgate::NOTgate(int i1, int o)
+{
+	this->inputs = std::vector<int>{ i1 };
+	this->output = o;
+}
+
+NOTgate::~NOTgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
+
+std::string NOTgate::gettype() { return std::string("NOT Gate"); }
+
+void NOTgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
+	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
+	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
+}
 
 
+buffer::buffer() {}
+
+buffer::buffer(int i1, int o)
+{
+	this->inputs = std::vector<int>{ i1 };
+	this->output = o;
+}
+
+buffer::~buffer() { std::cout << "Destroying " << this->gettype() << std::endl; }
+
+std::string buffer::gettype() { return std::string("buffer"); }
+
+void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
+	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
+	out_vector[output] = (inverting != in_vector[inputs[0]]);
+}
 
 
-
-constant_input::constant_input(){}
+constant_input::constant_input() {}
 
 constant_input::constant_input(bool val, int out)
 {
@@ -137,9 +172,9 @@ constant_input::constant_input(bool val, int out)
 	this->output = out;
 }
 
-constant_input::~constant_input(){ std::cout << "Destroying " << this->gettype() << std::endl; }
+constant_input::~constant_input() { std::cout << "Destroying " << this->gettype() << std::endl; }
 
-std::string constant_input::gettype(){ 	return std::string( "Constant "+ BoolToString(inverting) + " input"); }
+std::string constant_input::gettype() { return std::string("Constant " + BoolToString(inverting) + " input"); }
 
 void constant_input::info() {
 	std::cout << "type: " << this->gettype() << "\n";
@@ -150,3 +185,39 @@ void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out
 {
 	out_vector[output] = inverting;
 }
+
+
+//Other, less common components
+Majorityfunction::Majorityfunction() {}
+
+Majorityfunction::Majorityfunction(int i1, int i2, int o)
+{
+	this->inputs = std::vector<int>{ i1,i2 };
+	this->output = o;
+}
+
+Majorityfunction::~Majorityfunction() { std::cout << "Destroying " << this->gettype() << std::endl; }
+
+std::string Majorityfunction::gettype() { return std::string("Majority Function"); }
+
+void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
+	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
+	int true_count = 0;
+	int count = 0;
+	for (auto index : inputs) {
+		if (index >= 0 && index < in_vector.size()) {
+			count++;
+			if (in_vector[index]) { true_count++; };
+		}
+	}
+
+	bool result = false;
+	if (true_count > floor(count / 2)) { result = true; }
+
+	out_vector[output] = (inverting != result);
+}
+
+
+
+
