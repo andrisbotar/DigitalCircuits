@@ -12,12 +12,9 @@ using namespace digitalc;
 
 int main()
 {   
-    //user settigns
-    int n = 7;
-    bool default_wire_state = false;
 
     //set up variables
-    Circuit circuit1(n);
+    Circuit circuit1(7);
 
     //initialize data
     circuit1.addcomponent(new constant_input(true, 0));
@@ -25,13 +22,9 @@ int main()
     circuit1.addcomponent(new ANDgate(0, 1, 2));
     circuit1.addcomponent(new ORgate(0, 1, 3));
     circuit1.addcomponent(new XORgate(2, 1, 4));
-    /*components.push_back(new constant_input(true, 1));
-    components.push_back(new ANDgate(0, 1, 2));
-    components.push_back(new ORgate(0, 1, 3));
-    components.push_back(new XORgate(2, 1, 4));
-    components.push_back(new buffer(4, 5));
-    components.push_back(new NOTgate(4, 6));
-    */
+    circuit1.addcomponent(new buffer(4, 5));
+    circuit1.addcomponent(new NOTgate(4, 6));
+
 
     //Invert logic gates
     //components[3]->set_inversion(true);
@@ -39,16 +32,26 @@ int main()
     //Print component info  
     //components[2]->info();
 
-    
-    //circuit1.debug();
-    //circuit1.update();
+   
 
+    //print current state of circuit
+    circuit1.printstate();
+    //simulate one time step and print new state
+    circuit1.update();
+    circuit1.printstate();
+    std::cout << "\n\n";
 
-
+    //reset circuti and run proper simulation
+    circuit1.reset_state();
     circuit1.simulate_cli(5);
 
 
 
+
+
+    //GLOBAL
+    int n = 7;
+    bool default_wire_state = false;
 
     //Unfortunately Windows console does not want to reliably display unicode characters
     // So unable to use proper "box drawing characters"

@@ -155,7 +155,7 @@ buffer::buffer(int i1, int o)
 
 buffer::~buffer() { std::cout << "Destroying " << this->gettype() << std::endl; }
 
-std::string buffer::gettype() { return std::string("buffer"); }
+std::string buffer::gettype() { return std::string("Buffer"); }
 
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];

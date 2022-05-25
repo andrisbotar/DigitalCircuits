@@ -24,6 +24,11 @@ Circuit::~Circuit(){
     new_state.clear();
 }
 
+//debug function
+void Circuit::debug() {
+    std::cout << components.size() << " ";
+    std::cout << this->state.size();
+}
 
 //adding and deleting wires and components
 void Circuit::addcomponent(component *c){
@@ -57,6 +62,18 @@ void Circuit::printstate(){
     std::cout << " \n";
 }
 
+void Circuit::reset_state()
+{
+    this->state = std::vector<bool>(state.size(), false);
+    this->new_state = std::vector<bool>(state.size(), false);
+}
+
+void Circuit::reset_state(std::vector<bool> default_state)
+{
+    this->state = default_state;
+    this->new_state = default_state;
+}
+
 //Simualtion
 void Circuit::simulate_cli(int steps) {
     std::cout << "   ";
@@ -75,10 +92,7 @@ void Circuit::simulate_cli(int steps) {
     }
 }
 
-void Circuit::debug() {
-    std::cout << components.size() << " ";
-    std::cout << this->state.size();
-}
+
 
 
 
