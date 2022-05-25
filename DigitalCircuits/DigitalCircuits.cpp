@@ -25,9 +25,8 @@ int main()
     circuit1.addcomponent(new buffer(4, 5));
     circuit1.addcomponent(new NOTgate(4, 6));
 
-
-    //Invert logic gates
-    circuit1.debug(2);
+    //Invert logic gate
+    circuit1.set_invert(4,true);
 
     //Print component info  
     //components[2]->info();

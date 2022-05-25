@@ -26,7 +26,6 @@ Circuit::~Circuit(){
 
 //debug function
 void Circuit::debug(int n) {
-    components[n]->set_inversion(true);
     //std::cout << components.size() << " ";
     //std::cout << this->state.size();
 }
@@ -63,6 +62,10 @@ void Circuit::reset_state(std::vector<bool> default_state)
     this->new_state = default_state;
 }
 
+void digitalc::Circuit::set_invert(int n, bool inverted)
+{
+    components[n]->set_inversion(inverted);
+}
 
 //Updating logic
 void Circuit::update() {

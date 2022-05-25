@@ -28,6 +28,7 @@ namespace digitalc {
 		virtual void deletecomponent();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
+		void set_invert(int n,bool inverted);
 		void update();
 		void printstate();
 		void simulate_cli(int steps);
