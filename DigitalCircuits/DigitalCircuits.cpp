@@ -9,27 +9,33 @@ using namespace digitalc;
 int main()
 {   
     //user settigns
-    int n = 3;
+    int n = 5;
 
     //set up variables
-    std::vector<bool> cstate(n);
-    //std::vector<bool> output(n);
+    std::vector<bool> input(n);
+    std::vector<bool> output(n);
     ANDgate gate1(0,1,2);
-    ANDgate gate2;
+    ORgate gate2(0,1,3);
 
-    gate2.update(cstate);
+    
 
     //initialize data
-    cstate[0] = true;
-    cstate[1] = true;
-    cstate[2] = false;
+    input[0] = true;
+    input[1] = true;
+    input[2] = false;
 
+    //gate2.update(input, output);
 
     //print circuit contents
     //perform circuit update
-    printstate(cstate);
-    gate1.update(cstate);
-    printstate(cstate);
+    printstate(input);
+    gate1.update(input, output);
+    gate2.update(input, output);
+    input.swap(output);
+    printstate(input);
+
+
+
 
 
     //celanup memory
@@ -38,7 +44,8 @@ int main()
       // delete* vectorit;
     //cstate.clear();
     //std::cout << "particle_vector now has size " << components.size() << std::endl;
-    cstate.clear();
+    input.clear();
+    output.clear();
 
     //std::string usrinput ="";
     //std::cin >> usrinput;
