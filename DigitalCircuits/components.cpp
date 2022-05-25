@@ -48,7 +48,7 @@ ANDgate::ANDgate(int i1, int i2, int o)
 	this->output = o;
 }
 ANDgate::~ANDgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string ANDgate::gettype(){ return std::string("AND Gate"); }
+std::string ANDgate::gettype(){ return std::string(inverting ? "Inverting " : "") + std::string("AND Gate"); }
 void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
@@ -67,7 +67,7 @@ ORgate::ORgate(int i1, int i2, int o)
 	this->output = o;
 }
 ORgate::~ORgate() {	std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string ORgate::gettype() { return std::string("OR Gate"); }
+std::string ORgate::gettype() { return std::string(inverting ? "Inverting " : "") + std::string("OR Gate"); }
 void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
@@ -87,7 +87,7 @@ XORgate::XORgate(int i1, int i2, int o)
 	this->output = o;
 }
 XORgate::~XORgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string XORgate::gettype() { return std::string("XOR Gate"); }
+std::string XORgate::gettype() { return std::string(inverting ? "Inverting " : "") + std::string("XOR Gate"); }
 void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
@@ -107,7 +107,7 @@ NOTgate::NOTgate(int i1, int o)
 	this->output = o;
 }
 NOTgate::~NOTgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string NOTgate::gettype() { return std::string("NOT Gate"); }
+std::string NOTgate::gettype() { return std::string(inverting ? "Inverting " : "") + std::string("NOT Gate"); }
 void NOTgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
@@ -122,7 +122,7 @@ buffer::buffer(int i1, int o)
 	this->output = o;
 }
 buffer::~buffer() { std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string buffer::gettype() { return std::string("Buffer"); }
+std::string buffer::gettype() { return std::string(inverting ? "Inverting " : "") + std::string("Buffer"); }
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
@@ -156,7 +156,7 @@ Majorityfunction::Majorityfunction(int i1, int i2, int o)
 	this->output = o;
 }
 Majorityfunction::~Majorityfunction() { std::cout << "Destroying " << this->gettype() << std::endl; }
-std::string Majorityfunction::gettype() { return std::string("Majority Function"); }
+std::string Majorityfunction::gettype() { return std::string(inverting ? "Inverting " : "") + std::string("Majority Function"); }
 void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });

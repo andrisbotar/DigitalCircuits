@@ -25,9 +25,10 @@ Circuit::~Circuit(){
 }
 
 //debug function
-void Circuit::debug() {
-    std::cout << components.size() << " ";
-    std::cout << this->state.size();
+void Circuit::debug(int n) {
+    components[n]->set_inversion(true);
+    //std::cout << components.size() << " ";
+    //std::cout << this->state.size();
 }
 
 //Utility functionality

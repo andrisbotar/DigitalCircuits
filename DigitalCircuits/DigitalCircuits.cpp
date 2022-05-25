@@ -27,7 +27,7 @@ int main()
 
 
     //Invert logic gates
-    //components[3]->set_inversion(true);
+    circuit1.debug(2);
 
     //Print component info  
     //components[2]->info();
