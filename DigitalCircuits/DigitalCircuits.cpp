@@ -36,10 +36,6 @@ int main()
     printstate(cstate);
 
 
-
-    //test
-
-
     //celanup memory
     //std::cout << "particle_vector has size " << components.size() << std::endl;
     //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
