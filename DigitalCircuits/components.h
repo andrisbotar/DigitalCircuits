@@ -8,7 +8,10 @@ namespace digitalc {
 
 	class component
 	{
-	private:
+	protected:
+		int input1 = 0;
+		int input2 = 0;
+		int output = 0;
 
 	public:
 		component();
@@ -17,12 +20,9 @@ namespace digitalc {
 	};
 
 
-	class ANDgate:public component
+	class ANDgate:component
 	{
 	private:
-		int input1;
-		int input2;
-		int output;
 
 	public:
 		ANDgate();
