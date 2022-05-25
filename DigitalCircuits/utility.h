@@ -4,6 +4,7 @@
 
 #include <vector>
 namespace digitalc {
+	std::string BoolToString(bool b);
 	void printstate(std::vector<bool> circuitstate);
 	void print_int_vector(std::vector<int> circuitstate);
 	std::string int_vector_to_string(std::vector<int> circuitstate);

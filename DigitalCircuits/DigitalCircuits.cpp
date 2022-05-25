@@ -11,45 +11,47 @@ int main()
 {   
     //user settigns
     int n = 5;
+    bool default_wire_state = false;
 
     //set up variables
-    std::vector<bool> input(n,0);
-    std::vector<bool> output(n,0);
-
-    constant_input const1(true, 0);
-    constant_input const2(true, 1);
-    ANDgate gate1(0,1,2);
-    ORgate gate2(0,1,3);
-
+    std::vector<bool> input(n, default_wire_state);
+    std::vector<bool> output(n, default_wire_state);
+    std::vector<component*> components;
     
 
     //initialize data
+    components.push_back(new constant_input(true, 0));
+    components.push_back(new constant_input(true, 1));
+    components.push_back(new ANDgate(0, 1, 2));
+    components.push_back(new ORgate(0, 1, 3));
+    components.push_back(new XORgate(2, 1, 4));
 
+    //components[3]->set_inversion(true);
 
-    //print circuit contents
-    //perform circuit update
     for (int i = 0; i < 5; ++i) {
         printstate(input);
-        const1.update(input,output);
-        const2.update(input,output);
-        gate1.update(input, output);
-        gate2.update(input, output);
+        for (auto item : components) {
+            item->update(input, output);
+        }
         input.swap(output);
     }
 
+    //print circuit contents
+    
 
-    //print info about logic gates
-    gate1.info();
+
+    std::cout << "\n";
+    components[2]->info();
 
 
     //celanup memory
-    //std::cout << "particle_vector has size " << components.size() << std::endl;
-    //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
-      // delete* vectorit;
-    //cstate.clear();
-    //std::cout << "particle_vector now has size " << components.size() << std::endl;
+    std::cout << "\nCleaning up memory.\n";
+    for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
+       delete* vectorit;
+    components.clear();
     input.clear();
     output.clear();
+    
 
     //std::string usrinput ="";
     //std::cin >> usrinput;

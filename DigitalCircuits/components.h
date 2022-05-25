@@ -12,71 +12,80 @@ namespace digitalc {
 	{
 	public:
 		//component();
-		virtual ~component()=0; 
+		virtual ~component(){};
 		virtual void info() = 0;
+		virtual void set_inversion(bool b)=0;
+		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) = 0;
 		//virtual void update() = 0;
 	};
 
 	//base class for logic gates
-	class LogicGate :component
+	class LogicGate :public component
 	{
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output = 0;
-
+		virtual std::string gettype();
+		bool inverting = false;
 	public:
 		LogicGate();
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
-		virtual std::string gettype();
+		virtual void set_inversion(bool b);
 		virtual void info(); //virtual?
 		//virtual void update() = 0;  
-		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0; //redundant?
+		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0; 
 	};
 
 	//Definitions of logic gates:
 	class ANDgate:public LogicGate
 	{
 	private:
-
+		std::string gettype();
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
-		std::string gettype();
-		//using LogicGate::LogicGate;
-		//void update();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+		//using LogicGate::LogicGate;
 	};
 
-	class ORgate :LogicGate
+	class ORgate : public LogicGate
 	{
 	private:
-		
+		std::string gettype();
 	public:
 		ORgate();
 		ORgate(int i1, int i2, int o);
 		~ORgate();
-		std::string gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
+	class XORgate : public LogicGate
+	{
+	private:
+		std::string gettype();
+	public:
+		XORgate();
+		XORgate(int i1, int i2, int o);
+		~XORgate();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
 
-
-	//other components
-	class constant_input:component
+	class constant_input:public LogicGate
 	{
 	private:
 		int output = 0;
 		bool value = true;
+		std::string gettype();
 	public:
 		constant_input();
 		constant_input(bool value, int output);
 		~constant_input();
-		std::string gettype();
 		void info();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
+	//other components
 }
 #endif

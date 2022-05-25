@@ -7,7 +7,7 @@ using namespace digitalc;
 
 
 //component::component(){}
-component::~component(){}
+//component::~component(){}
 
 
 
@@ -26,14 +26,7 @@ LogicGate::~LogicGate() {} //std::cout << "Destroying " << this->gettype() << st
 
 std::string LogicGate::gettype() { 	return std::string("Generic Logic Gate"); }
 
-void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
-
-	//std::cout << "inputs size: " << inputs.size() << "\n";
-	//std::cout << "output: " << output << "\n";
-	out_vector[output] = in_vector[inputs[0]];
-	//std::cout << "updated!\n";
-	//return input;
-}
+void LogicGate::set_inversion(bool b) {	inverting = b; }
 
 void LogicGate::info() {
 	std::cout << "type: " << this->gettype() << "\n";
@@ -41,9 +34,16 @@ void LogicGate::info() {
 	std::cout << "inputs: ";
 		for (auto i : this->inputs) { std::cout << i <<","; }
 	std::cout << "\b "; //delete last comma
-	std::cout << "\n";
+	std::cout << "\n\n"; 
 }
 
+void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+	//std::cout << "inputs size: " << inputs.size() << "\n";
+	//std::cout << "output: " << output << "\n";
+	out_vector[output] = in_vector[inputs[0]];
+	//std::cout << "updated!\n";
+	//return input;
+}
 
 
 
@@ -60,7 +60,14 @@ ANDgate::~ANDgate() { std::cout << "Destroying " << this->gettype() << std::endl
 std::string ANDgate::gettype(){ return std::string("AND Gate"); }
 
 void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
-	out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
+	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
+	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
+	bool result = true;
+	for (auto index : inputs){
+		if (index >= 0 && index < in_vector.size())
+			result = result && in_vector[index];
+	}
+	out_vector[output] = (inverting != result);
 }
 
 /*void ANDgate::update() {
@@ -82,8 +89,40 @@ ORgate::~ORgate() {	std::cout << "Destroying " << this->gettype() << std::endl; 
 std::string ORgate::gettype() { return std::string("OR Gate"); }
 
 void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
-	out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
+	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
+	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
+	bool result = false;
+	for (auto index : inputs) {
+		if (index >= 0 && index < in_vector.size())
+			result = result || in_vector[index];
+	}
+	out_vector[output] = (inverting != result);
 }
+
+
+XORgate::XORgate() {}
+
+XORgate::XORgate(int i1, int i2, int o)
+{
+	this->inputs = std::vector<int>{ i1,i2 };
+	this->output = o;
+}
+
+XORgate::~XORgate() { std::cout << "Destroying " << this->gettype() << std::endl; }
+
+std::string XORgate::gettype() { return std::string("XOR Gate"); }
+
+void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
+	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
+	bool result = false;
+	for (auto index : inputs) {
+		if (index >= 0 && index < in_vector.size())
+			result = !result != !in_vector[index];
+	}
+	out_vector[output] = (inverting != result);
+}
+
 
 
 
@@ -98,9 +137,9 @@ constant_input::constant_input(bool val, int out)
 	this->output = out;
 }
 
-constant_input::~constant_input(){}
+constant_input::~constant_input(){ std::cout << "Destroying " << this->gettype() << std::endl; }
 
-std::string constant_input::gettype(){ 	return std::string( "Constant input"); }
+std::string constant_input::gettype(){ 	return std::string( "Constant "+ BoolToString(value) + " input"); }
 
 void constant_input::info() {
 	std::cout << "type: " << this->gettype() << "\n";
@@ -109,5 +148,5 @@ void constant_input::info() {
 
 void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {
-	out_vector[output] = value;
+	out_vector[output] = (inverting != value);
 }

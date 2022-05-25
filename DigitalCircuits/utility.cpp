@@ -5,7 +5,21 @@
 #include <sstream> 
 //using namespace digitalc;
 
+//various utility functions
 namespace digitalc {
+
+    std::string BoolToString(bool b)
+    {
+        return b ? "True" : "False";
+    }
+
+
+
+
+
+
+
+
     /*template<typename T, typename A>
     void printstate(std::vector<T, A> circuitstate)
     {
