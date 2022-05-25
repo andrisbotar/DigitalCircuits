@@ -14,7 +14,7 @@ namespace digitalc {
 		//component();
 		virtual ~component()=0; 
 		virtual void info() = 0;
-		//virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0;
+		//virtual void update() = 0;
 	};
 
 	//base class for logic gates
@@ -23,13 +23,15 @@ namespace digitalc {
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output = 0;
+
 	public:
 		LogicGate();
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
 		virtual std::string gettype();
 		virtual void info(); //virtual?
-		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0;
+		//virtual void update() = 0;  
+		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0; //redundant?
 	};
 
 	//Definitions of logic gates:
@@ -43,16 +45,19 @@ namespace digitalc {
 		~ANDgate();
 		std::string gettype();
 		//using LogicGate::LogicGate;
+		//void update();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 	class ORgate :LogicGate
 	{
 	private:
-		std::string type = "OR Gate";
+		
 	public:
+		ORgate();
+		ORgate(int i1, int i2, int o);
 		~ORgate();
-		using LogicGate::LogicGate;
+		std::string gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -61,16 +66,16 @@ namespace digitalc {
 	//other components
 	class constant_input:component
 	{
-	protected:
+	private:
 		int output = 0;
 		bool value = true;
-		std::string type = "Constant input";
 	public:
 		constant_input();
 		constant_input(bool value, int output);
 		~constant_input();
+		std::string gettype();
 		void info();
-		void update(std::vector<bool>& out_vector);
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 }

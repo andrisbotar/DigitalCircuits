@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream> 
 #include "components.h"
 #include "utility.h"
 using namespace digitalc;
@@ -23,20 +24,22 @@ int main()
     
 
     //initialize data
-    gate1.info();
+
 
     //print circuit contents
     //perform circuit update
     for (int i = 0; i < 5; ++i) {
         printstate(input);
-        const1.update(output);
-        const2.update(output);
+        const1.update(input,output);
+        const2.update(input,output);
         gate1.update(input, output);
         gate2.update(input, output);
         input.swap(output);
     }
 
 
+    //print info about logic gates
+    gate1.info();
 
 
     //celanup memory
