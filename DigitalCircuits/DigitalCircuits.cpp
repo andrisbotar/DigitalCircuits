@@ -3,15 +3,8 @@
 #include <string>
 #include <vector>
 #include "components.h"
+#include "utility.h"
 using namespace digitalc;
-
-void printstate(std::vector<bool> circuitstate)
-{
-    for (auto i : circuitstate) {
-        std::cout << i << " ";
-    }
-    std::cout << " \n";
-}
 
 int main()
 {   
@@ -22,6 +15,9 @@ int main()
     std::vector<bool> cstate(n);
     //std::vector<bool> output(n);
     ANDgate gate1(0,1,2);
+    ANDgate gate2;
+
+    gate2.update(cstate);
 
     //initialize data
     cstate[0] = true;

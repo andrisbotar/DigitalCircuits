@@ -9,13 +9,10 @@ namespace digitalc {
 	class component
 	{
 	protected:
-		int input1 = 0;
-		int input2 = 0;
-		int output = 0;
 
 	public:
-		component();
-		 ~component(); //virtual
+		//component();
+		virtual ~component(){}; 
 		virtual void update(std::vector<bool>& input)=0;
 	};
 
@@ -23,12 +20,13 @@ namespace digitalc {
 	class ANDgate:component
 	{
 	private:
-
+		std::vector<int> inputs{0,0};
+		int output = 1;
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
-		void update(std::vector<bool>& input);
+		void update(std::vector<bool>& state);
 	};
 
 

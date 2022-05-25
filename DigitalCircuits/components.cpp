@@ -2,28 +2,24 @@
 #include <iostream>
 #include "components.h"
 #include <vector>
+#include "utility.h"
 using namespace digitalc;
 
 
-component::component(){
-}
-
-component::~component(){
-}
+//component::component(){}
+//component::~component(){}
 
 
 
-ANDgate::ANDgate(){
-	input1 = 0;
-	input2 = 0;
-	output = 0;
+ANDgate::ANDgate() {
+	this->inputs = std::vector<int>{ 0,0 };
+	this->output = 0;
 }
 
 ANDgate::ANDgate(int i1, int i2, int o)
 {
-	input1 = i1;
-	input2 = i2;
-	output = o;
+	this->inputs = std::vector<int>{i1,i2};
+	this->output = o;
 }
 
 ANDgate::~ANDgate(){
@@ -32,9 +28,13 @@ ANDgate::~ANDgate(){
 
 
 void ANDgate::update(std::vector<bool>& state) {
-	std::cout << "updated!\n";
+	
+	//std::cout << "inputs size: " << inputs.size() << "\n";
+	std::cout << "output: " << output << "\n";
 
-	state[output] = state[input1] && state[input2];
+	state[output] = state[inputs[0]] && state[inputs[1]];
+
+	//std::cout << "updated!\n";
 	//return input;
 }
 
