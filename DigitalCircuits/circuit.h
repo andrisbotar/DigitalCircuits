@@ -21,6 +21,7 @@ namespace digitalc {
 		Circuit(int number_of_wires, bool default_wire_state);
 		~Circuit();
 		void debug();
+		size_t size();
 		void addcomponent(component *c);
 		void addwires(int wire_count);
 		virtual void deletewires();

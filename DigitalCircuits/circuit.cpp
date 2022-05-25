@@ -16,7 +16,7 @@ Circuit::Circuit(int number_of_wires, bool default_wire_state){
 }
 Circuit::~Circuit(){
     //Cleanup memory
-    std::cout << "\nCleaning up memory.\n";
+    std::cout << "Destroying Circuit of size " << size() <<" with " <<components.size() << " components\n";
     for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
         delete* vectorit;
     components.clear();
@@ -28,6 +28,11 @@ Circuit::~Circuit(){
 void Circuit::debug() {
     std::cout << components.size() << " ";
     std::cout << this->state.size();
+}
+
+//Utility functionality
+size_t Circuit::size() {
+    return state.size();
 }
 
 //adding and deleting wires and components
@@ -45,23 +50,6 @@ void Circuit::addwires(int wire_count) {
 void Circuit::deletewires(){}
 void Circuit::deletecomponent(){}
 
-
-//Updating logic
-void Circuit::update(){
-    for (auto item : components) {
-        item->update(state, new_state);
-    }
-    state.swap(new_state);
-}
-
-//Display functionality
-void Circuit::printstate(){
-    for (auto i : state) {
-        std::cout << i << " ";
-    }
-    std::cout << " \n";
-}
-
 void Circuit::reset_state()
 {
     this->state = std::vector<bool>(state.size(), false);
@@ -74,21 +62,35 @@ void Circuit::reset_state(std::vector<bool> default_state)
     this->new_state = default_state;
 }
 
+
+//Updating logic
+void Circuit::update() {
+    for (auto item : components) {
+        item->update(state, new_state);
+    }
+    state.swap(new_state);
+}
+
+//Display functionality
+void Circuit::printstate() {
+    for (auto i : state) {
+        std::cout << i << " ";
+    }
+    std::cout << " \n";
+}
+
 //Simualtion
 void Circuit::simulate_cli(int steps) {
     std::cout << "   ";
-    for (int i = 0; i < state.size(); ++i) { std::cout << " " << i; }
+    for (int i = 0; i < size(); ++i) { std::cout << " " << i; }
     std::cout << "\n---";
-    for (int i = 0; i < state.size(); ++i) { std::cout << "--"; }
+    for (int i = 0; i < size(); ++i) { std::cout << "--"; }
     std::cout << "\n";
 
-    for (int i = 0; i < 5; ++i) {
+    for (int i = 0; i < steps; ++i) {
         std::cout << i << "|  ";
         printstate();
-        for (auto item : components) {
-            item->update(state, new_state);
-        }
-        state.swap(new_state);
+        update();
     }
 }
 
