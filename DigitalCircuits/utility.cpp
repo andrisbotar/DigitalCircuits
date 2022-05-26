@@ -49,21 +49,40 @@ namespace digitalc {
     //prints atable of booleans with column and row indecies, and unicode box drawing characters
     void printtable(std::vector<bool> table, int width)
     {
-        std::wcout << "  ";
+        //option to print a frame or box around the table for readabiltiy
+        bool frame = true;
+        std::wstring framechar(frame ? L"\u2502" : L"");
+        if (frame) {
+            std::wcout << L'\u250C';
+            std::wcout << std::wstring(2*width+2, L'\u2500');
+            std::wcout << L'\u2510';
+        }
+        
+        //print columns indecies
+        std::wcout << "\n"<< framechar << L" \u2502";
         for (int i = 0; i < width; ++i) {
             std::wcout << " " << i;
         }
-        std::wcout << L" \n\u2500\u2540";
+        //print top divider of table
+        std::wcout << framechar << "\n" << framechar << L"\u2500\u253C";
         for (int i = 0; i < width; ++i) {
             std::wcout << L"\u2500\u2500";
         }
-        std::wcout << "\n";
+        //print each row of table with indecies
+        std::wcout << framechar<< "\n";
         for (int j = 0; j < ceil(table.size() / width); ++j) {
-            std::wcout << j << L"\u2502";
+            std::wcout << framechar << j << L"\u2502";
             for (int i = 0; i < width; ++i) {
                 std::wcout << " " << table[i+j* width];
             }
-            std::wcout << "\n";
+            std::wcout << framechar<<"\n";
+        }
+        
+        //if frame bool is true, print bottom of frame box
+        if (frame) {
+            std::wcout << L'\u2514';
+            std::wcout << std::wstring(2 * width + 2, L'\u2500');
+            std::wcout << L'\u2518';
         }
         std::wcout << "\n";
     }
