@@ -48,7 +48,7 @@ namespace digitalc {
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
-		virtual std::wstring gettype();
+		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		//using LogicGate::LogicGate;
 	};
