@@ -78,6 +78,9 @@ std::wstring Circuit::component_info(int n) {
     components[n]->info();
     return L"";
 }
+void Circuit::component_truth_table(int width, bool indecies = true, bool frame = true) {
+    printtable()
+}
 
 //Utility functions
 size_t Circuit::size() {

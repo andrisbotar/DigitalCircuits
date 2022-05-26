@@ -22,14 +22,18 @@ namespace digitalc {
 		~Circuit();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
+
 		void addwires(int wire_count);
 		virtual void deletewires();
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
+
 		void addcomponent(component* c);
 		virtual void deletecomponent();
 		void replacecomponent(int n, component* new_component);
 		std::wstring component_info(int n);
+		void component_truth_table(int width, bool indecies = true, bool frame = true) {
+
 		void set_invert(int n,bool inverted);
 		size_t size();
 		void printstate();

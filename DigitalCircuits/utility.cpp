@@ -47,13 +47,10 @@ namespace digitalc {
     }
 
     //prints atable of booleans with column and row indecies, and unicode box drawing characters
-    void printtable(std::vector<bool> table, int width)
+    void printtable(std::vector<bool> table, int width, bool indecies = true, bool frame = true)
     {
-        //option to print indecies or not
-        bool indecies = false;
-
-        //option to print a frame or box around the table for readabiltiy
-        bool frame = false;
+        //indecies argument allow for the option to print indecies or not
+        //frame decides wether to print a frame or box around the table for readabiltiy
         std::wstring framechar(frame ? L"\u2502" : L"");
         if (frame) {
             std::wcout << L'\u250C';
