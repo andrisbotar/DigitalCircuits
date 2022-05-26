@@ -25,8 +25,8 @@ namespace digitalc {
 	{
 	protected:
 		std::vector<int> inputs{ 0,0 };
-		int output = 0;
-		bool inverting = false;
+		int output{ 0 };
+		bool inverting{ false };
 	public:
 		LogicGate();
 		LogicGate(int i1, int i2, int o);
