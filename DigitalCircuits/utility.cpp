@@ -39,7 +39,6 @@ namespace digitalc {
         for (int i = 0; i < numtable;++i) {
             //std::cout << "aaa " << (i) <<"\n";
             input = int_to_bool_vector(i);
-            std::vector<bool> input{ 1,0 };
             printstate(input);
             comp.update(input,output);
             printstate(output);

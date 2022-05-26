@@ -12,19 +12,6 @@
 using namespace digitalc; //"DigitalCircuit" namespace abbreviated
 
 
-std::vector<bool> tru(LogicGate& cdd) {
-    std::vector<bool> ip(1, 1);
-    ip.push_back(false);
-    std::vector<bool> op(8, 0);
-    cdd.update(ip, op);
-    printstate(ip);
-    printstate(op);
-    std::cout << "asd\n\n";
-    return op;
-}
-
-
-
 int main()
 {   
     //set up variables
@@ -65,17 +52,7 @@ int main()
 
 
     ANDgate ag(0, 1, 0);
-    std::vector<bool> ip(1, 1);
-    ip.push_back(false);
-    std::vector<bool> op(8, 0);
-    ag.update(ip, op);
-    printstate(ip);
-    printstate(op);
-    std::cout << "asd\n\n";
-
-    tru(ag);
-
-    std::vector<bool> trutht = truth_table(ag, 3);
+    std::vector<bool> trutht = truth_table(ag, 2);
     printstate(trutht);
 
 
