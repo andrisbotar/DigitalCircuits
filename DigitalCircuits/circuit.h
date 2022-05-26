@@ -29,7 +29,7 @@ namespace digitalc {
 		void addcomponent(component* c);
 		virtual void deletecomponent();
 		void replacecomponent(int n, component* new_component);
-		std::string component_info(int n);
+		std::wstring component_info(int n);
 		void set_invert(int n,bool inverted);
 		size_t size();
 		void printstate();

@@ -26,7 +26,7 @@ namespace digitalc {
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output = 0;
-		virtual std::string gettype();
+		virtual std::wstring gettype();
 		bool inverting = false;
 	public:
 		LogicGate();
@@ -43,7 +43,7 @@ namespace digitalc {
 	class ANDgate:public LogicGate
 	{
 	private:
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
@@ -55,7 +55,7 @@ namespace digitalc {
 	class ORgate : public LogicGate
 	{
 	private:
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		ORgate();
 		ORgate(int i1, int i2, int o);
@@ -66,7 +66,7 @@ namespace digitalc {
 	class XORgate : public LogicGate
 	{
 	private:
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		XORgate();
 		XORgate(int i1, int i2, int o);
@@ -79,7 +79,7 @@ namespace digitalc {
 	{
 	private:
 		int output = 0;
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		NOTgate();
 		NOTgate(int i1, int o);
@@ -91,7 +91,7 @@ namespace digitalc {
 	{
 	private:
 		int output = 0;
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		buffer();
 		buffer(int i1, int o);
@@ -104,7 +104,7 @@ namespace digitalc {
 	{
 	private:
 		int output = 0;
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		constant_input();
 		constant_input(bool value, int output);
@@ -119,7 +119,7 @@ namespace digitalc {
 	class Majorityfunction :public LogicGate
 	{
 	private:
-		std::string gettype();
+		std::wstring gettype();
 	public:
 		Majorityfunction();
 		Majorityfunction(int i1, int i2, int o);
@@ -131,7 +131,7 @@ namespace digitalc {
 	class SubCircuitComponent :public LogicGate
 	{
 	private:
-		std::string gettype();
+		std::wstring gettype();
 		//digitalc::Circuit subcirsdfdfcuit();
 	public:
 		SubCircuitComponent();

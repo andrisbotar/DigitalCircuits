@@ -14,7 +14,9 @@ using namespace digitalc; //"DigitalCircuit" namespace abbreviated
 
 int main()
 {   
-    //_setmode(_fileno(stdout), _O_U16TEXT);
+    //Set up output mode of windows console so we can output unicode characters
+    //Using std::wcout and std::wstring
+    int _ = _setmode(_fileno(stdout), _O_U16TEXT);
     //std::wcout << L"Testing unicode -- English -- Ελληνικά -- Español." << std::endl;
 
     //set up variables
@@ -33,35 +35,32 @@ int main()
     circuit1.set_invert(4,true);
 
     //print current state of circuit
-    std::cout << "Intitial state: ";
+    std::wcout << "Intitial state: ";
     circuit1.printstate();
     //simulate one time step and print new state
     circuit1.update();
-    std::cout << "New state:      ";
+    std::wcout << "New state:      ";
     circuit1.printstate();
-    std::cout << "\n\n";
+    std::wcout << "\n\n";
 
     //reset circuti and run proper simulation
-    std::cout << "Simulation over several timesteps: \n";
+    std::wcout << "Simulation over several timesteps: \n";
     circuit1.reset_state();
     circuit1.simulate_cli(5);
-    std::cout << "\n\n";
+    std::wcout << "\n\n";
 
     //Print info for a specific component
-    std::cout << "Detailed information of component 3: ";
+    std::wcout << "Detailed information of component 3: ";
     circuit1.component_info(2);
-    //std::cout << "\n";
+    //std::wcout << "\n";
 
     
-    std::cout << "Truth table for a XOR gate: \n";
+    std::wcout << "Truth table for a XOR gate: \n";
     XORgate ag(0, 1, 0);
-    std::vector<bool> trutht = truth_table(ag, 2);
+    int gate_size = 2;
+    std::vector<bool> trutht = truth_table(ag, gate_size);
     //printstate(trutht);
-    std::cout << "   0 1 \n";
-    std::cout << "_______\n";
-    std::cout << "0| 0 0 \n";
-    std::cout << "1| 0 0 \n";
-    std::cout << "\n";
+    printtable(trutht, gate_size);
 
     //GLOBAL
     int n = 7;
@@ -75,14 +74,14 @@ int main()
 
 
     //Cleanup memory
-    //std::cout << "Cleaning up: \n";
+    //std::wcout << "Cleaning up: \n";
     //delete circuit1;
     
     //Exit program
-    //std::string usrinput ="";
+    //std::wstring usrinput ="";
     //std::cin >> usrinput;
-    std::cout << "\n";
-    //std::cout << "Goodbye!\n";
+    std::wcout << "\n";
+    //std::wcout << "Goodbye!\n";
 }
 
 

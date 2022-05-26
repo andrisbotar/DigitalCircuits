@@ -16,7 +16,7 @@ Circuit::Circuit(int number_of_wires, bool default_wire_state){
 }
 Circuit::~Circuit(){
     //Cleanup memory
-    std::cout << "Destroying Circuit of size " << size() <<" with " <<components.size() << " components\n";
+    std::wcout << "Destroying Circuit of size " << size() <<" with " <<components.size() << " components\n";
     for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
         delete* vectorit;
     components.clear();
@@ -48,7 +48,7 @@ void Circuit::reset_state(std::vector<bool> default_state)
 //acting on individual wires
 void Circuit::addwires(int wire_count) {
     if (wire_count < 0) {
-        std::cout << "Cannot add negative number of wires.";
+        std::wcout << "Cannot add negative number of wires.";
         return;
     }
     size_t new_size = state.size() + wire_count;
@@ -74,9 +74,9 @@ void Circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
 }
-std::string Circuit::component_info(int n) {
+std::wstring Circuit::component_info(int n) {
     components[n]->info();
-    return "";
+    return L"";
 }
 
 //Utility functions
@@ -85,22 +85,22 @@ size_t Circuit::size() {
 }
 void Circuit::printstate() {
     for (auto i : state) {
-        std::cout << i << " ";
+        std::wcout << i << " ";
     }
-    std::cout << " \n";
+    std::wcout << " \n";
 }
 
 
 //Simualtion
 void Circuit::simulate_cli(int steps) {
-    std::cout << "   ";
-    for (int i = 0; i < size(); ++i) { std::cout << " " << i; }
-    std::cout << "\n---";
-    for (int i = 0; i < size(); ++i) { std::cout << "--"; }
-    std::cout << "\n";
+    std::wcout << "   ";
+    for (int i = 0; i < size(); ++i) { std::wcout << " " << i; }
+    std::wcout << "\n---";
+    for (int i = 0; i < size(); ++i) { std::wcout << "--"; }
+    std::wcout << "\n";
 
     for (int i = 0; i < steps; ++i) {
-        std::cout << i << "|  ";
+        std::wcout << i << "|  ";
         printstate();
         update();
     }
@@ -110,8 +110,8 @@ void Circuit::simulate_cli(int steps) {
 
 //debug function
 void Circuit::debug(int n) {
-    //std::cout << components.size() << " ";
-    //std::cout << this->state.size();
+    //std::wcout << components.size() << " ";
+    //std::wcout << this->state.size();
 }
 
 

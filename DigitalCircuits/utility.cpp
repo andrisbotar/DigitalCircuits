@@ -1,4 +1,4 @@
-#include <vector>
+﻿#include <vector>
 #include <iostream>
 #include <string>
 #include <sstream> 
@@ -10,9 +10,9 @@
 namespace digitalc {
 
     //convert boolean "0" or "1" into human firendly text
-    std::string BoolToString(bool b)
+    std::wstring BoolToString(bool b)
     {
-        return b ? "True" : "False";
+        return b ? L"True" : L"False";
     }
 
     //Convert and integer into a bool vector representing the binary count for that number
@@ -33,7 +33,7 @@ namespace digitalc {
     std::vector<bool> truth_table(LogicGate& comp, int n)
     {
         //int output_wire = 0;
-        int numtable = pow(2, n);
+        int numtable = (int)pow(2, n);
         std::vector<bool> input(n, 0);
         std::vector<bool> output(8, 0);
         std::vector<bool> table(numtable, 0);
@@ -46,6 +46,28 @@ namespace digitalc {
         return table;
     }
 
+    //prints atable of booleans with column and row indecies, and unicode box drawing characters
+    void printtable(std::vector<bool> table, int width)
+    {
+        std::wcout << "  ";
+        for (int i = 0; i < width; ++i) {
+            std::wcout << " " << i;
+        }
+        std::wcout << L" \n\u2500\u2540";
+        for (int i = 0; i < width; ++i) {
+            std::wcout << L"\u2500\u2500";
+        }
+        std::wcout << "\n";
+        for (int j = 0; j < ceil(table.size() / width); ++j) {
+            std::wcout << j << L"\u2502";
+            for (int i = 0; i < width; ++i) {
+                std::wcout << " " << table[i+j* width];
+            }
+            std::wcout << "\n";
+        }
+        std::wcout << "\n";
+    }
+
 
 
 
@@ -54,36 +76,36 @@ namespace digitalc {
     void printstate(std::vector<T, A> circuitstate)
     {
         for (T i : circuitstate) {
-            std::cout << i << " ";
+            std::wcout << i << " ";
         }
-        std::cout << " \n";
+        std::wcout << " \n";
     }*/
 
     //print out a vector of booleans
     void printstate(std::vector<bool> circuitstate)
     {
         for (auto i : circuitstate) {
-            std::cout << i << " ";
+            std::wcout << i << " ";
         }
-        std::cout << " \n";
+        std::wcout << " \n";
     }
 
     //print out a vector of ints
     void print_int_vector(std::vector<int> circuitstate)
     {
         for (auto i : circuitstate) {
-            std::cout << i << " ";
+            std::wcout << i << " ";
         }
-        std::cout << " \n";
+        std::wcout << " \n";
     }
 
     //convert a vector of ints to a single string
-    std::string int_vector_to_string(std::vector<int> circuitstate) {
-        std::stringstream ss;
+    std::wstring int_vector_to_string(std::vector<int> circuitstate) {
+        std::wstringstream ss;
         for (auto i : circuitstate) {
-            ss << std::to_string(i) << " ";
+            ss << std::to_wstring(i) << " ";
         }
-        std::string returnval;
+        std::wstring returnval;
         ss >> returnval;
         return returnval;
     }
