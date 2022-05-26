@@ -24,32 +24,15 @@ Circuit::~Circuit(){
     new_state.clear();
 }
 
-//debug function
-void Circuit::debug(int n) {
-    //std::cout << components.size() << " ";
-    //std::cout << this->state.size();
-}
-
-//Utility functionality
-size_t Circuit::size() {
-    return state.size();
-}
-
-//adding and deleting wires and components
-void Circuit::addcomponent(component *c){
-    components.push_back(c);
-}
-void Circuit::addwires(int wire_count) {
-    if (wire_count < 0) {
-        std::cout << "Cannot add negative number of wires.";
-        return;
+//Core updating logic
+void Circuit::update() {
+    for (auto item : components) {
+        item->update(state, new_state);
     }
-    size_t new_size = state.size() + wire_count;
-    state.resize(new_size);
+    state.swap(new_state);
 }
-void Circuit::deletewires(){}
-void Circuit::deletecomponent(){}
 
+//Reset circuit if needed
 void Circuit::reset_state()
 {
     this->state = std::vector<bool>(state.size(), false);
@@ -62,26 +45,51 @@ void Circuit::reset_state(std::vector<bool> default_state)
     this->new_state = default_state;
 }
 
-void digitalc::Circuit::set_invert(int n, bool inverted)
+//acting on individual wires
+void Circuit::addwires(int wire_count) {
+    if (wire_count < 0) {
+        std::cout << "Cannot add negative number of wires.";
+        return;
+    }
+    size_t new_size = state.size() + wire_count;
+    state.resize(new_size);
+}
+void Circuit::deletewires() {}
+bool Circuit::get_wire_state(int n) {
+    return state[n];
+}
+void Circuit::set_wire_state(int n, bool value) {
+    state[n] = value;
+}
+
+//acting on individual components
+void Circuit::addcomponent(component* c) {
+    components.push_back(c);
+}
+void Circuit::deletecomponent(){}
+void Circuit::replacecomponent(int n, component* new_component) {
+    components[n] = new_component;
+}
+void Circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
 }
-
-//Updating logic
-void Circuit::update() {
-    for (auto item : components) {
-        item->update(state, new_state);
-    }
-    state.swap(new_state);
+std::string Circuit::component_info(int n) {
+    components[n]->info();
+    return "";
 }
 
-//Display functionality
+//Utility functions
+size_t Circuit::size() {
+    return state.size();
+}
 void Circuit::printstate() {
     for (auto i : state) {
         std::cout << i << " ";
     }
     std::cout << " \n";
 }
+
 
 //Simualtion
 void Circuit::simulate_cli(int steps) {
@@ -99,6 +107,12 @@ void Circuit::simulate_cli(int steps) {
 }
 
 
+
+//debug function
+void Circuit::debug(int n) {
+    //std::cout << components.size() << " ";
+    //std::cout << this->state.size();
+}
 
 
 

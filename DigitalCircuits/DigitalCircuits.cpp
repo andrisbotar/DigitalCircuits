@@ -1,18 +1,32 @@
 ﻿// DigitalCircuits.cpp : Central file containing main function, demosntration cases, etc..
+
 #include <iostream>
 #include <string>
 #include <vector>
 #include <sstream> 
 //#include <io.h>
 //#include <fcntl.h>
-#include "components.h"
-#include "circuit.h"
-#include "utility.h"
-using namespace digitalc;
+#include "components.h" //Contains AND Gates, XOR gates, buffers...
+#include "circuit.h" //Contains circuit class to collect and simualte components
+#include "utility.h" //A few miscelaneous utility functions
+using namespace digitalc; //"DigitalCircuit" namespace abbreviated
+
+
+std::vector<bool> tru(LogicGate& cdd) {
+    std::vector<bool> ip(1, 1);
+    ip.push_back(false);
+    std::vector<bool> op(8, 0);
+    cdd.update(ip, op);
+    printstate(ip);
+    printstate(op);
+    std::cout << "asd\n\n";
+    return op;
+}
+
+
 
 int main()
 {   
-
     //set up variables
     Circuit circuit1(7);
 
@@ -28,23 +42,41 @@ int main()
     //Invert logic gate
     circuit1.set_invert(4,true);
 
-    //Print component info  
-    //components[2]->info();
-
-   
-
     //print current state of circuit
+    std::cout << "Intitial state: ";
     circuit1.printstate();
     //simulate one time step and print new state
     circuit1.update();
+    std::cout << "New state:      ";
     circuit1.printstate();
     std::cout << "\n\n";
 
     //reset circuti and run proper simulation
+    std::cout << "Simulation over several timesteps: \n";
     circuit1.reset_state();
     circuit1.simulate_cli(5);
+    std::cout << "\n\n";
+
+    //Print info for a specific component
+    std::cout << "Detailed information of component 3: ";
+    circuit1.component_info(2);
+    std::cout << "\n";
 
 
+
+    ANDgate ag(0, 1, 0);
+    std::vector<bool> ip(1, 1);
+    ip.push_back(false);
+    std::vector<bool> op(8, 0);
+    ag.update(ip, op);
+    printstate(ip);
+    printstate(op);
+    std::cout << "asd\n\n";
+
+    tru(ag);
+
+    std::vector<bool> trutht = truth_table(ag, 3);
+    printstate(trutht);
 
 
 
@@ -59,6 +91,9 @@ int main()
     const char continous_line_character = '-';
 
 
+    //Cleanup memory
+    //std::cout << "Cleaning up: \n";
+    //delete circuit1;
     
     //Exit program
     //std::string usrinput ="";
@@ -66,7 +101,6 @@ int main()
     std::cout << "\n";
     //std::cout << "Goodbye!\n";
 }
-
 
 
 

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+//#include "circuit.h"
 
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
@@ -33,8 +34,9 @@ namespace digitalc {
 		~LogicGate();
 		virtual void set_inversion(bool b);
 		virtual void info(); //virtual?
-		//virtual void update() = 0;  
-		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)=0; 
+		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+		//virtual void update() = 0; 
+		//std::vector<bool> truth_table();
 	};
 
 	//Common logic gates:
@@ -124,5 +126,22 @@ namespace digitalc {
 		~Majorityfunction();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
+
+	//Wrapper to package an entire circuit as a single component
+	class SubCircuitComponent :public LogicGate
+	{
+	private:
+		std::string gettype();
+		//digitalc::Circuit subcirsdfdfcuit();
+	public:
+		SubCircuitComponent();
+		SubCircuitComponent(int i1, int i2, int o);
+		//SubCircuitComponent(int i1, int i2, int o, Circuit subcircuit);
+		~SubCircuitComponent();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
+
+
+
 }
 #endif

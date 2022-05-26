@@ -20,19 +20,22 @@ namespace digitalc {
 		Circuit(int number_of_wires);
 		Circuit(int number_of_wires, bool default_wire_state);
 		~Circuit();
-		void debug(int n);
-		size_t size();
-		void addcomponent(component *c);
-		void addwires(int wire_count);
-		virtual void deletewires();
-		virtual void deletecomponent();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
+		void addwires(int wire_count);
+		virtual void deletewires();
+		bool get_wire_state(int n);
+		void set_wire_state(int n, bool value);
+		void addcomponent(component* c);
+		virtual void deletecomponent();
+		void replacecomponent(int n, component* new_component);
+		std::string component_info(int n);
 		void set_invert(int n,bool inverted);
-		void update();
+		size_t size();
 		void printstate();
+		void update();
 		void simulate_cli(int steps);
-		
+		void debug(int n);
 	};
 }
 
