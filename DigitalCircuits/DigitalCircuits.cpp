@@ -51,7 +51,6 @@ int main()
 
     //create a circuit
     Circuit circuit1(9);
-
     example_circuit(circuit1);
 
 
