@@ -9,24 +9,27 @@
 //various utility functions
 namespace digitalc {
 
+    //convert boolean "0" or "1" into human firendly text
     std::string BoolToString(bool b)
     {
         return b ? "True" : "False";
     }
 
-    std::vector<bool> int_to_bool_vector(int n) {
-        if (n == 0) { std::vector<bool> vector(1, 0); return vector; }
-        int i = n;
+    //Convert and integer into a bool vector representing the binary count for that number
+    //A length option is used to pad the bool array to a desired length
+    std::vector<bool> int_to_bool_vector(int number, int len) {
+        int i = number;
         std::vector<bool> vector;
         while (i) {
             vector.push_back(i & 1);
             i >>= 1;
         }
+        vector.insert(vector.end(), len-vector.size(), 0);
         std::reverse(vector.begin(), vector.end());
         return vector;
     }
     
-
+    //Creates a truth table for a LogicGate
     std::vector<bool> truth_table(LogicGate& comp, int n)
     {
         int output_wire = 0;
@@ -38,10 +41,9 @@ namespace digitalc {
 
         for (int i = 0; i < numtable;++i) {
             //std::cout << "aaa " << (i) <<"\n";
-            input = int_to_bool_vector(i);
-            printstate(input);
+            input = int_to_bool_vector(i, n);
             comp.update(input,output);
-            printstate(output);
+            //printstate(output); printstate(input);
             bool out = output[0];
             //std::cout <<" result: " << out << "\n";
             table[i] = out;
@@ -62,6 +64,7 @@ namespace digitalc {
         std::cout << " \n";
     }*/
 
+    //print out a vector of booleans
     void printstate(std::vector<bool> circuitstate)
     {
         for (auto i : circuitstate) {
@@ -70,6 +73,7 @@ namespace digitalc {
         std::cout << " \n";
     }
 
+    //print out a vector of ints
     void print_int_vector(std::vector<int> circuitstate)
     {
         for (auto i : circuitstate) {
@@ -78,6 +82,7 @@ namespace digitalc {
         std::cout << " \n";
     }
 
+    //convert a vector of ints to a single string
     std::string int_vector_to_string(std::vector<int> circuitstate) {
         std::stringstream ss;
         for (auto i : circuitstate) {

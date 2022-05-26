@@ -51,7 +51,7 @@ int main()
 
 
 
-    ANDgate ag(0, 1, 0);
+    XORgate ag(0, 1, 0);
     std::vector<bool> trutht = truth_table(ag, 2);
     printstate(trutht);
 
