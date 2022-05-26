@@ -19,6 +19,7 @@ namespace digitalc {
 		Circuit();
 		Circuit(int number_of_wires, bool default_wire_state=false);
 		~Circuit();
+		//Circuit& operator=(Circuit other);
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
 		void addwires(int wire_count);

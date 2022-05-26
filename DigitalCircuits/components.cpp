@@ -30,7 +30,7 @@ LogicGate::LogicGate(int i1, int i2, int o) //: type("Generic Logic Gate")
 		this->output = o;
 	}
 }*/
-LogicGate::~LogicGate(){} // {std::wcout << "Destroying " << this->gettype() << std::endl; }
+LogicGate::~LogicGate() {}//std::wcout << "Destroying " << this->gettype() << std::endl; }
 std::wstring LogicGate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
 void LogicGate::set_inversion(bool b) {	inverting = b; }
 void LogicGate::info() {

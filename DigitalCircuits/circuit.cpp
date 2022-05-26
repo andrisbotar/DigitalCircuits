@@ -20,6 +20,22 @@ Circuit::~Circuit(){
     new_state.clear();
 }
 
+/*Circuit& Circuit::operator=(Circuit other)
+{
+    if (this != &other)
+    {
+        delete[] name;
+        // This is a dangerous point in the flow of execution!
+        // We have temporarily invalidated the class invariants,
+        // and the next statement might throw an exception,
+        // leaving the object in an invalid state :(
+        name = new char[strlen(that.name) + 1];
+        strcpy(name, that.name);
+        age = that.age;
+    }
+    return *this;
+}*/
+
 //Core updating logic
 void Circuit::update() {
     for (auto item : components) {

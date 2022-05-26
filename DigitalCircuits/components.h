@@ -26,12 +26,12 @@ namespace digitalc {
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output = 0;
-		virtual std::wstring gettype();
 		bool inverting = false;
 	public:
 		LogicGate();
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
+		virtual std::wstring gettype();
 		virtual void set_inversion(bool b);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
@@ -43,11 +43,12 @@ namespace digitalc {
 	class ANDgate:public LogicGate
 	{
 	private:
-		std::wstring gettype();
+
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
+		virtual std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		//using LogicGate::LogicGate;
 	};
@@ -55,11 +56,12 @@ namespace digitalc {
 	class ORgate : public LogicGate
 	{
 	private:
-		std::wstring gettype();
+		
 	public:
 		ORgate();
 		ORgate(int i1, int i2, int o);
 		~ORgate();
+		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -78,24 +80,24 @@ namespace digitalc {
 	class NOTgate :public LogicGate
 	{
 	private:
-		int output = 0;
-		std::wstring gettype();
+		//int output = 0;
 	public:
 		NOTgate();
 		NOTgate(int i1, int o);
 		~NOTgate();
+		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 	class buffer :public LogicGate
 	{
 	private:
-		int output = 0;
-		std::wstring gettype();
+		//int output = 0;
 	public:
 		buffer();
 		buffer(int i1, int o);
 		~buffer();
+		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -103,12 +105,12 @@ namespace digitalc {
 	class constant_input :public LogicGate
 	{
 	private:
-		int output = 0;
-		std::wstring gettype();
+		//int output = 0;
 	public:
 		constant_input();
 		constant_input(bool value, int output);
 		~constant_input();
+		std::wstring gettype();
 		void info();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
@@ -119,11 +121,12 @@ namespace digitalc {
 	class Majorityfunction :public LogicGate
 	{
 	private:
-		std::wstring gettype();
+		
 	public:
 		Majorityfunction();
 		Majorityfunction(int i1, int i2, int o);
 		~Majorityfunction();
+		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 

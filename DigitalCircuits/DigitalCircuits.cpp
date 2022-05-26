@@ -52,9 +52,10 @@ int main()
     //create a circuit
     
     Circuit circuit2(9);
-    Circuit circuit1;
+    Circuit circuit1(9);
     example_circuit(circuit2);
-    circuit1 = circuit2;
+    example_circuit(circuit1);
+    //circuit1 = circuit2;
 
     //Invert logic gate
     circuit1.set_invert(4,true);
