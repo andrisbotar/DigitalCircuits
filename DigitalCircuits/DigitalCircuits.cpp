@@ -50,9 +50,11 @@ int main()
 
 
     //create a circuit
-    Circuit circuit1(9);
-    example_circuit(circuit1);
-
+    
+    Circuit circuit2(9);
+    Circuit circuit1;
+    example_circuit(circuit2);
+    circuit1 = circuit2;
 
     //Invert logic gate
     circuit1.set_invert(4,true);
