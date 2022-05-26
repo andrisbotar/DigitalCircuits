@@ -3,6 +3,7 @@
 #include "components.h"
 #include <vector>
 #include "utility.h"
+//using namespace std::remove_cvref;
 using namespace digitalc;
 
 
@@ -15,10 +16,21 @@ LogicGate::LogicGate(int i1, int i2, int o) //: type("Generic Logic Gate")
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*LogicGate::~LogicGate() {
-	std::wcout << "Destroying " << this->type << std::endl;
+/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o)
+{
+	const std::wstring empty = L"";
+	std::wstring type(empty);
+	if (type_string.substr(0, type_string.find(L" ")) == L"Inverting") {
+		type = empty;
+	}
+
+	if (type == L"AND Gate") { this = ORgate(i1, i2, o); }
+	else{
+		this->inputs = std::vector<int>{ i1,i2 };
+		this->output = o;
+	}
 }*/
-LogicGate::~LogicGate() {} //std::wcout << "Destroying " << this->gettype() << std::endl; 
+LogicGate::~LogicGate(){} // {std::wcout << "Destroying " << this->gettype() << std::endl; }
 std::wstring LogicGate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
 void LogicGate::set_inversion(bool b) {	inverting = b; }
 void LogicGate::info() {

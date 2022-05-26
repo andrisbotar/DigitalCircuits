@@ -30,6 +30,17 @@ int setup() {
     return 0;
 }
 
+//function to create and eample circuit with one of each logic gate type
+void example_circuit(Circuit& circuit1) {
+    circuit1.addcomponent(new constant_input(true, 0));
+    circuit1.addcomponent(new constant_input(true, 1));
+    circuit1.addcomponent(new ANDgate(0, 1, 2));
+    circuit1.addcomponent(new ORgate(0, 1, 3));
+    circuit1.addcomponent(new XORgate(0, 1, 4));
+    circuit1.addcomponent(new NOTgate(0, 5));
+    circuit1.addcomponent(new buffer(0, 6));
+    circuit1.addcomponent(new Majorityfunction(1, 2, 7));
+}
 
 //Main function of program, start-point
 int main()
@@ -38,17 +49,11 @@ int main()
 
 
 
-    //set up variables
-    Circuit circuit1(7);
+    //create a circuit
+    Circuit circuit1(9);
 
-    //initialize data
-    circuit1.addcomponent(new constant_input(true, 0));
-    circuit1.addcomponent(new constant_input(true, 1));
-    circuit1.addcomponent(new ANDgate(0, 1, 2));
-    circuit1.addcomponent(new ORgate(0, 1, 3));
-    circuit1.addcomponent(new XORgate(2, 1, 4));
-    circuit1.addcomponent(new buffer(4, 5));
-    circuit1.addcomponent(new NOTgate(4, 6));
+    example_circuit(circuit1);
+
 
     //Invert logic gate
     circuit1.set_invert(4,true);
@@ -74,13 +79,18 @@ int main()
     //std::wcout << "\n";
 
     //print truth table for a logic gate
+    //int gate_size = 2;
     std::wcout << "Truth table for a XOR gate: \n";
-    XORgate ag(0, 1, 0);
-    int gate_size = 2;
-    std::vector<bool> trutht = truth_table(ag, gate_size);
-    printtable(trutht, gate_size);
+    XORgate gate1(0, 1, 0);
+    std::vector<bool> trutht1 = truth_table(gate1, 2);
+    printtable(trutht1, 2);
+    std::wcout << "\n";
 
-
+    std::wcout << "Truth table for a bigger XOR gate: \n";
+    XORgate gate2(0, 2, 0);
+    std::vector<bool> trutht2 = truth_table(gate2, 3);
+    printstate(trutht2);
+    std::wcout << "\n";
 
 
 
