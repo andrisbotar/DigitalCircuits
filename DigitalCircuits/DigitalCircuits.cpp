@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 #include <sstream> 
-//#include <io.h>
-//#include <fcntl.h>
+#include <io.h>
+#include <fcntl.h>
 #include "components.h" //Contains AND Gates, XOR gates, buffers...
 #include "circuit.h" //Contains circuit class to collect and simualte components
 #include "utility.h" //A few miscelaneous utility functions
@@ -14,6 +14,9 @@ using namespace digitalc; //"DigitalCircuit" namespace abbreviated
 
 int main()
 {   
+    //_setmode(_fileno(stdout), _O_U16TEXT);
+    //std::wcout << L"Testing unicode -- English -- Ελληνικά -- Español." << std::endl;
+
     //set up variables
     Circuit circuit1(7);
 
@@ -47,15 +50,18 @@ int main()
     //Print info for a specific component
     std::cout << "Detailed information of component 3: ";
     circuit1.component_info(2);
-    std::cout << "\n";
+    //std::cout << "\n";
 
-
-
+    
+    std::cout << "Truth table for a XOR gate: \n";
     XORgate ag(0, 1, 0);
     std::vector<bool> trutht = truth_table(ag, 2);
-    printstate(trutht);
-
-
+    //printstate(trutht);
+    std::cout << "   0 1 \n";
+    std::cout << "_______\n";
+    std::cout << "0| 0 0 \n";
+    std::cout << "1| 0 0 \n";
+    std::cout << "\n";
 
     //GLOBAL
     int n = 7;

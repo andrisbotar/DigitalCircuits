@@ -32,21 +32,16 @@ namespace digitalc {
     //Creates a truth table for a LogicGate
     std::vector<bool> truth_table(LogicGate& comp, int n)
     {
-        int output_wire = 0;
-
+        //int output_wire = 0;
         int numtable = pow(2, n);
         std::vector<bool> input(n, 0);
         std::vector<bool> output(8, 0);
         std::vector<bool> table(numtable, 0);
 
         for (int i = 0; i < numtable;++i) {
-            //std::cout << "aaa " << (i) <<"\n";
             input = int_to_bool_vector(i, n);
             comp.update(input,output);
-            //printstate(output); printstate(input);
-            bool out = output[0];
-            //std::cout <<" result: " << out << "\n";
-            table[i] = out;
+            table[i] = output[0];
         }
         return table;
     }
