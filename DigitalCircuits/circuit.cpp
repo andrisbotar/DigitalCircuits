@@ -1,4 +1,4 @@
-//Define class for storign circuit with multiple inputs, outputs and update functionality
+//Defines a class for storing a circuit with multiple inputs, outputs and update functionality
 
 #include "circuit.h"
 #include <iostream>
@@ -6,10 +6,6 @@ using namespace digitalc;
 
 //Circuit constructors and destructors first
 Circuit::Circuit() {}
-Circuit::Circuit(int number_of_wires) {
-    this->state = std::vector<bool>(number_of_wires, false);
-    this->new_state = std::vector<bool>(number_of_wires, false);
-}
 Circuit::Circuit(int number_of_wires, bool default_wire_state){
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);

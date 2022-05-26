@@ -17,8 +17,7 @@ namespace digitalc {
 		std::vector<component*> components;
 	public:
 		Circuit();
-		Circuit(int number_of_wires);
-		Circuit(int number_of_wires, bool default_wire_state);
+		Circuit(int number_of_wires, bool default_wire_state=false);
 		~Circuit();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);

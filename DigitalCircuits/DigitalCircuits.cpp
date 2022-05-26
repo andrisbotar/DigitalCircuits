@@ -1,5 +1,15 @@
-﻿// DigitalCircuits.cpp : Central file containing main function, demosntration cases, etc..
+﻿//Digital Circuits
+//This is a program to represent, manipulate, simualate and display digital circuits
+//Written by Andras Botar
+//May 2022
 
+//Contained files:
+//DigitalCircuits.cpp : Central file containing main function, demonstration cases, etc..
+//circuit.cpp and circuit.h: Defines a class for storing a circuit with multiple inputs, outputs, update functionality..
+//Components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
+//utility.cpp and utility.h: Contains various utility functions for creating truth tables, printing tables,printing vectors...
+
+//Import required libraries and namespaces
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,13 +21,22 @@
 #include "utility.h" //A few miscelaneous utility functions
 using namespace digitalc; //"DigitalCircuit" namespace abbreviated
 
-
-int main()
-{   
+//setup function to collect some start-up actions
+int setup() {
     //Set up output mode of windows console so we can output unicode characters
     //Using std::wcout and std::wstring
     int _ = _setmode(_fileno(stdout), _O_U16TEXT);
     //std::wcout << L"Testing unicode -- English -- Ελληνικά -- Español." << std::endl;
+    return 0;
+}
+
+
+//Main function of program, start-point
+int main()
+{   
+    setup();
+
+
 
     //set up variables
     Circuit circuit1(7);
@@ -43,34 +62,29 @@ int main()
     circuit1.printstate();
     std::wcout << "\n\n";
 
-    //reset circuti and run proper simulation
+    //reset circuit and run proper simulation
     std::wcout << "Simulation over several timesteps: \n";
     circuit1.reset_state();
     circuit1.simulate_cli(5);
     std::wcout << "\n\n";
 
     //Print info for a specific component
-    std::wcout << "Detailed information of component 3: ";
+    std::wcout << "Detailed information of component 3: \n";
     circuit1.component_info(2);
     //std::wcout << "\n";
 
-    
+    //print truth table for a logic gate
     std::wcout << "Truth table for a XOR gate: \n";
     XORgate ag(0, 1, 0);
     int gate_size = 2;
     std::vector<bool> trutht = truth_table(ag, gate_size);
-    //printstate(trutht);
     printtable(trutht, gate_size);
 
-    //GLOBAL
-    int n = 7;
-    bool default_wire_state = false;
 
-    //Unfortunately Windows console does not want to reliably display unicode characters
-    // So unable to use proper "box drawing characters"
-    //_setmode(_fileno(stdout), _O_U16TEXT);
-    //const char continous_line_character = '\u2501';
-    const char continous_line_character = '-';
+
+
+
+
 
 
     //Cleanup memory
@@ -82,6 +96,7 @@ int main()
     //std::cin >> usrinput;
     std::wcout << "\n";
     //std::wcout << "Goodbye!\n";
+    return 0;
 }
 
 

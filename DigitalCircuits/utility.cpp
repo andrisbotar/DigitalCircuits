@@ -35,7 +35,7 @@ namespace digitalc {
         //int output_wire = 0;
         int numtable = (int)pow(2, n);
         std::vector<bool> input(n, 0);
-        std::vector<bool> output(8, 0);
+        std::vector<bool> output(1, 0);
         std::vector<bool> table(numtable, 0);
 
         for (int i = 0; i < numtable;++i) {
