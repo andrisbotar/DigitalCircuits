@@ -27,8 +27,10 @@ namespace digitalc {
 		std::vector<int> inputs{ 0,0 };
 		int output{ 0 };
 		bool inverting{ false };
+		virtual LogicGate* clone_impl() const = 0;
 	public:
 		LogicGate();
+		//LogicGate(LogicGate L);
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
 		virtual std::wstring gettype();
@@ -36,6 +38,7 @@ namespace digitalc {
 		virtual void set_inversion(bool b);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+		auto clone() const;
 		//virtual void update() = 0; 
 		//std::vector<bool> truth_table();
 	};
@@ -44,7 +47,7 @@ namespace digitalc {
 	class ANDgate:public LogicGate
 	{
 	private:
-
+		virtual ANDgate* clone_impl() const override;
 	public:
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
@@ -57,7 +60,7 @@ namespace digitalc {
 	class ORgate : public LogicGate
 	{
 	private:
-		
+		virtual ORgate* clone_impl() const override;
 	public:
 		ORgate();
 		ORgate(int i1, int i2, int o);
@@ -70,6 +73,7 @@ namespace digitalc {
 	{
 	private:
 		std::wstring gettype();
+		virtual XORgate* clone_impl() const override;
 	public:
 		XORgate();
 		XORgate(int i1, int i2, int o);
@@ -82,6 +86,7 @@ namespace digitalc {
 	{
 	private:
 		//int output = 0;
+		virtual NOTgate* clone_impl() const override;
 	public:
 		NOTgate();
 		NOTgate(int i1, int o);
@@ -94,6 +99,7 @@ namespace digitalc {
 	{
 	private:
 		//int output = 0;
+		virtual buffer* clone_impl() const override;
 	public:
 		buffer();
 		buffer(int i1, int o);
@@ -107,6 +113,7 @@ namespace digitalc {
 	{
 	private:
 		//int output = 0;
+		virtual constant_input* clone_impl() const override;
 	public:
 		constant_input();
 		constant_input(bool value, int output);
@@ -122,7 +129,7 @@ namespace digitalc {
 	class Majorityfunction :public LogicGate
 	{
 	private:
-		
+		virtual ANDgate* clone_impl() const override;
 	public:
 		Majorityfunction();
 		Majorityfunction(int i1, int i2, int o);
@@ -137,6 +144,7 @@ namespace digitalc {
 	private:
 		std::wstring gettype();
 		//digitalc::Circuit subcirsdfdfcuit();
+		virtual SubCircuitComponent* clone_impl() const override;
 	public:
 		SubCircuitComponent();
 		SubCircuitComponent(int i1, int i2, int o);

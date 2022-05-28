@@ -50,6 +50,11 @@ void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vect
 	//return input;
 }
 
+auto digitalc::LogicGate::clone() const
+{
+	return std::unique_ptr<LogicGate>(clone_impl());
+}
+
 
 
 
@@ -72,6 +77,7 @@ void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 	}
 	out_vector[output] = (inverting != result);
 }
+ANDgate* ANDgate::clone_impl() const { return new ANDgate(*this); };
 
 ORgate::ORgate() {}
 ORgate::ORgate(int i1, int i2, int o)
@@ -91,6 +97,8 @@ void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 	}
 	out_vector[output] = (inverting != result);
 }
+ORgate* ORgate::clone_impl() const { return new ORgate(*this); };
+
 
 
 XORgate::XORgate() {}
@@ -109,6 +117,7 @@ void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 	}
 	out_vector[output] = (inverting != result);
 }
+XORgate* XORgate::clone_impl() const { return new XORgate(*this); };
 
 
 NOTgate::NOTgate() {}
@@ -122,6 +131,7 @@ std::wstring NOTgate::gettype() { return std::wstring(inverting ? L"Inverting " 
 void NOTgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
 }
+NOTgate* NOTgate::clone_impl() const { return new NOTgate(*this); };
 
 
 buffer::buffer() {}
@@ -135,6 +145,7 @@ std::wstring buffer::gettype() { return std::wstring(inverting ? L"Inverting " :
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != in_vector[inputs[0]]);
 }
+buffer* buffer::clone_impl() const { return new buffer(*this); };
 
 
 constant_input::constant_input() {}
@@ -153,6 +164,8 @@ void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out
 {
 	out_vector[output] = inverting;
 }
+constant_input* constant_input::clone_impl() const { return new constant_input(*this); };
+
 
 
 //Other, less common components
@@ -179,6 +192,7 @@ void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& o
 
 	out_vector[output] = (inverting != result);
 }
+Majorityfunction* Majorityfunction::clone_impl() const { return new Majorityfunction(*this); };
 
 
 
@@ -206,7 +220,7 @@ void SubCircuitComponent::update(std::vector<bool>& in_vector, std::vector<bool>
 	}
 	out_vector[output] = (inverting != result);
 }
-
+SubCircuitComponent* SubCircuitComponent::clone_impl() const { return new SubCircuitComponent(*this); };
 
 
 
