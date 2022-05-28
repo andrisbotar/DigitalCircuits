@@ -32,6 +32,7 @@ namespace digitalc {
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
 		virtual std::wstring gettype();
+		//virtual std::wstring getCNFsig();
 		virtual void set_inversion(bool b);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);

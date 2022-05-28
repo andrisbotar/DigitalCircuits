@@ -41,6 +41,7 @@ void Circuit::update() {
     for (auto item : components) {
         item->update(state, new_state);
     }
+    //new_state[0] = defaul_wire_state 
     state.swap(new_state);
 }
 

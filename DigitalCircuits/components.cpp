@@ -69,7 +69,6 @@ void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 	for (auto index : inputs){
 		if (index >= 0 && index < in_vector.size())
 			result = result && in_vector[index];
-		//std::wcout << "AAAAAA" << in_vector[index];
 	}
 	out_vector[output] = (inverting != result);
 }

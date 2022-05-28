@@ -32,13 +32,13 @@ int setup() {
 
 //function to create and eample circuit with one of each logic gate type
 void example_circuit(Circuit& circuit1) {
-    circuit1.addcomponent(new constant_input(true, 0));
-    circuit1.addcomponent(new constant_input(true, 1));
-    circuit1.addcomponent(new ANDgate(0, 1, 2));
-    circuit1.addcomponent(new ORgate(0, 1, 3));
-    circuit1.addcomponent(new XORgate(0, 1, 4));
-    circuit1.addcomponent(new NOTgate(0, 5));
-    circuit1.addcomponent(new buffer(0, 6));
+    circuit1.addcomponent(new constant_input(false, 1));  
+    circuit1.addcomponent(new constant_input(true, 2));
+    circuit1.addcomponent(new ANDgate(1, 2, 3));
+    circuit1.addcomponent(new ORgate(1, 2, 4));
+    circuit1.addcomponent(new XORgate(1, 2, 5));
+    circuit1.addcomponent(new NOTgate(1, 7));
+    circuit1.addcomponent(new buffer(1, 7));
     circuit1.addcomponent(new Majorityfunction(1, 2, 7));
 }
 
