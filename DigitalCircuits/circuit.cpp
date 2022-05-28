@@ -75,8 +75,8 @@ void Circuit::set_wire_state(int n, bool value) {
 }
 
 //acting on individual components
-void Circuit::addcomponent(std::unique_ptr<component> const &new_component) {
-    components.push_back(new_component);
+void Circuit::addcomponent(std::unique_ptr<component> new_component) {
+    components.push_back(std::move(new_component));
 }
 void Circuit::deletecomponent(){}
 void Circuit::replacecomponent(int n, std::unique_ptr<component> new_component) {

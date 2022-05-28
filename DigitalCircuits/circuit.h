@@ -27,7 +27,7 @@ namespace digitalc {
 		virtual void deletewires();
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
-		void addcomponent(std::unique_ptr<component> const &new_component);
+		void addcomponent(std::unique_ptr<component> new_component);
 		virtual void deletecomponent();
 		void replacecomponent(int n, std::unique_ptr<component> new_component);
 		std::wstring component_info(int n);
