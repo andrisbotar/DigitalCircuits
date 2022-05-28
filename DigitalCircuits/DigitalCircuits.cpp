@@ -32,6 +32,8 @@ int setup() {
 
 //function to create and eample circuit with one of each logic gate type
 void example_circuit(Circuit& circuit1) {
+    //std::unique_ptr< constant_input> newgate;
+    //newgate = std::make_unique< constant_input>(new constant_input(false, 1));
     circuit1.addcomponent(std::move(std::make_unique< constant_input>(new constant_input(false, 1))));
     circuit1.addcomponent(std::move(std::make_unique< constant_input>(new constant_input(true, 2))));
     circuit1.addcomponent(std::move(std::make_unique< ANDgate>(new ANDgate(1, 2, 3))));
