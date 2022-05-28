@@ -7,6 +7,7 @@
 
 namespace digitalc {
 	std::wstring BoolToString(bool b);
+	//bool StringToBool(std::wstring);
 	std::vector<bool> int_to_bool_vector(int number, int len);
 	std::vector<bool> truth_table(LogicGate& comp, int n);
 	void printtable(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
