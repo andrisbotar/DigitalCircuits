@@ -13,8 +13,7 @@ Circuit::Circuit(int number_of_wires, bool default_wire_state){
 Circuit::~Circuit(){
     //Cleanup memory
     std::wcout << "Destroying Circuit of size " << size() <<" with " <<components.size() << " components\n";
-    for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)
-        delete* vectorit;
+    //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)        delete vectorit;
     components.clear();
     state.clear();
     new_state.clear();
@@ -38,7 +37,7 @@ Circuit::~Circuit(){
 
 //Core updating logic
 void Circuit::update() {
-    for (auto item : components) {
+    for (const auto& item : components) {
         item->update(state, new_state);
     }
     //new_state[0] = defaul_wire_state 
@@ -76,12 +75,12 @@ void Circuit::set_wire_state(int n, bool value) {
 }
 
 //acting on individual components
-void Circuit::addcomponent(component* c) {
-    components.push_back(c);
+void Circuit::addcomponent(std::unique_ptr<component> new_component) {
+    components.push_back(new_component);
 }
 void Circuit::deletecomponent(){}
-void Circuit::replacecomponent(int n, component* new_component) {
-    components[n] = new_component;
+void Circuit::replacecomponent(int n, std::unique_ptr<component> new_component) {
+    components[n] = move(new_component);
 }
 void Circuit::set_invert(int n, bool inverted)
 {

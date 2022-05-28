@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <memory>
 #include "components.h"
 
 #ifndef __CIRCUIT__
@@ -14,7 +15,7 @@ namespace digitalc {
 		//int component_count = 0;
 		std::vector<bool> state;
 		std::vector<bool> new_state;
-		std::vector<component*> components;
+		std::vector<std::unique_ptr<component>> components;
 	public:
 		Circuit();
 		Circuit(int number_of_wires, bool default_wire_state=false);
@@ -26,9 +27,9 @@ namespace digitalc {
 		virtual void deletewires();
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
-		void addcomponent(component* c);
+		void addcomponent(std::unique_ptr<component> new_component);
 		virtual void deletecomponent();
-		void replacecomponent(int n, component* new_component);
+		void replacecomponent(int n, std::unique_ptr<component> new_component);
 		std::wstring component_info(int n);
 		void set_invert(int n,bool inverted);
 		size_t size();

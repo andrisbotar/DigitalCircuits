@@ -129,7 +129,7 @@ namespace digitalc {
 	class Majorityfunction :public LogicGate
 	{
 	private:
-		virtual ANDgate* clone_impl() const override;
+		virtual Majorityfunction* clone_impl() const override;
 	public:
 		Majorityfunction();
 		Majorityfunction(int i1, int i2, int o);
