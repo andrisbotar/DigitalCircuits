@@ -50,7 +50,7 @@ namespace digital_circuits {
 
 		void add_component(std::unique_ptr<component> new_component);
 		void replace_component(int n, std::unique_ptr<component> new_component);
-		virtual void delete_component();
+		virtual void delete_component(int n);
 		std::wstring component_info(int n);
 		void set_invert(int n, bool inverted);
 

@@ -15,7 +15,8 @@ int COMPONENTCOUNT{ 0 };
 //component::component(){ label = L"circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //wouldn't make component an abstract base class anymore
 component::~component(){}
 
-logic_gate::logic_gate(){ 
+logic_gate::logic_gate()
+{ 
 	label = L"Component " + std::to_wstring(COMPONENTCOUNT);
 	COMPONENTCOUNT++;
 } //:type("Generic Logic Gate") {}
@@ -60,9 +61,7 @@ int digital_circuits::logic_gate::get_output()
 {
 	return this->output;
 }
-std::wstring logic_gate::get_label() {
-	return this->label;
-}
+std::wstring logic_gate::get_label() {	return this->label;}
 void logic_gate::set_inversion(bool b) {	inverting = b; }
 void digital_circuits::logic_gate::set_output(int new_value)
 {
@@ -74,13 +73,14 @@ void digital_circuits::logic_gate::set_input(int input_index, int new_value)
 }
 void logic_gate:: set_inputs(std::vector<int> new_input_vector)
 {
-	this->inputs = new_input_vector;
+	this->inputs= new_input_vector;
 }
 void logic_gate::set_label(std::wstring in) 
 {
 	this->label = in;
 }
-void logic_gate::info() {
+void logic_gate::info() 
+{
 	std::wcout << L"Label: " << label << "\n";
 	std::wcout << L"Type: " << this->get_type() << "\n";
 	std::wcout << L"Input wires: ";
@@ -141,13 +141,15 @@ or_gate::or_gate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-or_gate::~or_gate() {
+or_gate::~or_gate() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
 }
 std::wstring or_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
-void or_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void or_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
 	bool result = false;
@@ -167,13 +169,15 @@ xor_gate::xor_gate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-xor_gate::~xor_gate() {
+xor_gate::~xor_gate() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
 }
 std::wstring xor_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
-void xor_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void xor_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	bool result = false;
 	for (auto index : inputs) {
 		if (index >= 0 && index < in_vector.size())
@@ -190,13 +194,15 @@ not_gate::not_gate(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-not_gate::~not_gate() {
+not_gate::~not_gate() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
 }
 std::wstring not_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
-void not_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void not_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
 }
 not_gate* not_gate::clone_impl() const { return new not_gate(*this); };
@@ -208,13 +214,15 @@ buffer::buffer(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-buffer::~buffer() {
+buffer::~buffer() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
 }
 std::wstring buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Buffer"); }
-void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	out_vector[output] = (inverting != in_vector[inputs[0]]);
 }
 buffer* buffer::clone_impl() const { return new buffer(*this); };
@@ -226,7 +234,8 @@ constant_input::constant_input(bool val, int out)
 	this->set_inversion(val);
 	this->output = out;
 }
-constant_input::~constant_input() {
+constant_input::~constant_input() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
@@ -251,13 +260,15 @@ majority_function::majority_function(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-majority_function::~majority_function() {
+majority_function::~majority_function() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
 }
 std::wstring majority_function::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
-void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	int true_count = 0;
 	int count = 0;
 	for (auto index : inputs) {
@@ -289,7 +300,8 @@ sub_circuit_component::sub_circuit_component() {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }*/
-sub_circuit_component::~sub_circuit_component() {
+sub_circuit_component::~sub_circuit_component() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
@@ -312,7 +324,8 @@ sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn
 	this->acyclic = acyc;
 	this->size = circuit_size;
 }
-void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	try {
 		std::vector<bool> input_to_function(size, 0);
 		for (int i = 0; i < inputs.size(); ++i) {
@@ -336,7 +349,8 @@ digital_circuits::multi_not::multi_not(std::vector<int> in, std::vector<int> o)
 	this->out = o;
 
 }
-digital_circuits::multi_not::~multi_not() {
+digital_circuits::multi_not::~multi_not() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}
@@ -361,7 +375,8 @@ digital_circuits::big_buffer::big_buffer(std::vector<int> in, std::vector<int> o
 	this->out = o;
 
 }
-digital_circuits::big_buffer::~big_buffer() {
+digital_circuits::big_buffer::~big_buffer() 
+{
 	if (digital_circuits::verbose) {
 		std::wcout << L"Destroying " << this->get_type() << std::endl;
 	}

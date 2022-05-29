@@ -14,7 +14,8 @@
 #include "digitalcircuits.h"
 
 //setup function to collect some start-up actions
-int setup() {
+int setup() 
+{
     //Set up output mode of windows console so we can output unicode characters
     //Using std::wcout and std::wstring
     int _ = _setmode(_fileno(stdout), _O_U16TEXT);
@@ -25,7 +26,8 @@ int setup() {
 }
 
 //function to create and eample circuit with one of each logic gate type
-void example_circuit(circuit& circuit_1) {
+void example_circuit(circuit& circuit_1) 
+{
     circuit_1.add_component(std::make_unique< constant_input>(true, 1));
     circuit_1.add_component(std::make_unique< constant_input>(true, 2));
     circuit_1.add_component(std::make_unique< and_gate>(1, 2, 3));

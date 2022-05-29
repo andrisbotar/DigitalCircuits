@@ -10,12 +10,14 @@ using namespace digital_circuits;
 int CIRCUITCOUNT{0};
 
 //circuit constructors and destructors first
-circuit::circuit() { 
+circuit::circuit() 
+{ 
     label = L"Circuit " + std::to_wstring(CIRCUITCOUNT);
     CIRCUITCOUNT++;
 }
 //Copy cosntructor
-circuit::circuit(const circuit& other) {
+circuit::circuit(const circuit& other) 
+{
     label = L"Circuit " + std::to_wstring(CIRCUITCOUNT);
     CIRCUITCOUNT++;
     this->state = other.state;
@@ -35,7 +37,8 @@ circuit::circuit(int number_of_wires, bool default_wire_state)
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
 }
 //alow labeling of cricuit
-circuit::circuit(int number_of_wires, bool default_wire_state, std::wstring label) {
+circuit::circuit(int number_of_wires, bool default_wire_state, std::wstring label) 
+{
     label = label; CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
@@ -87,7 +90,8 @@ circuit& circuit::operator++()
 
 
 //Core updating logic
-void circuit::update() {
+void circuit::update() 
+{
     for (const auto& item : components) {
         item->update(state, new_state);
     }
@@ -96,7 +100,8 @@ void circuit::update() {
 }
 
 //state manipulation
-void circuit::print_state() {
+void circuit::print_state() 
+{
     //for (auto i : state) {        std::wcout << i << " ";    } 
     //std::vector<bool> not a standard container, so causes some problems
     for (int i = 0; i < state.size(); ++i) {
@@ -107,7 +112,8 @@ void circuit::print_state() {
     }
     std::wcout << " \n";
 }
-std::vector<bool> circuit::get_state() {
+std::vector<bool> circuit::get_state() 
+{
     return this->state;
 }
 void circuit::set_state(std::vector<bool> default_state)
@@ -124,7 +130,8 @@ void circuit::reset_state()  //Reset circuit if needed
 
 
 //acting on individual wires
-void circuit::add_wires(int wire_count) {
+void circuit::add_wires(int wire_count) 
+{
     if (wire_count < 0) {
         std::wcout << "Cannot add negative number of wires.";
         return;
@@ -132,7 +139,8 @@ void circuit::add_wires(int wire_count) {
     size_t new_size = state.size() + wire_count;
     state.resize(new_size);
 }
-void circuit::delete_wire(int n) {
+void circuit::delete_wire(int n) 
+{
     hidden.push_back(n);
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[i]->get_input();
@@ -147,38 +155,29 @@ void circuit::delete_wire(int n) {
         }
     }
 }
-void circuit::delete_wires(std::vector<int> wirestodelete) {
+void circuit::delete_wires(std::vector<int> wirestodelete) 
+{
     for (auto wireindex : wirestodelete) {
         this->delete_wire(wireindex);
     }
 }
-bool circuit::get_wire_state(int n) {
-    return state[n];
-}
-void circuit::set_wire_state(int n, bool value) {
-    state[n] = value;
-}
-void circuit::hide_wire(int n) {
-    hidden.push_back(n);
-}
-void circuit::un_hide_all_wires() {
-    hidden.clear();
-}
+bool circuit::get_wire_state(int n) {    return state[n];}
+void circuit::set_wire_state(int n, bool value) {    state[n] = value;}
+void circuit::hide_wire(int n) {    hidden.push_back(n);}
+void circuit::un_hide_all_wires() {    hidden.clear();}
 
 
 //acting on individual components
-void circuit::add_component(std::unique_ptr<component> new_component) {
-    components.push_back(std::move(new_component));
-}
-void circuit::replace_component(int n, std::unique_ptr<component> new_component) {
-    components[n] = std::move(new_component);
-}
-void circuit::delete_component(){}
-void circuit::set_invert(int n, bool inverted)
+void circuit::add_component(std::unique_ptr<component> new_component) {    components.push_back(std::move(new_component));}
+void circuit::replace_component(int n, std::unique_ptr<component> new_component) {    components[n] = std::move(new_component);}
+void circuit::delete_component(int n)
 {
-    components[n]->set_inversion(inverted);
+    components.erase(components.begin() + n);
+    //this->replace_component(n, std::make_unique<and_gate>(0, 0, 0));
 }
-std::wstring circuit::component_info(int n) {
+void circuit::set_invert(int n, bool inverted){    components[n]->set_inversion(inverted);}
+std::wstring circuit::component_info(int n) 
+{
     components[n]->info();
     return L"";
 }
