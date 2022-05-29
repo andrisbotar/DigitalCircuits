@@ -41,8 +41,8 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 		this->output = o;
 	}
 }*/
-logic_gate::~logic_gate() {}//std::wcout << "Destroying " << this->gettype() << std::endl; }
-std::wstring logic_gate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
+logic_gate::~logic_gate() {}//std::wcout << "Destroying " << this->get_type() << std::endl; }
+std::wstring logic_gate::get_type() { 	return std::wstring(L"Generic Logic Gate"); }
 std::vector<int> digitalc::logic_gate::get_input()
 {
 	return inputs;
@@ -62,7 +62,7 @@ void digitalc::logic_gate::set_input(int input_index, int new_value)
 }
 void logic_gate::info() {
 	std::wcout << L"Label: " << label << "\n";
-	std::wcout << L"Type: " << this->gettype() << "\n";
+	std::wcout << L"Type: " << this->get_type() << "\n";
 	std::wcout << L"Input wires: ";
 		for (auto i : this->inputs) { std::wcout << i <<","; }
 	std::wcout << L"\b \n"; //delete last comma
@@ -92,8 +92,8 @@ ANDgate::ANDgate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{i1,i2};
 	this->output = o;
 }
-ANDgate::~ANDgate() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring ANDgate::gettype(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
+ANDgate::~ANDgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring ANDgate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
 void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
@@ -112,8 +112,8 @@ ORgate::ORgate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-ORgate::~ORgate() {	std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring ORgate::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
+ORgate::~ORgate() {	std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring ORgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
 void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
@@ -134,8 +134,8 @@ XORgate::XORgate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-XORgate::~XORgate() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring XORgate::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+XORgate::~XORgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring XORgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
 void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	bool result = false;
 	for (auto index : inputs) {
@@ -153,8 +153,8 @@ NOTgate::NOTgate(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-NOTgate::~NOTgate() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring NOTgate::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
+NOTgate::~NOTgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring NOTgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
 void NOTgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
 }
@@ -167,8 +167,8 @@ buffer::buffer(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-buffer::~buffer() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring buffer::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Buffer"); }
+buffer::~buffer() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Buffer"); }
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != in_vector[inputs[0]]);
 }
@@ -181,10 +181,10 @@ constant_input::constant_input(bool val, int out)
 	this->set_inversion(val);
 	this->output = out;
 }
-constant_input::~constant_input() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring constant_input::gettype() { return std::wstring(L"Constant " + BoolToString(inverting) + L" input"); }
+constant_input::~constant_input() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring constant_input::get_type() { return std::wstring(L"Constant " + BoolToString(inverting) + L" input"); }
 void constant_input::info() {
-	std::wcout << L"type: " << this->gettype() << "\n";
+	std::wcout << L"type: " << this->get_type() << "\n";
 	std::wcout << L"value: " << this->inverting << "\n";
 }
 void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
@@ -202,8 +202,8 @@ Majorityfunction::Majorityfunction(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-Majorityfunction::~Majorityfunction() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring Majorityfunction::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
+Majorityfunction::~Majorityfunction() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring Majorityfunction::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
 void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	int true_count = 0;
 	int count = 0;
@@ -234,8 +234,8 @@ SubCircuitComponent::SubCircuitComponent(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }*/
-SubCircuitComponent::~SubCircuitComponent() { std::wcout << L"Destroying " << this->gettype() << std::endl; }
-std::wstring SubCircuitComponent::gettype() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+SubCircuitComponent::~SubCircuitComponent() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring SubCircuitComponent::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
 void SubCircuitComponent::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
 

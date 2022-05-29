@@ -37,7 +37,7 @@ namespace digitalc {
 		logic_gate(int i1, int i2, int o);
 		logic_gate(int i1, int i2, int o, std::wstring label);
 		~logic_gate();
-		virtual std::wstring gettype();
+		virtual std::wstring get_type();
 		virtual std::vector<int> get_input();
 		virtual int getoutput();
 		//virtual std::wstring getCNFsig();
@@ -60,7 +60,7 @@ namespace digitalc {
 		ANDgate();
 		ANDgate(int i1,int i2,int o);
 		~ANDgate();
-		std::wstring gettype();
+		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		//using logic_gate::logic_gate;
 	};
@@ -73,14 +73,14 @@ namespace digitalc {
 		ORgate();
 		ORgate(int i1, int i2, int o);
 		~ORgate();
-		std::wstring gettype();
+		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 	class XORgate : public logic_gate
 	{
 	private:
-		std::wstring gettype();
+		std::wstring get_type();
 		virtual XORgate* clone_impl() const override;
 	public:
 		XORgate();
@@ -99,7 +99,7 @@ namespace digitalc {
 		NOTgate();
 		NOTgate(int i1, int o);
 		~NOTgate();
-		std::wstring gettype();
+		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -112,7 +112,7 @@ namespace digitalc {
 		buffer();
 		buffer(int i1, int o);
 		~buffer();
-		std::wstring gettype();
+		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -126,7 +126,7 @@ namespace digitalc {
 		constant_input();
 		constant_input(bool value, int output);
 		~constant_input();
-		std::wstring gettype();
+		std::wstring get_type();
 		void info();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
@@ -142,7 +142,7 @@ namespace digitalc {
 		Majorityfunction();
 		Majorityfunction(int i1, int i2, int o);
 		~Majorityfunction();
-		std::wstring gettype();
+		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -150,7 +150,7 @@ namespace digitalc {
 	class SubCircuitComponent :public logic_gate
 	{
 	private:
-		std::wstring gettype();
+		std::wstring get_type();
 		//digitalc::Circuit subcirsdfdfcuit();
 		virtual SubCircuitComponent* clone_impl() const override;
 	public:
