@@ -39,8 +39,8 @@ void example_circuit(circuit& circuit_1) {
     circuit_1.add_component(std::make_unique< or_gate>(1, 2, 4));
     circuit_1.add_component(std::make_unique< xor_gate>(1, 2, 5));
     circuit_1.add_component(std::make_unique< not_gate>(1, 7));
-    circuit_1.add_component(std::make_unique< buffer>(1, 7));
-    circuit_1.add_component(std::make_unique< majority_function>(1, 2, 7));
+    circuit_1.add_component(std::make_unique< buffer>(1, 8));
+    circuit_1.add_component(std::make_unique< majority_function>(1, 2, 9));
 }
 
 //Main function of program, start-point
@@ -51,8 +51,8 @@ int main()
 
     //create a circuit
     
-    circuit circuit_2(9);
-    circuit circuit_1(9);
+    circuit circuit_2(10);
+    circuit circuit_1(10);
     example_circuit(circuit_2);
     example_circuit(circuit_1);
     //circuit_1 = circuit_2;
@@ -92,6 +92,7 @@ int main()
 
     //print truth table for a logic gate
     //int gate_size = 2;
+    std::wcout << "\n";
     std::wcout << "Truth table for a XOR gate: \n";
     xor_gate gate_1(0, 1, 0);
     std::vector<bool> trutht_1 = truth_table(gate_1, 2);

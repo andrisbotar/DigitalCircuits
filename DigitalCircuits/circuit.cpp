@@ -154,24 +154,25 @@ void circuit::print_info() {
         std::wcout << "It has feedback/Is a cyclic circuit.\n";
     }
 
-    std::wcout << "And t has " << size() << " wires and contains "<< component_count() <<" components: \n";
+    std::wcout << "And it has " << size() << " wires and contains "<< component_count() <<" components: \n";
     for (int i = 0; i < components.size(); ++i) { std::wcout << "- "; components[i]->info(); }
     //std::wcout<<"and has complexity: "<<complexity();
 }
 //Checks wether the circuit has any feedback or "cycles"
 bool circuit::acyclic()
 {
-    std::vector<bool> visited(components.size(),false);
-    for (int i = 0; i < components.size(); ++i) {
+    std::vector<bool> visited(size(),false);
+    for (int i = 0; i < components.size()-1; ++i) {
         int output_of_component = components[i]->getoutput();
+        //std::wcout << visited.size() << " " << output_of_component << " - " << components.size() << " " << i << "\n";
         if (visited[output_of_component] and !vector_contains(output_of_component,hidden)) { 
-            return true; 
+            return false; 
         }
         for (auto j : components[i]->get_input()) {
             visited[j] = true;
         }
     }
-    return false;
+    return true;
 }
 
 

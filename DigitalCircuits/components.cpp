@@ -254,7 +254,45 @@ void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<boo
 sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
 
 
+//multi output compoennts
+digital_circuits::multi_not::multi_not() {}
+digital_circuits::multi_not::multi_not(std::vector<int> in, std::vector<int> o)
+{
+	this->inputs = in;
+	this->out = o;
+
+}
+digital_circuits::multi_not::~multi_not() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring multi_not::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-input NOT"); }
+void digital_circuits::multi_not::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
+{
+	for (int i = 0; i < std::min(inputs.size(),out.size()); ++i) {
+		if (i>out.size() || i>inputs.size() || out[i] > out_vector.size() || inputs[i] > in_vector.size()){
+			continue; 
+		}
+		out_vector[out[i]] = (inverting != in_vector[inputs[i]]);
+	}
+}
+multi_not* multi_not::clone_impl() const { return new multi_not(*this); };
 
 
+digital_circuits::big_buffer::big_buffer() {}
+digital_circuits::big_buffer::big_buffer(std::vector<int> in, std::vector<int> o)
+{
+	this->inputs = in;
+	this->out = o;
 
-
+}
+digital_circuits::big_buffer::~big_buffer() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring big_buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-buffer"); }
+void digital_circuits::big_buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
+{
+	for (int i = 1; i < std::min(inputs.size(), out.size()); ++i) {
+		if (i > out.size() || i > inputs.size() || out[i] > out_vector.size() || inputs[i] > in_vector.size()) {
+			continue;
+		}
+		out_vector[out[i+1]] = (inverting != in_vector[out[i]]);
+	}
+	out_vector[out[0]] = (inverting != in_vector[inputs[0]]);
+}
+big_buffer* big_buffer::clone_impl() const { return new big_buffer(*this); };

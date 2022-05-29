@@ -163,6 +163,36 @@ namespace digital_circuits {
 	};
 
 
+	//Multi output compoennts
+	//Many NOT gates in parralel, more conevient
+	class multi_not :public logic_gate
+	{
+	private:
+		virtual multi_not* clone_impl() const override;
+		std::vector<int> out;
+	public:
+		multi_not();
+		multi_not(std::vector<int> in, std::vector<int> out);
+		~multi_not();
+		std::wstring get_type();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
+
+
+
+	//Big buffer for more than jsut 1 tck delay
+	class big_buffer :public logic_gate
+	{
+	private:
+		virtual big_buffer* clone_impl() const override;
+		std::vector<int> out;
+	public:
+		big_buffer();
+		big_buffer(std::vector<int> in, std::vector<int> out);
+		~big_buffer();
+		std::wstring get_type();
+		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
+	};
 
 }
 #endif
