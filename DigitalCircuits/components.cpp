@@ -132,7 +132,11 @@ or_gate::or_gate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-or_gate::~or_gate() {	std::wcout << L"Destroying " << this->get_type() << std::endl; }
+or_gate::~or_gate() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring or_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
 void or_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
@@ -154,7 +158,11 @@ xor_gate::xor_gate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-xor_gate::~xor_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+xor_gate::~xor_gate() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring xor_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
 void xor_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	bool result = false;
@@ -173,7 +181,11 @@ not_gate::not_gate(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-not_gate::~not_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+not_gate::~not_gate() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring not_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
 void not_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
@@ -187,7 +199,11 @@ buffer::buffer(int i1, int o)
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-buffer::~buffer() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+buffer::~buffer() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Buffer"); }
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != in_vector[inputs[0]]);
@@ -201,7 +217,11 @@ constant_input::constant_input(bool val, int out)
 	this->set_inversion(val);
 	this->output = out;
 }
-constant_input::~constant_input() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+constant_input::~constant_input() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring constant_input::get_type() { return std::wstring(L"Constant " + bool_to_string(inverting) + L" input"); }
 void constant_input::info() {
 	std::wcout << L"type: " << this->get_type() << "\n";
@@ -222,7 +242,11 @@ majority_function::majority_function(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-majority_function::~majority_function() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+majority_function::~majority_function() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring majority_function::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
 void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	int true_count = 0;
@@ -256,7 +280,11 @@ sub_circuit_component::sub_circuit_component() {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }*/
-sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+sub_circuit_component::~sub_circuit_component() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"")
 + std::wstring(acyclic ? L"acyclic ":L"") + std::wstring(L"sub-circuit"); }
 sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn, size_t circuit_size, bool acyc)
@@ -281,10 +309,7 @@ void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<boo
 		for (int i = 0; i < inputs.size(); ++i) {
 			input_to_function[i]=(in_vector[i]);
 		}
-		std::wcout << L"input_to_function size: "<< input_to_function.size()<<"\n";
-		std::wcout << "asdsd " << update_function_call(input_to_function);
 		out_vector[output] = (inverting != update_function_call(input_to_function));
-		std::wcout << out_vector.size() << " AAAAA: " << output;
 	}
 	catch (...) {
 		std::cerr << "Was unable to update subcircuit component!";// << label;
@@ -302,7 +327,11 @@ digital_circuits::multi_not::multi_not(std::vector<int> in, std::vector<int> o)
 	this->out = o;
 
 }
-digital_circuits::multi_not::~multi_not() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+digital_circuits::multi_not::~multi_not() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring multi_not::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-input NOT"); }
 void digital_circuits::multi_not::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {
@@ -323,7 +352,11 @@ digital_circuits::big_buffer::big_buffer(std::vector<int> in, std::vector<int> o
 	this->out = o;
 
 }
-digital_circuits::big_buffer::~big_buffer() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+digital_circuits::big_buffer::~big_buffer() {
+	if (digital_circuits::verbose) {
+		std::wcout << L"Destroying " << this->get_type() << std::endl;
+	}
+}
 std::wstring big_buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-buffer"); }
 void digital_circuits::big_buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {

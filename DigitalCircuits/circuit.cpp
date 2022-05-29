@@ -43,7 +43,9 @@ circuit::circuit(int number_of_wires, bool default_wire_state, std::wstring labe
 circuit::~circuit()
 {
     //Cleanup memory
-    std::wcout << "Destroying circuit of size " << size() <<" with " << component_count() << " components\n";
+    if (digital_circuits::verbose) {
+        std::wcout << "Destroying circuit of size " << size() << " with " << component_count() << " components\n";
+    }
     //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)        delete vectorit;
     components.clear();
     state.clear();
@@ -65,7 +67,9 @@ circuit::~circuit()
 circuit& circuit::operator=(circuit other)
 {
     //swap and copy idiom
-    std::wcout << L"Copy assignment of "<< label <<L" \n";
+    if (verbose) {
+        std::wcout << L"Copy assignment of " << label << L" \n";
+    }
     std::swap(state, other.state);
     std::swap(new_state, other.new_state);
     std::swap(hidden, other.hidden);
