@@ -52,53 +52,53 @@ namespace digital_circuits {
 	};
 
 	//Common logic gates:
-	class ANDgate:public logic_gate
+	class and_gate:public logic_gate
 	{
 	private:
-		virtual ANDgate* clone_impl() const override;
+		virtual and_gate* clone_impl() const override;
 	public:
-		ANDgate();
-		ANDgate(int i1,int i2,int o);
-		~ANDgate();
+		and_gate();
+		and_gate(int i1,int i2,int o);
+		~and_gate();
 		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		//using logic_gate::logic_gate;
 	};
 
-	class ORgate : public logic_gate
+	class or_gate : public logic_gate
 	{
 	private:
-		virtual ORgate* clone_impl() const override;
+		virtual or_gate* clone_impl() const override;
 	public:
-		ORgate();
-		ORgate(int i1, int i2, int o);
-		~ORgate();
+		or_gate();
+		or_gate(int i1, int i2, int o);
+		~or_gate();
 		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	class XORgate : public logic_gate
+	class xor_gate : public logic_gate
 	{
 	private:
 		std::wstring get_type();
-		virtual XORgate* clone_impl() const override;
+		virtual xor_gate* clone_impl() const override;
 	public:
-		XORgate();
-		XORgate(int i1, int i2, int o);
-		~XORgate();
+		xor_gate();
+		xor_gate(int i1, int i2, int o);
+		~xor_gate();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 	//Unitary logic gates
-	class NOTgate :public logic_gate
+	class not_gate :public logic_gate
 	{
 	private:
 		//int output = 0;
-		virtual NOTgate* clone_impl() const override;
+		virtual not_gate* clone_impl() const override;
 	public:
-		NOTgate();
-		NOTgate(int i1, int o);
-		~NOTgate();
+		not_gate();
+		not_gate(int i1, int o);
+		~not_gate();
 		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};

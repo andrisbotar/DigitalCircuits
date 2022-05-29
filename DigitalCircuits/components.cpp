@@ -35,7 +35,7 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 		type = empty;
 	}
 
-	if (type == L"AND Gate") { this = ORgate(i1, i2, o); }
+	if (type == L"AND Gate") { this = or_gate(i1, i2, o); }
 	else{
 		this->inputs = std::vector<int>{ i1,i2 };
 		this->output = o;
@@ -86,15 +86,15 @@ auto digital_circuits::logic_gate::clone() const{
 
 
 //Definitions for common logic gates
-ANDgate::ANDgate(){}
-ANDgate::ANDgate(int i1, int i2, int o)
+and_gate::and_gate(){}
+and_gate::and_gate(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{i1,i2};
 	this->output = o;
 }
-ANDgate::~ANDgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring ANDgate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
-void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+and_gate::~and_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring and_gate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
+void and_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
 	bool result = true;
@@ -104,17 +104,17 @@ void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 	}
 	out_vector[output] = (inverting != result);
 }
-ANDgate* ANDgate::clone_impl() const { return new ANDgate(*this); };
+and_gate* and_gate::clone_impl() const { return new and_gate(*this); };
 
-ORgate::ORgate() {}
-ORgate::ORgate(int i1, int i2, int o)
+or_gate::or_gate() {}
+or_gate::or_gate(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-ORgate::~ORgate() {	std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring ORgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
-void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+or_gate::~or_gate() {	std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring or_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
+void or_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
 	//std::any_of(vec.begin(), vec.end(), [](bool x) { return x; } )
 	bool result = false;
@@ -124,19 +124,19 @@ void ORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 	}
 	out_vector[output] = (inverting != result);
 }
-ORgate* ORgate::clone_impl() const { return new ORgate(*this); };
+or_gate* or_gate::clone_impl() const { return new or_gate(*this); };
 
 
 
-XORgate::XORgate() {}
-XORgate::XORgate(int i1, int i2, int o)
+xor_gate::xor_gate() {}
+xor_gate::xor_gate(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-XORgate::~XORgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring XORgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
-void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+xor_gate::~xor_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring xor_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+void xor_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	bool result = false;
 	for (auto index : inputs) {
 		if (index >= 0 && index < in_vector.size())
@@ -144,21 +144,21 @@ void XORgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 	}
 	out_vector[output] = (inverting != result);
 }
-XORgate* XORgate::clone_impl() const { return new XORgate(*this); };
+xor_gate* xor_gate::clone_impl() const { return new xor_gate(*this); };
 
 
-NOTgate::NOTgate() {}
-NOTgate::NOTgate(int i1, int o)
+not_gate::not_gate() {}
+not_gate::not_gate(int i1, int o)
 {
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
-NOTgate::~NOTgate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring NOTgate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
-void NOTgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+not_gate::~not_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring not_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
+void not_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
 }
-NOTgate* NOTgate::clone_impl() const { return new NOTgate(*this); };
+not_gate* not_gate::clone_impl() const { return new not_gate(*this); };
 
 
 buffer::buffer() {}
