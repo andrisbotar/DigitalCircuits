@@ -1,3 +1,4 @@
+//various utility functions
 #pragma once
 #ifndef __UTILITY__
 #define __UTILITY__
