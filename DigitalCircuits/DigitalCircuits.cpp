@@ -44,8 +44,7 @@ void example_circuit(Circuit& circuit1) {
 }
 
 //Main function of program, start-point
-int main()
-{   
+int main(){   
     setup();
 
 
