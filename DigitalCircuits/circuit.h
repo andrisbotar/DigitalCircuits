@@ -54,16 +54,18 @@ namespace digital_circuits {
 		size_t component_count();
 		void print_info();
 		bool acyclic();
+		bool stayed_the_same();
 
 		//export circuit as lambda function, single output logic-gate or multi output component
 		typedef bool (*boolean_function)(std::vector<bool> boolean_vector);
 		using bool_fn = std::function<bool(std::vector<bool>)>;
 		using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
 		auto lambda_update();
-		bool_v_fn lamda_terminal();
+		bool_v_fn lamda_terminal(int max_updates =100);
 		auto to_component_single_update();
 		auto to_component();
-		sub_circuit_component to_logic_gate(std::vector<int> inputs, int output, int output_port);
+		std::unique_ptr<sub_circuit_component> to_logic_gate(std::vector<int> inputs, int output, int output_port);
+		std::unique_ptr<sub_circuit_component> to_logic_gate(int i1, int i2, int o, int output_port);
 		auto to_logic_gate_single_update();
 		
 		//interactive simulation, combination of update(), some display functions and maybe user interaction

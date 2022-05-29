@@ -251,22 +251,28 @@ sub_circuit_component::sub_circuit_component() {
 	this->output = o;
 }*/
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"sub-circuit"); }
-sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn)
+std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"")
++ std::wstring(acyclic ? L"acyclic ":L"") + std::wstring(L"sub-circuit"); }
+sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn, bool acyc)
 {
 	this->update_function_call = fn;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
+	this->acyclic = acyc;
 }
-sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn fn)
+sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn fn, bool acyc)
 {
 	this->update_function_call = fn;
 	this->inputs = in;
 	this->output = o;
+	this->acyclic = acyc;
 }
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
-
-	out_vector[output] = (inverting != update_function_call(in_vector));
+	std::vector<bool> input_to_function;
+	for (auto i : inputs) {
+		input_to_function.push_back(in_vector[i]);
+	}
+	out_vector[output] = (inverting != update_function_call(input_to_function));
 }
 sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
 

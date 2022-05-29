@@ -168,15 +168,15 @@ namespace digital_circuits {
 		std::wstring get_type();
 		//digital_circuits::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
-
+		bool acyclic{ true };
 		std::function<bool(std::vector<bool>)> update_function_call{ [](std::vector<bool>) {return true; } };
 	public:
 		sub_circuit_component();
 		~sub_circuit_component();
 
 		//define constructor with an imput function
-		sub_circuit_component(int i1, int i2, int o, bool_fn fn);
-		sub_circuit_component(std::vector<int> in, int o, bool_fn fn);
+		sub_circuit_component(int i1, int i2, int o, bool_fn fn,bool acyclic=true);
+		sub_circuit_component(std::vector<int> in, int o, bool_fn fn, bool acyclic = true);
 		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
 		
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
