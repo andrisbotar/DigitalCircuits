@@ -2,13 +2,14 @@
 #include <vector>
 #include <memory>
 #include "components.h"
+#include "otherclasses.h"
 
 #ifndef __CIRCUIT__
 #define __CIRCUIT__
 
 //Define class for storign circuit with multiple inputs, outputs and update functionality
 namespace digitalc {
-	class Circuit
+	class Circuit:digital_object
 	{
 	protected:
 		//int wire_count = 0;

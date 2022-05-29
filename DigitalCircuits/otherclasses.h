@@ -12,8 +12,8 @@ namespace digitalc {
 	class digital_object {
 	protected:
 		std::wstring label;
-	private:
-
+	public:
+		~digital_object() {};
 	};
 
 }

@@ -3,13 +3,14 @@
 #include <vector>
 #include <string>
 //#include "circuit.h"
+#include "otherclasses.h"
 
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
 namespace digitalc {
 	
 	//Abstract base class for all circuit components
-	class component
+	class component :digital_object
 	{
 	public:
 		//component();

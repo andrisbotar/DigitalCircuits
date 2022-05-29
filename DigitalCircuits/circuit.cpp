@@ -3,6 +3,7 @@
 #include "circuit.h"
 #include <iostream>
 #include "utility.h"
+#include "otherclasses.h"
 using namespace digitalc;
 
 //Circuit constructors and destructors first
