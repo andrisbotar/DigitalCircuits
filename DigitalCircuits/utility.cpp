@@ -8,13 +8,21 @@
 
 //various utility functions
 namespace digitalc {
-
-
-
     //convert boolean "0" or "1" into human firendly text
     std::wstring BoolToString(bool b)
     {
         return b ? L"True" : L"False";
+    }
+
+    //convert a vector of ints to a single string
+    std::wstring int_vector_to_string(std::vector<int> circuitstate) {
+        std::wstringstream ss;
+        for (auto i : circuitstate) {
+            ss << std::to_wstring(i) << " ";
+        }
+        std::wstring returnval;
+        ss >> returnval;
+        return returnval;
     }
 
     //Convert and integer into a bool vector representing the binary count for that number
@@ -99,19 +107,12 @@ namespace digitalc {
 
 
 
-
-
-    /*template<typename T, typename A>
-    void printstate(std::vector<T, A> circuitstate)
-    {
-        for (T i : circuitstate) {
-            std::wcout << i << " ";
-        }
-        std::wcout << " \n";
-    }*/
-
     //print out a vector of booleans
-    void printstate(std::vector<bool> circuitstate)
+    void printstate(std::vector<bool> circuitstate){
+        printvector<bool>(circuitstate);
+    }
+
+    /*void printstate(std::vector<bool> circuitstate)
     {
         for (auto i : circuitstate) {
             std::wcout << i << " ";
@@ -127,22 +128,7 @@ namespace digitalc {
         }
         std::wcout << " \n";
     }
-
-    //convert a vector of ints to a single string
-    std::wstring int_vector_to_string(std::vector<int> circuitstate) {
-        std::wstringstream ss;
-        for (auto i : circuitstate) {
-            ss << std::to_wstring(i) << " ";
-        }
-        std::wstring returnval;
-        ss >> returnval;
-        return returnval;
-    }
+    */
 
 
-
-
-    /*	//init global variables for keepign track of total counts
-	int COMPONENTCOUNT{ 0 };
-	int CIRCUITCOUNT{ 0 };*/
 }

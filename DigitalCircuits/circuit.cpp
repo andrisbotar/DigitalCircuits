@@ -6,10 +6,18 @@
 #include "otherclasses.h"
 using namespace digitalc;
 
+////init global variables for keepign track of circuits
+int CIRCUITCOUNT{0};
+
 //Circuit constructors and destructors first
-Circuit::Circuit() { label = L"Circuit " + digitalc::CIRCUITCOUNT; digitalc::CIRCUITCOUNT++; }
+Circuit::Circuit() { label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++; }
 Circuit::Circuit(int number_of_wires, bool default_wire_state){
-    label = L"Circuit " + digitalc::CIRCUITCOUNT; digitalc::CIRCUITCOUNT++;
+    label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++;
+    this->state = std::vector<bool>(number_of_wires, default_wire_state);
+    this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
+}
+Circuit::Circuit(int number_of_wires, bool default_wire_state, std::wstring label) {
+    label = label; CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
 }
@@ -76,7 +84,7 @@ void Circuit::deletewire(int n) {
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[i]->getinput();
         //std::wcout <<"\n"<< i << ": "; print_int_vector(v);
-        for(int j=0; j< v.size();++j){
+        for (int j=0; j< v.size();++j){
             if (v[j] == n) {
                 components[i]->setinput(j, 0);
             }
@@ -97,6 +105,13 @@ bool Circuit::get_wire_state(int n) {
 void Circuit::set_wire_state(int n, bool value) {
     state[n] = value;
 }
+void Circuit::hidewire(int n) {
+    hidden.push_back(n);
+}
+void Circuit::unhideallwires() {
+    hidden.clear();
+}
+
 
 //acting on individual components
 void Circuit::addcomponent(std::unique_ptr<component> new_component) {
@@ -154,7 +169,7 @@ void Circuit::debug() {
 
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[4]->getinput();
-        print_int_vector(v);
+        printvector<int>(v);
     }
 
     //std::wcout << components.size() << " ";

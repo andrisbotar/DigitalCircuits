@@ -7,13 +7,23 @@
 //using namespace std::remove_cvref;
 using namespace digitalc;
 
-//component::component(){ label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++; }
+
+//init global variables for keepign track of components
+int COMPONENTCOUNT{ 0 };
+
+//component::component(){ label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //wouldn't make component an abstract base class anymore
 component::~component(){}
 
-LogicGate::LogicGate(){ label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
-LogicGate::LogicGate(int i1, int i2, int o) //: type("Generic Logic Gate")
+LogicGate::LogicGate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
+LogicGate::LogicGate(int i1, int i2, int o) 
 {
-	label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++;
+	label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
+	this->inputs = std::vector<int>{ i1,i2 };
+	this->output = o;
+}
+LogicGate::LogicGate(int i1, int i2, int o, std::wstring label)
+{
+	label = label; COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -42,6 +52,10 @@ int digitalc::LogicGate::getoutput()
 	return this->output;
 }
 void LogicGate::set_inversion(bool b) {	inverting = b; }
+void digitalc::LogicGate::setoutput(int new_value)
+{
+	this->output = new_value;
+}
 void digitalc::LogicGate::setinput(int input_index, int new_value)
 {
 	this->inputs[input_index] = new_value;
@@ -49,10 +63,10 @@ void digitalc::LogicGate::setinput(int input_index, int new_value)
 void LogicGate::info() {
 	std::wcout << L"Label: " << label << "\n";
 	std::wcout << L"Type: " << this->gettype() << "\n";
-	std::wcout << L"Output: " << this->output << "\n";
-	std::wcout << L"Inputs: ";
+	std::wcout << L"Input wires: ";
 		for (auto i : this->inputs) { std::wcout << i <<","; }
 	std::wcout << L"\b \n"; //delete last comma
+	std::wcout << L"Output wire: " << this->output << "\n";
 	//std::wcout << L"Inverting: " << BoolToString(this->inverting);
 	//std::wcout << L"\n";
 }

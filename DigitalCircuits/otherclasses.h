@@ -9,15 +9,11 @@
 
 namespace digitalc {
 
-	//init global variables for keepign track of total counts
-	int COMPONENTCOUNT{ 0 };
-	int CIRCUITCOUNT{ 0 };
-
-
 	class digital_object {
 	protected:
-		std::wstring label;
+		
 	public:
+		std::wstring label;
 		~digital_object() {};
 	};
 

@@ -21,6 +21,7 @@ namespace digitalc {
 	public:
 		Circuit();
 		Circuit(int number_of_wires, bool default_wire_state=false);
+		Circuit(int number_of_wires, bool default_wire_state, std::wstring label);
 		~Circuit();
 		//Circuit& operator=(Circuit other);
 		void update();
@@ -33,6 +34,8 @@ namespace digitalc {
 		virtual void deletewires(std::vector<int> v);
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
+		void hidewire(int n);
+		void unhideallwires();
 
 		void addcomponent(std::unique_ptr<component> new_component);
 		void replacecomponent(int n, std::unique_ptr<component> new_component);
