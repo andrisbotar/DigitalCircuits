@@ -52,9 +52,12 @@ std::vector<int> digital_circuits::logic_gate::get_input()
 {
 	return inputs;
 }
-int digital_circuits::logic_gate::getoutput()
+int digital_circuits::logic_gate::get_output()
 {
 	return this->output;
+}
+std::wstring logic_gate::get_label() {
+	return this->label;
 }
 void logic_gate::set_inversion(bool b) {	inverting = b; }
 void digital_circuits::logic_gate::set_output(int new_value)
@@ -64,6 +67,9 @@ void digital_circuits::logic_gate::set_output(int new_value)
 void digital_circuits::logic_gate::set_input(int input_index, int new_value)
 {
 	this->inputs[input_index] = new_value;
+}
+void logic_gate::set_label(std::wstring in) {
+	this->label = in;
 }
 void logic_gate::info() {
 	std::wcout << L"Label: " << label << "\n";
@@ -240,7 +246,7 @@ sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 	this->output = o;
 }*/
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"sub-circuit"); }
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
 

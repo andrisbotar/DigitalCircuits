@@ -25,9 +25,12 @@ namespace digital_circuits {
 		~circuit();
 		//circuit& operator=(circuit other);
 		void update();
+
 		void print_state();
+		std::vector<bool> get_state();
+		void set_state(std::vector<bool> default_state);
 		void reset_state();
-		void reset_state(std::vector<bool> default_state);
+		
 
 		void add_wires(int wire_count);
 		virtual void delete_wire(int n);
@@ -47,6 +50,9 @@ namespace digital_circuits {
 		size_t component_count();
 		void print_info();
 		bool acyclic();
+
+		auto lambda_update();
+		auto to_logic_gate_update();
 
 		void simulate_cli(int steps);
 		void debug();

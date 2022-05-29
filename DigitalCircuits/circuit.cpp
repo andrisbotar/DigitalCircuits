@@ -54,27 +54,34 @@ void circuit::update() {
     //new_state[0] = defaul_wire_state 
     state.swap(new_state);
 }
+
+//state manipulation
 void circuit::print_state() {
-    //for (auto i : state) {        std::wcout << i << " ";    }
+    //for (auto i : state) {        std::wcout << i << " ";    } 
+    //std::vector<bool> not a standard container, so causes some problems
     for (int i = 0; i < state.size(); ++i) {
-        if(vector_contains <int,std::vector<int>> (i,hidden))
-{ continue; }
+        if(vector_contains <int,std::vector<int>> (i,hidden)) {
+             continue; 
+        }
         std::wcout << state[i] << " ";
     }
     std::wcout << " \n";
 }
-//Reset circuit if needed
-void circuit::reset_state()
+std::vector<bool> circuit::get_state() {
+    return this->state;
+}
+void circuit::set_state(std::vector<bool> default_state)
+{
+    this->state = default_state;
+    this->new_state = default_state;
+}
+void circuit::reset_state()  //Reset circuit if needed
 {
     this->state = std::vector<bool>(state.size(), false);
     this->new_state = std::vector<bool>(state.size(), false);
 }
 
-void circuit::reset_state(std::vector<bool> default_state)
-{
-    this->state = default_state;
-    this->new_state = default_state;
-}
+
 
 //acting on individual wires
 void circuit::add_wires(int wire_count) {
@@ -131,6 +138,7 @@ void circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
 }
+
 std::wstring circuit::component_info(int n) {
     components[n]->info();
     return L"";
@@ -162,7 +170,7 @@ void circuit::print_info() {
 bool circuit::acyclic()
 {
     std::vector<bool> visited(size(),false);
-    for (int i = 0; i < components.size()-1; ++i) {
+    for (int i = 0; i < components.size(); ++i) {
         int output_of_component = components[i]->getoutput();
         //std::wcout << visited.size() << " " << output_of_component << " - " << components.size() << " " << i << "\n";
         if (visited[output_of_component] and !vector_contains(output_of_component,hidden)) { 
@@ -171,10 +179,27 @@ bool circuit::acyclic()
         for (auto j : components[i]->get_input()) {
             visited[j] = true;
         }
+        if (components[i]->get_type() == std::wstring(L"sub-circuit") ||
+            components[i]->get_type() == std::wstring(L"Inverting sub-circuit")) {
+            //components[i]->
+        }
     }
     return true;
 }
 
+auto circuit::lambda_update()
+{
+    return [](auto const& x) { 
+        circuit copy = *this;
+        copy.set_state(x);
+        copy.update();
+        return copy.get_state();
+    };  
+}
+
+auto circuit::to_logic_gate_update() {
+
+}
 
 //Simualtion
 //Basic simulation that steps through a given number of timesteps 
