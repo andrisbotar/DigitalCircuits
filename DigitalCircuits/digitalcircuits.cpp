@@ -32,15 +32,15 @@ int setup() {
 }
 
 //function to create and eample circuit with one of each logic gate type
-void example_circuit(circuit& circuit1) {
-    circuit1.add_component(std::make_unique< constant_input>(true, 1));
-    circuit1.add_component(std::make_unique< constant_input>(true, 2));
-    circuit1.add_component(std::make_unique< ANDgate>(1, 2, 3));
-    circuit1.add_component(std::make_unique< ORgate>(1, 2, 4));
-    circuit1.add_component(std::make_unique< XORgate>(1, 2, 5));
-    circuit1.add_component(std::make_unique< NOTgate>(1, 7));
-    circuit1.add_component(std::make_unique< buffer>(1, 7));
-    circuit1.add_component(std::make_unique< majority_function>(1, 2, 7));
+void example_circuit(circuit& circuit_1) {
+    circuit_1.add_component(std::make_unique< constant_input>(true, 1));
+    circuit_1.add_component(std::make_unique< constant_input>(true, 2));
+    circuit_1.add_component(std::make_unique< ANDgate>(1, 2, 3));
+    circuit_1.add_component(std::make_unique< ORgate>(1, 2, 4));
+    circuit_1.add_component(std::make_unique< XORgate>(1, 2, 5));
+    circuit_1.add_component(std::make_unique< NOTgate>(1, 7));
+    circuit_1.add_component(std::make_unique< buffer>(1, 7));
+    circuit_1.add_component(std::make_unique< majority_function>(1, 2, 7));
 }
 
 //Main function of program, start-point
@@ -51,67 +51,67 @@ int main()
 
     //create a circuit
     
-    circuit circuit2(9);
-    circuit circuit1(9);
-    example_circuit(circuit2);
-    example_circuit(circuit1);
-    //circuit1 = circuit2;
+    circuit circuit_2(9);
+    circuit circuit_1(9);
+    example_circuit(circuit_2);
+    example_circuit(circuit_1);
+    //circuit_1 = circuit_2;
 
     //Invert logic gate
-    circuit1.set_invert(4,true);
+    circuit_1.set_invert(4,true);
     
 
     //print current state of circuit
     std::wcout << "Intitial state: ";
-    circuit1.printstate();
+    circuit_1.printstate();
     //simulate one time step and print new state
-    circuit1.update();
+    circuit_1.update();
     std::wcout << "New state:      ";
-    circuit1.printstate();
+    circuit_1.printstate();
     std::wcout << "\n\n";
 
     //reset circuit and run proper simulation
     std::wcout << "Simulation over several timesteps: \n";
-    circuit1.reset_state();
-    circuit1.simulate_cli(5);
+    circuit_1.reset_state();
+    circuit_1.simulate_cli(5);
     std::wcout << "\n\n";
 
     std::wcout << "Delete wires and re-run simulation.\n";
-    circuit1.reset_state();
-    circuit1.deletewires(std::vector<int>{2, 8});
-    //circuit1.deletewires(std::vector<int>{5, 8});
-    circuit1.simulate_cli(5);
+    circuit_1.reset_state();
+    circuit_1.deletewires(std::vector<int>{2, 8});
+    //circuit_1.deletewires(std::vector<int>{5, 8});
+    circuit_1.simulate_cli(5);
     std::wcout << "\n\n";
 
 
 
     //Print info for a specific component
     std::wcout << "Detailed information of component 3: \n";
-    circuit1.component_info(2);
+    circuit_1.component_info(2);
     //std::wcout << "\n";
 
     //print truth table for a logic gate
     //int gate_size = 2;
     std::wcout << "Truth table for a XOR gate: \n";
-    XORgate gate1(0, 1, 0);
-    std::vector<bool> trutht1 = truth_table(gate1, 2);
-    printtable(trutht1, 2);
+    XORgate gate_1(0, 1, 0);
+    std::vector<bool> trutht_1 = truth_table(gate_1, 2);
+    printtable(trutht_1, 2);
     std::wcout << "\n";
 
     std::wcout << "Truth table for a bigger XOR gate: \n";
-    XORgate gate2(0, 2, 0);
-    std::vector<bool> trutht2 = truth_table(gate2, 3);
-    printstate(trutht2);
+    XORgate gate_2(0, 2, 0);
+    std::vector<bool> trutht_2 = truth_table(gate_2, 3);
+    printstate(trutht_2);
     std::wcout << "\n";
 
 
 
-    circuit1.print_info();
-    //circuit1.debug();
+    circuit_1.print_info();
+    //circuit_1.debug();
 
     //Cleanup memory
     //std::wcout << "Cleaning up: \n";
-    //delete circuit1;
+    //delete circuit_1;
     
     //Exit program
     //std::wstring usrinput ="";
