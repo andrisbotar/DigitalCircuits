@@ -223,20 +223,20 @@ Majorityfunction* Majorityfunction::clone_impl() const { return new Majorityfunc
 
 
 
-SubCircuitComponent::SubCircuitComponent() {}
-SubCircuitComponent::SubCircuitComponent(int i1, int i2, int o)
+sub_circuit_component::sub_circuit_component() {}
+sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*SubCircuitComponent::SubCircuitComponent(int i1, int i2, int o, Circuit subcircuit){
+/*sub_circuit_component::sub_circuit_component(int i1, int i2, int o, Circuit subcircuit){
 	this->subcircuit = subcircuit;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }*/
-SubCircuitComponent::~SubCircuitComponent() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring SubCircuitComponent::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
-void SubCircuitComponent::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
 
 	bool result = false;
@@ -246,7 +246,7 @@ void SubCircuitComponent::update(std::vector<bool>& in_vector, std::vector<bool>
 	}
 	out_vector[output] = (inverting != result);
 }
-SubCircuitComponent* SubCircuitComponent::clone_impl() const { return new SubCircuitComponent(*this); };
+sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
 
 
 

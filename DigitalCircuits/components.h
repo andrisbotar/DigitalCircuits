@@ -147,17 +147,17 @@ namespace digitalc {
 	};
 
 	//Wrapper to package an entire circuit as a single component
-	class SubCircuitComponent :public logic_gate
+	class sub_circuit_component :public logic_gate
 	{
 	private:
 		std::wstring get_type();
 		//digitalc::Circuit subcirsdfdfcuit();
-		virtual SubCircuitComponent* clone_impl() const override;
+		virtual sub_circuit_component* clone_impl() const override;
 	public:
-		SubCircuitComponent();
-		SubCircuitComponent(int i1, int i2, int o);
-		//SubCircuitComponent(int i1, int i2, int o, Circuit subcircuit);
-		~SubCircuitComponent();
+		sub_circuit_component();
+		sub_circuit_component(int i1, int i2, int o);
+		//sub_circuit_component(int i1, int i2, int o, Circuit subcircuit);
+		~sub_circuit_component();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
