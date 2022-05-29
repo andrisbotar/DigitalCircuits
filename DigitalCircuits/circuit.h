@@ -24,8 +24,9 @@ namespace digital_circuits {
 		circuit(int number_of_wires, bool default_wire_state=false);
 		circuit(int number_of_wires, bool default_wire_state, std::wstring label);
 		~circuit();
-		//circuit& operator=(circuit other);
 
+		circuit& operator=(circuit other);
+		
 		//Core update function
 		void update();
 

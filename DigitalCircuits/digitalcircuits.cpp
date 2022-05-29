@@ -49,14 +49,15 @@ int main()
     setup();
 
 
-    //create a circuit
-    
-    circuit circuit_2(10);
+    //create a circuit and fill it with example data
     circuit circuit_1(10);
-    example_circuit(circuit_2);
     example_circuit(circuit_1);
-    //circuit_1 = circuit_2;
 
+    //copy-create two more circuits
+    circuit circuit_2(circuit_1); //copy constructor
+    circuit circuit_3; //copy assignment operator
+    circuit_3 = circuit_1;
+    
     //Invert logic gate
     circuit_1.set_invert(4,true);
     

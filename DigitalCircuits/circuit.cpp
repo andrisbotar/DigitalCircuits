@@ -21,6 +21,7 @@ circuit::circuit(const circuit& other) {
     this->state = other.state;
     this->new_state = other.new_state;
     this->hidden = other.hidden;
+    this->label = other.label;
 
     //need to make copy cosntructor becuase unique_ptr-s cannot be simply copied
     for (const auto& item : other.components) {
@@ -59,6 +60,25 @@ circuit::~circuit()
     }
     return *this;
 }*/
+
+//define operators for circuits
+circuit& circuit::operator=(circuit other)
+{
+    //swap and copy idiom
+    std::wcout << L"copy assignment of "<< label <<L" \n";
+    std::swap(state, other.state);
+    std::swap(new_state, other.new_state);
+    std::swap(hidden, other.hidden);
+    std::swap(label, other.label);
+
+    for (const auto& item : other.components) {
+        this->components.push_back(std::move(item.get()->clone()));
+    }
+
+    return *this;
+}
+
+
 
 //Core updating logic
 void circuit::update() {
@@ -206,14 +226,14 @@ bool circuit::acyclic()
 //Other is to define some inputs as external inputs, run the circuit until it doesn't change anymore, then copy an output
 auto circuit::lambda_update()
 {
-    /*return [this](auto const& x) {
-        circuit copy = *this;
+    return [this](auto const& x) {
+        circuit copy(*this);
         copy.set_state(x);
         copy.update();
         return copy.get_state();
-    };  */
+    };  
 
-    return []() {return true; };
+    //return []() {return true; };
 }
 using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
 bool_v_fn circuit::lamda_terminal() {
