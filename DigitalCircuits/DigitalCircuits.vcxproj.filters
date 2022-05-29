@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DigitalCircuits.cpp">
+    <ClCompile Include="digitalcircuits.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="circuit.cpp">

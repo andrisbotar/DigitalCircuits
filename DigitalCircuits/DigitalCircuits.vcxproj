@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="circuit.cpp" />
     <ClCompile Include="components.cpp" />
-    <ClCompile Include="DigitalCircuits.cpp" />
+    <ClCompile Include="digitalcircuits.cpp" />
     <ClCompile Include="otherclasses.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
