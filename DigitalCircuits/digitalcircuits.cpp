@@ -4,30 +4,23 @@
 //May 2022
 
 //Contained files:
-//digital_circuitsircuits.cpp : Central file containing main function, demonstration cases, etc..
+//digital_circuitsircuits.cpp and digitalcircuits.h: Central file containing main function, demonstration cases, etc..
 //circuit.cpp and circuit.h: Defines a class for storing a circuit with multiple inputs, outputs, update functionality..
-//Components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
+//components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
 //utility.cpp and utility.h: Contains various utility functions for creating truth tables, printing tables,printing vectors...
 
-//Import required libraries and namespaces
-#include <iostream>
-#include <string>
-#include <vector>
-#include <sstream> 
-#include <io.h>
-#include <fcntl.h>
-#include "components.h" //Contains AND Gates, XOR gates, buffers...
-#include "circuit.h" //Contains circuit class to collect and simualte components
-#include "utility.h" //A few miscelaneous utility functions
-using namespace digital_circuits; //namespace for own code
+
+//import dependencies
+#include "digitalcircuits.h"
 
 //setup function to collect some start-up actions
 int setup() {
     //Set up output mode of windows console so we can output unicode characters
     //Using std::wcout and std::wstring
     int _ = _setmode(_fileno(stdout), _O_U16TEXT);
+    //digital_circuits::verbose = false;
     //std::wcout << L"Testing unicode -- English -- Ελληνικά -- Español." << std::endl;
-
+    
     return 0;
 }
 

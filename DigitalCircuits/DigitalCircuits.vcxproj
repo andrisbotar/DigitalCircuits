@@ -136,7 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="circuit.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="components.h" />
+    <ClInclude Include="digitalcircuits.h" />
     <ClInclude Include="drawing.h" />
     <ClInclude Include="otherclasses.h" />
     <ClInclude Include="utility.h" />

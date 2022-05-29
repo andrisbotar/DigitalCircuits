@@ -4,6 +4,7 @@
 #include "components.h"
 #include "utility.h"
 #include "otherclasses.h"
+#include "common.h"
 //using namespace std::remove_cvref;
 using namespace digital_circuits;
 
@@ -106,7 +107,12 @@ and_gate::and_gate(int i1, int i2, int o)
 	this->inputs = std::vector<int>{i1,i2};
 	this->output = o;
 }
-and_gate::~and_gate() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+
+and_gate::~and_gate() { 
+	if (digital_circuits::verbose) { 
+		std::wcout << L"Destroying " << this->get_type() << std::endl; 
+	} 
+}
 std::wstring and_gate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
 void and_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];

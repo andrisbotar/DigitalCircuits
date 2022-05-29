@@ -2,15 +2,19 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 //#include "circuit.h"
 //#include "utility.h"
 #include "otherclasses.h"
-#include <functional>
+#include "common.h"
+
+
 
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
 namespace digital_circuits {
 	
+
 	//Abstract base class for all circuit components
 	class component :public digital_object
 	{

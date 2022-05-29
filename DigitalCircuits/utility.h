@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "components.h"
+#include "common.h"
 
 namespace digital_circuits {
 	//Template to check if some element is in a vector
@@ -37,8 +38,6 @@ namespace digital_circuits {
 	void print_table(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
 	void print_state(std::vector<bool> circuit_state);
 	//void print_int_vector(std::vector<int> circuit_state);
-
-
 }
 
 #endif

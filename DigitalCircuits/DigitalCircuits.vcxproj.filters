@@ -50,5 +50,11 @@
     <ClInclude Include="drawing.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="digitalcircuits.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

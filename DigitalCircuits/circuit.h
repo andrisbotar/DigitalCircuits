@@ -3,12 +3,16 @@
 #include <memory>
 #include "components.h"
 #include "otherclasses.h"
+#include "common.h"
+//#include "utility.h"
 
 #ifndef __CIRCUIT__
 #define __CIRCUIT__
 
 //Define class for storign circuit with multiple inputs, outputs and update functionality
 namespace digital_circuits {
+	
+
 	class circuit:public digital_object
 	{
 	protected:
@@ -62,6 +66,7 @@ namespace digital_circuits {
 		using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
 		auto lambda_update();
 		bool_v_fn lamda_terminal(int max_updates =100);	
+		bool_v_fn circuit_to_lambda(int max_updates = 100);
 		std::unique_ptr<sub_circuit_component> to_logic_gate(std::vector<int> inputs, int output, int output_port, int max_updates = 100);
 		std::unique_ptr<sub_circuit_component> to_logic_gate(int i1, int i2, int o, int output_port, int max_updates = 100);
 		//auto to_component();

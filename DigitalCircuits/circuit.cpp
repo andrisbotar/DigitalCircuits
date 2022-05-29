@@ -250,10 +250,8 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
     //func = [auto x]() {return true; }
     bool_v_fn func;
     try {
-        std::wcout << "1";
         bool_v_fn  func = [this, max_updates](std::vector<bool> in) {
             try {
-                std::wcout << "here";
                 circuit copy = *this;
                 bool feedback = copy.acyclic();
                 copy.set_state(in);
@@ -280,8 +278,9 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
 }
 
 bool_v_fn simplest_boolean_v_fn = [](std::vector<bool> a) {return std::vector<bool>(2, 0); };
-bool_v_fn circuit_to_lambda(circuit circ, int max_updates = 100) {
+bool_v_fn circuit::circuit_to_lambda(int max_updates) {
     //int max_updates = 100;
+    circuit circ = *this;
     bool_v_fn  func = [circ, max_updates](std::vector<bool> in) {
         try {
             circuit copy = circ;
@@ -325,7 +324,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
     bool_fn function;
     try {
         //bool_v_fn vfunction = this->lamda_terminal();
-        bool_v_fn vfunction = circuit_to_lambda(*this,  max_updates);
+        bool_v_fn vfunction = circuit_to_lambda(  max_updates);
         function = [vfunction, output_port](std::vector<bool> inputvalues) {
             try {
                 std::vector<bool> temparr = vfunction(inputvalues);
@@ -333,12 +332,15 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
             }
             catch (...) {
                 std::wcout << "unable to calulate output";
+                return false;
+                //function = simplest_boolean_fn;
             }
         };
     }
     catch (...) {
         std::wcout << "Error ocurred in turning circuit to logic gate";
         function = simplest_boolean_fn;
+        //return std::make_unique<sub_circuit_component>(inputs, output, function, this->size());
     }
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
     return std::make_unique<sub_circuit_component>(inputs, output, function, this->size());
@@ -349,7 +351,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
     bool_fn function;
     try {
         //bool_v_fn vfunction = this->lamda_terminal();
-        bool_v_fn vfunction = circuit_to_lambda(*this, max_updates);
+        bool_v_fn vfunction = circuit_to_lambda( max_updates);
         function = [vfunction, output_port](std::vector<bool> inputvalues) {
             try {
                 std::vector<bool> temparr = vfunction(inputvalues);
@@ -357,6 +359,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
             }
             catch (...) {
                 std::wcout << "unable to calulate output";
+                return false;
             }
         };
     }
@@ -365,6 +368,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
         function = simplest_boolean_fn;
     }
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
+    //return std::make_unique<sub_circuit_component>(0, 1, 0, simplest_boolean_fn, 2);
     return std::make_unique<sub_circuit_component>(i1,i2,o, function, this->size());
 }
 
