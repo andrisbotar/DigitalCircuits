@@ -268,6 +268,7 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
             }
             catch (...) {
                 std::wcout << "In lambda error.\n";
+                return std::vector<bool>(2, 0);
             }
         };
     }
@@ -277,6 +278,33 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
     return func;
    // return [](std::vector<bool> in) {return std::vector<bool>(true); };
 }
+
+bool_v_fn simplest_boolean_v_fn = [](std::vector<bool> a) {return std::vector<bool>(2, 0); };
+bool_v_fn circuit_to_lambda(circuit circ) {
+    int max_updates = 100;
+    bool_v_fn  func = [circ, max_updates](std::vector<bool> in) {
+        try {
+            circuit copy = circ;
+            bool feedback = copy.acyclic();
+            copy.set_state(in);
+            std::wcout << in.size();
+            int update_counter{ 0 };
+            bool continue_updating = true;
+            while (continue_updating) {
+                copy.update();
+                update_counter++;
+                continue_updating = update_counter < max_updates && (feedback || copy.stayed_the_same());
+            }
+            return copy.get_state();
+        }
+        catch (...) {
+            std::wcout << "In lambda error.\n";
+            return std::vector<bool>(2, 0);
+        }
+    };
+    return func;
+}
+
 
 //creates a component which represents a single state-udpate of this circuit
 auto circuit::to_component_single_update() {
@@ -295,6 +323,7 @@ auto circuit::to_component() {
 std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
+    //bool_v_fn vfunction = circuit_to_lambda(*this);
     bool_v_fn vfunction = this->lamda_terminal();
     //bool_v_fn vfunction = this->lambda_update();
     bool_fn function = [vfunction, output_port](auto inputvalues) {
@@ -302,14 +331,15 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
         return temparr[output_port] ; 
     };
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
-    return std::make_unique<sub_circuit_component>(inputs, output, function);
+    return std::make_unique<sub_circuit_component>(inputs, output, function, this->size());
 }
 std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
     bool_fn function;
     try {
-        bool_v_fn vfunction = this->lamda_terminal();
+        //bool_v_fn vfunction = this->lamda_terminal();
+        bool_v_fn vfunction = circuit_to_lambda(*this);
         function = [vfunction, output_port](auto inputvalues) {
             try {
                 std::vector<bool> temparr = vfunction(inputvalues);
@@ -325,12 +355,15 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
         function = simplest_boolean_fn;
     }
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
-    return std::make_unique<sub_circuit_component>(i1,i2,o, function);
+    return std::make_unique<sub_circuit_component>(i1,i2,o, function, this->size());
 }
 //not very useful function, essentially selects single gate from subcircuit
 auto circuit::to_logic_gate_single_update() {
 
 }
+
+
+
 
 //Simualtion
 //Basic simulation that steps through a given number of timesteps 

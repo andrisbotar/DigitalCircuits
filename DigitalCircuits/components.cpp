@@ -253,29 +253,31 @@ sub_circuit_component::sub_circuit_component() {
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"")
 + std::wstring(acyclic ? L"acyclic ":L"") + std::wstring(L"sub-circuit"); }
-sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn, bool acyc)
+sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn, size_t circuit_size, bool acyc)
 {
 	this->update_function_call = fn;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 	this->acyclic = acyc;
+	this -> size = circuit_size;
 }
-sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn fn, bool acyc)
+sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn fn, size_t circuit_size, bool acyc)
 {
 	this->update_function_call = fn;
 	this->inputs = in;
 	this->output = o;
 	this->acyclic = acyc;
+	this->size = circuit_size;
 }
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	try {
-		std::vector<bool> input_to_function;
-		for (auto i : inputs) {
-			input_to_function.push_back(in_vector[i]);
+		std::vector<bool> input_to_function(size, 0);
+		for (int i = 0; i < inputs.size(); ++i) {
+			input_to_function[i]=(in_vector[i]);
 		}
 		//std::wcout << L"asdf";
 		out_vector[output] = (inverting != update_function_call(input_to_function));
-		std::wcout << out_vector.size() << " : " << output;
+		std::wcout << out_vector.size() << " AAAAA: " << output;
 	}
 	catch (...) {
 		std::cerr << "Was unable to update subcircuit component!";// << label;
