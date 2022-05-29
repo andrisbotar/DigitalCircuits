@@ -3,7 +3,9 @@
 #include <vector>
 #include <string>
 //#include "circuit.h"
+//#include "utility.h"
 #include "otherclasses.h"
+#include <functional>
 
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
@@ -152,18 +154,26 @@ namespace digital_circuits {
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	//Wrapper to package an entire circuit as a single component
+	//Define what we mean by "boolean function", so compielr knows what kind of function we can encapsualte
+	typedef bool (*function_call)(std::vector<bool> boolean_vector);
+
+	//Wrapper to package an entire circuit or arbitrary boolean function as a single component
 	class sub_circuit_component :public logic_gate
 	{
 	private:
 		std::wstring get_type();
 		//digital_circuits::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
+
+		function_call update_function_call{ simplest_boolean_fn };
 	public:
 		sub_circuit_component();
-		sub_circuit_component(int i1, int i2, int o);
-		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
 		~sub_circuit_component();
+
+		//define constructor with an imput function
+		sub_circuit_component(int i1, int i2, int o, function_call fn);
+		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
+		
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -198,6 +208,7 @@ namespace digital_circuits {
 		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
+
 
 }
 #endif

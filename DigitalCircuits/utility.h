@@ -7,8 +7,9 @@
 #include "components.h"
 
 namespace digital_circuits {
-	//template to check if some element is in a vector
-	template <typename T, typename U> //has to be in header for linking to wokr
+	//Template to check if some element is in a vector
+	//Has to be in header for linking to wokr
+	template <typename T, typename U> 
 	bool vector_contains(T element, U v)
 	{
 		if (std::find(v.begin(), v.end(), element) != v.end())
@@ -16,6 +17,16 @@ namespace digital_circuits {
 			return true;
 		}
 		return false;
+	}
+	
+	//Template function to print out vector of some templated type
+	template<typename S> 
+	void print_vector(std::vector<S> circuit_state)
+	{
+		for (S i : circuit_state) {
+			std::wcout << i << " ";
+		}
+		std::wcout << " \n";
 	}
 
 	std::wstring bool_to_string(bool b);
@@ -25,16 +36,9 @@ namespace digital_circuits {
 	std::vector<bool> truth_table(logic_gate& comp, int n);
 	void print_table(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
 	void print_state(std::vector<bool> circuit_state);
-
 	//void print_int_vector(std::vector<int> circuit_state);
-	template<typename S> //template function to print out vector of some templated type
-	void print_vector(std::vector<S> circuit_state)
-	{
-		for (S i : circuit_state) {
-			std::wcout << i << " ";
-		}
-		std::wcout << " \n";
-	}
+
+
 }
 
 #endif

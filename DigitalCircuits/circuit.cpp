@@ -187,6 +187,10 @@ bool circuit::acyclic()
     return true;
 }
 
+
+//conversions to lambda functions adn circuits
+//One option is to output function that represents only one timestep, one update of the circuit state
+//Other is to define some inputs as external inputs, run the circuit until it doesn't change anymore, then copy an output
 auto circuit::lambda_update()
 {
     return [this](auto const& x) {

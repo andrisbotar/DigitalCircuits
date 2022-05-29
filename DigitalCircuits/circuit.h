@@ -57,6 +57,7 @@ namespace digital_circuits {
 		void simulate_cli(int steps);
 		void debug();
 	};
+
 }
 
 

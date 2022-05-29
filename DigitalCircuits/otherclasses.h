@@ -9,6 +9,8 @@
 
 namespace digital_circuits {
 
+	bool simplest_boolean_fn(std::vector<bool> x);
+
 	class digital_object {
 	protected:
 		

@@ -234,12 +234,14 @@ majority_function* majority_function::clone_impl() const { return new majority_f
 
 
 
-sub_circuit_component::sub_circuit_component() {}
-sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
+sub_circuit_component::sub_circuit_component() {
+	function_call update_function_call = simplest_boolean_fn;
+}
+/*sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
-}
+}*/
 /*sub_circuit_component::sub_circuit_component(int i1, int i2, int o, circuit subcircuit){
 	this->subcircuit = subcircuit;
 	this->inputs = std::vector<int>{ i1,i2 };
@@ -247,6 +249,12 @@ sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 }*/
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"sub-circuit"); }
+digital_circuits::sub_circuit_component::sub_circuit_component(int i1, int i2, int o, function_call fn)
+{
+	this->update_function_call = fn;
+	this->inputs = std::vector<int>{ i1,i2 };
+	this->output = o;
+}
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
 
@@ -258,6 +266,7 @@ void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<boo
 	out_vector[output] = (inverting != result);
 }
 sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
+
 
 
 //multi output compoennts
