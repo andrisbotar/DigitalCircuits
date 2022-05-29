@@ -15,17 +15,20 @@ int COMPONENTCOUNT{ 0 };
 component::~component(){}
 
 LogicGate::LogicGate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
-LogicGate::LogicGate(int i1, int i2, int o) {
+LogicGate::LogicGate(int i1, int i2, int o) 
+{
 	label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-LogicGate::LogicGate(int i1, int i2, int o, std::wstring label){
+LogicGate::LogicGate(int i1, int i2, int o, std::wstring label)
+{
 	label = label; COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o){
+/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o)
+{
 	const std::wstring empty = L"";
 	std::wstring type(empty);
 	if (type_string.substr(0, type_string.find(L" ")) == L"Inverting") {
@@ -40,14 +43,17 @@ LogicGate::LogicGate(int i1, int i2, int o, std::wstring label){
 }*/
 LogicGate::~LogicGate() {}//std::wcout << "Destroying " << this->gettype() << std::endl; }
 std::wstring LogicGate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
-std::vector<int> digitalc::LogicGate::getinput(){
+std::vector<int> digitalc::LogicGate::getinput()
+{
 	return inputs;
 }
-int digitalc::LogicGate::getoutput(){
+int digitalc::LogicGate::getoutput()
+{
 	return this->output;
 }
 void LogicGate::set_inversion(bool b) {	inverting = b; }
-void digitalc::LogicGate::setoutput(int new_value){
+void digitalc::LogicGate::setoutput(int new_value)
+{
 	this->output = new_value;
 }
 void digitalc::LogicGate::setinput(int input_index, int new_value){
@@ -80,7 +86,8 @@ auto digitalc::LogicGate::clone() const{
 
 //Definitions for common logic gates
 ANDgate::ANDgate(){}
-ANDgate::ANDgate(int i1, int i2, int o){
+ANDgate::ANDgate(int i1, int i2, int o)
+{
 	this->inputs = std::vector<int>{i1,i2};
 	this->output = o;
 }
@@ -99,7 +106,8 @@ void ANDgate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector
 ANDgate* ANDgate::clone_impl() const { return new ANDgate(*this); };
 
 ORgate::ORgate() {}
-ORgate::ORgate(int i1, int i2, int o){
+ORgate::ORgate(int i1, int i2, int o)
+{
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -120,7 +128,8 @@ ORgate* ORgate::clone_impl() const { return new ORgate(*this); };
 
 
 XORgate::XORgate() {}
-XORgate::XORgate(int i1, int i2, int o){
+XORgate::XORgate(int i1, int i2, int o)
+{
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -138,7 +147,8 @@ XORgate* XORgate::clone_impl() const { return new XORgate(*this); };
 
 
 NOTgate::NOTgate() {}
-NOTgate::NOTgate(int i1, int o){
+NOTgate::NOTgate(int i1, int o)
+{
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
@@ -151,7 +161,8 @@ NOTgate* NOTgate::clone_impl() const { return new NOTgate(*this); };
 
 
 buffer::buffer() {}
-buffer::buffer(int i1, int o){
+buffer::buffer(int i1, int o)
+{
 	this->inputs = std::vector<int>{ i1 };
 	this->output = o;
 }
@@ -164,7 +175,8 @@ buffer* buffer::clone_impl() const { return new buffer(*this); };
 
 
 constant_input::constant_input() {}
-constant_input::constant_input(bool val, int out){
+constant_input::constant_input(bool val, int out)
+{
 	this->set_inversion(val);
 	this->output = out;
 }
@@ -174,7 +186,8 @@ void constant_input::info() {
 	std::wcout << L"type: " << this->gettype() << "\n";
 	std::wcout << L"value: " << this->inverting << "\n";
 }
-void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector){
+void constant_input::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
+{
 	out_vector[output] = inverting;
 }
 constant_input* constant_input::clone_impl() const { return new constant_input(*this); };
@@ -183,7 +196,8 @@ constant_input* constant_input::clone_impl() const { return new constant_input(*
 
 //Other, less common components
 Majorityfunction::Majorityfunction() {}
-Majorityfunction::Majorityfunction(int i1, int i2, int o){
+Majorityfunction::Majorityfunction(int i1, int i2, int o)
+{
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -209,7 +223,8 @@ Majorityfunction* Majorityfunction::clone_impl() const { return new Majorityfunc
 
 
 SubCircuitComponent::SubCircuitComponent() {}
-SubCircuitComponent::SubCircuitComponent(int i1, int i2, int o){
+SubCircuitComponent::SubCircuitComponent(int i1, int i2, int o)
+{
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }

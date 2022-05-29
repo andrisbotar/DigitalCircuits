@@ -108,7 +108,8 @@ namespace digitalc {
 
 
     //print out a vector of booleans
-    void printstate(std::vector<bool> circuitstate){
+    void printstate(std::vector<bool> circuitstate)
+{
         printvector<bool>(circuitstate);
     }
 
