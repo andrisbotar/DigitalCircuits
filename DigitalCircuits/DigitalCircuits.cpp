@@ -76,12 +76,13 @@ int main()
     circuit1.simulate_cli(5);
     std::wcout << "\n\n";
 
-
+    std::wcout << "Delete wires and re-run simulation.\n";
     circuit1.reset_state();
-    circuit1.deletewire(3);
+    circuit1.deletewires(std::vector<int>{2, 8});
     //circuit1.deletewires(std::vector<int>{5, 8});
     circuit1.simulate_cli(5);
     std::wcout << "\n\n";
+
 
 
     //Print info for a specific component
@@ -106,8 +107,7 @@ int main()
 
 
 
-
-
+    //circuit1.debug();
 
     //Cleanup memory
     //std::wcout << "Cleaning up: \n";

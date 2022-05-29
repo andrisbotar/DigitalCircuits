@@ -42,7 +42,7 @@ namespace digitalc {
 		size_t size();
 
 		void simulate_cli(int steps);
-		void debug(int n);
+		void debug();
 	};
 }
 

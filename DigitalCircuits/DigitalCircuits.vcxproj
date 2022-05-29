@@ -130,11 +130,13 @@
     <ClCompile Include="circuit.cpp" />
     <ClCompile Include="components.cpp" />
     <ClCompile Include="DigitalCircuits.cpp" />
+    <ClCompile Include="otherclasses.cpp" />
     <ClCompile Include="utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="circuit.h" />
     <ClInclude Include="components.h" />
+    <ClInclude Include="otherclasses.h" />
     <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

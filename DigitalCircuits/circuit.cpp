@@ -19,18 +19,13 @@ Circuit::~Circuit(){
     state.clear();
     new_state.clear();
 }
-
 /*Circuit& Circuit::operator=(Circuit other)
 {
     if (this != &other)
     {
-        delete[] name;
-        // This is a dangerous point in the flow of execution!
-        // We have temporarily invalidated the class invariants,
-        // and the next statement might throw an exception,
-        // leaving the object in an invalid state :(
-        name = new char[strlen(that.name) + 1];
-        strcpy(name, that.name);
+        delete components;
+        components = ;
+        cpy(components, that.components);
         age = that.age;
     }
     return *this;
@@ -75,35 +70,23 @@ void Circuit::addwires(int wire_count) {
     state.resize(new_size);
 }
 void Circuit::deletewire(int n) {
-    //hidden.push_back(n);
+    hidden.push_back(n);
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[i]->getinput();
-        std::wcout << i << ": ";
-        print_int_vector(v);
+        //std::wcout <<"\n"<< i << ": "; print_int_vector(v);
         for(int j=0; j< v.size();++j){
             if (v[j] == n) {
-                components[i]->setinput(n, 0);
+                components[i]->setinput(j, 0);
             }
-            if (v[j] > n) {
+            /*if (v[j] > n) {
                 components[i]->setinput(j, v[j] -1);
-            }
+            }*/
         }
     }
 }
 void Circuit::deletewires(std::vector<int> wirestodelete) {
-    //hidden.push_back(n);
     for (auto wireindex : wirestodelete) {
-        for (int i = 0; i < components.size(); ++i) {
-            std::vector<int> v = components[i]->getinput();
-            for (int j = 0; j < v.size(); ++j) {
-                if (v[j] == wireindex) {
-                    components[i]->setinput(wireindex, 0);
-                }
-                if (v[j] > wireindex) {
-                    components[i]->setinput(j, v[j] - 1);
-                }
-            }
-        }
+        this->deletewire(wireindex);
     }
 }
 bool Circuit::get_wire_state(int n) {
@@ -143,7 +126,7 @@ void Circuit::simulate_cli(int steps) {
         std::wcout << " " << i; 
     }
     std::wcout << "\n---";
-    for (int i = 0; i < size()-hidden.size()*2; ++i) { std::wcout << "--"; }
+    for (int i = 0; i < size()-hidden.size() ; ++i) { std::wcout << "--"; }
     std::wcout << "\n";
 
     for (int i = 0; i < steps; ++i) {
@@ -156,7 +139,13 @@ void Circuit::simulate_cli(int steps) {
 
 
 //debug function
-void Circuit::debug(int n) {
+void Circuit::debug() {
+
+    for (int i = 0; i < components.size(); ++i) {
+        std::vector<int> v = components[4]->getinput();
+        print_int_vector(v);
+    }
+
     //std::wcout << components.size() << " ";
     //std::wcout << this->state.size();
 }
