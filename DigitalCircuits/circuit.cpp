@@ -85,14 +85,14 @@ void Circuit::addwires(int wire_count) {
 void Circuit::deletewire(int n) {
     hidden.push_back(n);
     for (int i = 0; i < components.size(); ++i) {
-        std::vector<int> v = components[i]->getinput();
+        std::vector<int> v = components[i]->get_input();
         //std::wcout <<"\n"<< i << ": "; print_int_vector(v);
         for (int j=0; j< v.size();++j){
             if (v[j] == n) {
-                components[i]->setinput(j, 0);
+                components[i]->set_input(j, 0);
             }
             /*if (v[j] > n) {
-                components[i]->setinput(j, v[j] -1);
+                components[i]->set_input(j, v[j] -1);
             }*/
         }
     }
@@ -171,7 +171,7 @@ void Circuit::simulate_cli(int steps) {
 void Circuit::debug() {
 
     for (int i = 0; i < components.size(); ++i) {
-        std::vector<int> v = components[4]->getinput();
+        std::vector<int> v = components[4]->get_input();
         printvector<int>(v);
     }
 

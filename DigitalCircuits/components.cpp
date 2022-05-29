@@ -14,20 +14,20 @@ int COMPONENTCOUNT{ 0 };
 //component::component(){ label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //wouldn't make component an abstract base class anymore
 component::~component(){}
 
-LogicGate::LogicGate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
-LogicGate::LogicGate(int i1, int i2, int o) 
+logic_gate::logic_gate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
+logic_gate::logic_gate(int i1, int i2, int o) 
 {
 	label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-LogicGate::LogicGate(int i1, int i2, int o, std::wstring label)
+logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 {
 	label = label; COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o)
+/*digitalc::logic_gate::logic_gate(std::wstring type_string, int i1, int i2, int o)
 {
 	const std::wstring empty = L"";
 	std::wstring type(empty);
@@ -41,26 +41,26 @@ LogicGate::LogicGate(int i1, int i2, int o, std::wstring label)
 		this->output = o;
 	}
 }*/
-LogicGate::~LogicGate() {}//std::wcout << "Destroying " << this->gettype() << std::endl; }
-std::wstring LogicGate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
-std::vector<int> digitalc::LogicGate::getinput()
+logic_gate::~logic_gate() {}//std::wcout << "Destroying " << this->gettype() << std::endl; }
+std::wstring logic_gate::gettype() { 	return std::wstring(L"Generic Logic Gate"); }
+std::vector<int> digitalc::logic_gate::get_input()
 {
 	return inputs;
 }
-int digitalc::LogicGate::getoutput()
+int digitalc::logic_gate::getoutput()
 {
 	return this->output;
 }
-void LogicGate::set_inversion(bool b) {	inverting = b; }
-void digitalc::LogicGate::setoutput(int new_value)
+void logic_gate::set_inversion(bool b) {	inverting = b; }
+void digitalc::logic_gate::set_output(int new_value)
 {
 	this->output = new_value;
 }
-void digitalc::LogicGate::setinput(int input_index, int new_value)
+void digitalc::logic_gate::set_input(int input_index, int new_value)
 {
 	this->inputs[input_index] = new_value;
 }
-void LogicGate::info() {
+void logic_gate::info() {
 	std::wcout << L"Label: " << label << "\n";
 	std::wcout << L"Type: " << this->gettype() << "\n";
 	std::wcout << L"Input wires: ";
@@ -70,7 +70,7 @@ void LogicGate::info() {
 	//std::wcout << L"Inverting: " << BoolToString(this->inverting);
 	//std::wcout << L"\n";
 }
-void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//std::wcout << "inputs size: " << inputs.size() << "\n";
 	//std::wcout << "output: " << output << "\n";
 	out_vector[output] = in_vector[inputs[0]];
@@ -78,8 +78,8 @@ void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vect
 	//return input;
 }
 
-auto digitalc::LogicGate::clone() const{
-	return std::unique_ptr<LogicGate>(clone_impl());
+auto digitalc::logic_gate::clone() const{
+	return std::unique_ptr<logic_gate>(clone_impl());
 }
 
 

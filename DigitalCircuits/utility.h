@@ -21,7 +21,7 @@ namespace digitalc {
 	std::wstring int_vector_to_string(std::vector<int> circuitstate);
 	//bool StringToBool(std::wstring);
 	std::vector<bool> int_to_bool_vector(int number, int len);
-	std::vector<bool> truth_table(LogicGate& comp, int n);
+	std::vector<bool> truth_table(logic_gate& comp, int n);
 	void printtable(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
 	void printstate(std::vector<bool> circuitstate);
 

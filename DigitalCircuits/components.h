@@ -16,34 +16,34 @@ namespace digitalc {
 		//component();  
 		virtual ~component();
 		virtual void info() = 0;
-		virtual std::vector<int> getinput() = 0;
+		virtual std::vector<int> get_input() = 0;
 		virtual void set_inversion(bool b)=0;
-		virtual void setinput(int input_index, int new_value)= 0;
+		virtual void set_input(int input_index, int new_value)= 0;
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) = 0;
 		//virtual void update() = 0;
 	};
 
 	//Base class for logic gates
-	class LogicGate :public component
+	class logic_gate :public component
 	{
 	protected:
 		std::vector<int> inputs{ 0,0 };
 		int output{ 0 };
 		bool inverting{ false };
-		virtual LogicGate* clone_impl() const = 0;
+		virtual logic_gate* clone_impl() const = 0;
 	public:
-		LogicGate();
-		//LogicGate(LogicGate L);
-		LogicGate(int i1, int i2, int o);
-		LogicGate(int i1, int i2, int o, std::wstring label);
-		~LogicGate();
+		logic_gate();
+		//logic_gate(logic_gate L);
+		logic_gate(int i1, int i2, int o);
+		logic_gate(int i1, int i2, int o, std::wstring label);
+		~logic_gate();
 		virtual std::wstring gettype();
-		virtual std::vector<int> getinput();
+		virtual std::vector<int> get_input();
 		virtual int getoutput();
 		//virtual std::wstring getCNFsig();
 		virtual void set_inversion(bool b);
-		virtual void setoutput(int new_value);
-		virtual void setinput(int input_index,int new_value);
+		virtual void set_output(int new_value);
+		virtual void set_input(int input_index,int new_value);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		auto clone() const;
@@ -52,7 +52,7 @@ namespace digitalc {
 	};
 
 	//Common logic gates:
-	class ANDgate:public LogicGate
+	class ANDgate:public logic_gate
 	{
 	private:
 		virtual ANDgate* clone_impl() const override;
@@ -62,10 +62,10 @@ namespace digitalc {
 		~ANDgate();
 		std::wstring gettype();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
-		//using LogicGate::LogicGate;
+		//using logic_gate::logic_gate;
 	};
 
-	class ORgate : public LogicGate
+	class ORgate : public logic_gate
 	{
 	private:
 		virtual ORgate* clone_impl() const override;
@@ -77,7 +77,7 @@ namespace digitalc {
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	class XORgate : public LogicGate
+	class XORgate : public logic_gate
 	{
 	private:
 		std::wstring gettype();
@@ -90,7 +90,7 @@ namespace digitalc {
 	};
 
 	//Unitary logic gates
-	class NOTgate :public LogicGate
+	class NOTgate :public logic_gate
 	{
 	private:
 		//int output = 0;
@@ -103,7 +103,7 @@ namespace digitalc {
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
-	class buffer :public LogicGate
+	class buffer :public logic_gate
 	{
 	private:
 		//int output = 0;
@@ -117,7 +117,7 @@ namespace digitalc {
 	};
 
 	//Nullary constant 
-	class constant_input :public LogicGate
+	class constant_input :public logic_gate
 	{
 	private:
 		//int output = 0;
@@ -134,7 +134,7 @@ namespace digitalc {
 	//Other, less common components
 	//Majority function:  evaluates to false when half or more arguments are false and true otherwise
 	//i.e. the value of the function equals the value of the majority of the inputs
-	class Majorityfunction :public LogicGate
+	class Majorityfunction :public logic_gate
 	{
 	private:
 		virtual Majorityfunction* clone_impl() const override;
@@ -147,7 +147,7 @@ namespace digitalc {
 	};
 
 	//Wrapper to package an entire circuit as a single component
-	class SubCircuitComponent :public LogicGate
+	class SubCircuitComponent :public logic_gate
 	{
 	private:
 		std::wstring gettype();

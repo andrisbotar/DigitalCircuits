@@ -39,8 +39,8 @@ namespace digitalc {
         return vector;
     }
     
-    //Creates a truth table for a LogicGate
-    std::vector<bool> truth_table(LogicGate& comp, int n)
+    //Creates a truth table for a logic_gate
+    std::vector<bool> truth_table(logic_gate& comp, int n)
     {
         //int output_wire = 0;
         int numtable = (int)pow(2, n);
