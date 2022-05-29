@@ -15,20 +15,17 @@ int COMPONENTCOUNT{ 0 };
 component::~component(){}
 
 LogicGate::LogicGate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
-LogicGate::LogicGate(int i1, int i2, int o) 
-{
+LogicGate::LogicGate(int i1, int i2, int o) {
 	label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-LogicGate::LogicGate(int i1, int i2, int o, std::wstring label)
-{
+LogicGate::LogicGate(int i1, int i2, int o, std::wstring label){
 	label = label; COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o)
-{
+/*digitalc::LogicGate::LogicGate(std::wstring type_string, int i1, int i2, int o){
 	const std::wstring empty = L"";
 	std::wstring type(empty);
 	if (type_string.substr(0, type_string.find(L" ")) == L"Inverting") {
