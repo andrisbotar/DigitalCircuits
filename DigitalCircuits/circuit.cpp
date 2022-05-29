@@ -131,14 +131,13 @@ void circuit::add_component(std::unique_ptr<component> new_component) {
     components.push_back(std::move(new_component));
 }
 void circuit::replace_component(int n, std::unique_ptr<component> new_component) {
-    components[n] = move(new_component);
+    components[n] = std::move(new_component);
 }
 void circuit::delete_component(){}
 void circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
 }
-
 std::wstring circuit::component_info(int n) {
     components[n]->info();
     return L"";
@@ -193,12 +192,14 @@ bool circuit::acyclic()
 //Other is to define some inputs as external inputs, run the circuit until it doesn't change anymore, then copy an output
 auto circuit::lambda_update()
 {
-    return [this](auto const& x) {
+    /*return [this](auto const& x) {
         circuit copy = *this;
         copy.set_state(x);
         copy.update();
         return copy.get_state();
-    };  
+    };  */
+
+    return []() {return true; };
 }
 using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
 bool_v_fn circuit::lamda_terminal() {
@@ -206,13 +207,14 @@ bool_v_fn circuit::lamda_terminal() {
     //boolean_function fn{  };
     //bool_fn  func = [](std::vector<bool> in) {return true; };
     //func = [auto x]() {return true; }
-    bool_v_fn  func = [this](std::vector<bool> in) {
+    /*bool_v_fn  func = [this](std::vector<bool> in) {
         circuit copy = *this;
         copy.set_state(in);
         copy.update();
         return copy.get_state();
-    };
-    
+    };*/
+    return [](std::vector<bool> in) {return std::vector<bool>(true); };
+
     /*return [this](auto const& x) {
         circuit copy = *this;
         copy.set_state(x);
