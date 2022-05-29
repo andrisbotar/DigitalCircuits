@@ -56,11 +56,12 @@ namespace digital_circuits {
 		//export circuit as lambda function, single output logic-gate or multi output component
 		typedef bool (*boolean_function)(std::vector<bool> boolean_vector);
 		using bool_fn = std::function<bool(std::vector<bool>)>;
+		using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
 		auto lambda_update();
-		bool_fn lamda_terminal();
+		bool_v_fn lamda_terminal();
 		auto to_component_single_update();
 		auto to_component();
-		auto to_logic_gate(std::vector<int> inputs, int output);
+		sub_circuit_component to_logic_gate(std::vector<int> inputs, int output, int output_port);
 		auto to_logic_gate_single_update();
 		
 		//interactive simulation, combination of update(), some display functions and maybe user interaction

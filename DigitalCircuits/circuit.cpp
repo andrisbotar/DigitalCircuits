@@ -200,13 +200,18 @@ auto circuit::lambda_update()
         return copy.get_state();
     };  
 }
-using bool_fn = std::function<bool(std::vector<bool>)>;
-bool_fn circuit::lamda_terminal() {
+using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
+bool_v_fn circuit::lamda_terminal() {
 
     //boolean_function fn{  };
-    bool_fn  func = [](std::vector<bool> in) {return true; };
+    //bool_fn  func = [](std::vector<bool> in) {return true; };
     //func = [auto x]() {return true; }
-    return func;
+    bool_v_fn  func = [this](std::vector<bool> in) {
+        circuit copy = *this;
+        copy.set_state(in);
+        copy.update();
+        return copy.get_state();
+    };
     
     /*return [this](auto const& x) {
         circuit copy = *this;
@@ -230,11 +235,16 @@ auto circuit::to_component() {
 //It simulates runnign the circuit unitl it reaches "steady state", and a given wire is returned as output
 //If an oscillatory circuit is input, this may cause unpredictable or unexpected results
 
-auto circuit::to_logic_gate(std::vector<int> inputs, int output) {
+sub_circuit_component circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
-    bool_fn function = this->lamda_terminal();
-    return sub_circuit_component(inputs, output, function);
+    bool_v_fn vfunction = this->lamda_terminal();
+    bool_fn function = [vfunction, output_port](auto inputvalues) {
+        std::vector<bool> temparr = vfunction(inputvalues);
+        return temparr[output_port] ; 
+    };
+    sub_circuit_component subcircuit(inputs, output, function);
+    return subcircuit;
 }
 //not very useful function, essentially selects single gate from subcircuit
 auto circuit::to_logic_gate_single_update() {
