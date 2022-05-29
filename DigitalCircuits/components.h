@@ -134,14 +134,14 @@ namespace digitalc {
 	//Other, less common components
 	//Majority function:  evaluates to false when half or more arguments are false and true otherwise
 	//i.e. the value of the function equals the value of the majority of the inputs
-	class Majorityfunction :public logic_gate
+	class majority_function :public logic_gate
 	{
 	private:
-		virtual Majorityfunction* clone_impl() const override;
+		virtual majority_function* clone_impl() const override;
 	public:
-		Majorityfunction();
-		Majorityfunction(int i1, int i2, int o);
-		~Majorityfunction();
+		majority_function();
+		majority_function(int i1, int i2, int o);
+		~majority_function();
 		std::wstring get_type();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};

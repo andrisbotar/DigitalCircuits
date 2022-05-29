@@ -196,15 +196,15 @@ constant_input* constant_input::clone_impl() const { return new constant_input(*
 
 
 //Other, less common components
-Majorityfunction::Majorityfunction() {}
-Majorityfunction::Majorityfunction(int i1, int i2, int o)
+majority_function::majority_function() {}
+majority_function::majority_function(int i1, int i2, int o)
 {
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-Majorityfunction::~Majorityfunction() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring Majorityfunction::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
-void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+majority_function::~majority_function() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
+std::wstring majority_function::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
+void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	int true_count = 0;
 	int count = 0;
 	for (auto index : inputs) {
@@ -219,7 +219,7 @@ void Majorityfunction::update(std::vector<bool>& in_vector, std::vector<bool>& o
 
 	out_vector[output] = (inverting != result);
 }
-Majorityfunction* Majorityfunction::clone_impl() const { return new Majorityfunction(*this); };
+majority_function* majority_function::clone_impl() const { return new majority_function(*this); };
 
 
 

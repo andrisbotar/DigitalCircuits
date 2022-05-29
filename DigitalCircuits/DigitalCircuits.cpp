@@ -40,7 +40,7 @@ void example_circuit(Circuit& circuit1) {
     circuit1.addcomponent(std::make_unique< XORgate>(1, 2, 5));
     circuit1.addcomponent(std::make_unique< NOTgate>(1, 7));
     circuit1.addcomponent(std::make_unique< buffer>(1, 7));
-    circuit1.addcomponent(std::make_unique< Majorityfunction>(1, 2, 7));
+    circuit1.addcomponent(std::make_unique< majority_function>(1, 2, 7));
 }
 
 //Main function of program, start-point
