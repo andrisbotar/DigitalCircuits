@@ -56,7 +56,8 @@ void digitalc::LogicGate::setoutput(int new_value)
 {
 	this->output = new_value;
 }
-void digitalc::LogicGate::setinput(int input_index, int new_value){
+void digitalc::LogicGate::setinput(int input_index, int new_value)
+{
 	this->inputs[input_index] = new_value;
 }
 void LogicGate::info() {
