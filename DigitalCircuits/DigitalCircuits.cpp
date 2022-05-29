@@ -35,10 +35,10 @@ int setup() {
 void example_circuit(circuit& circuit_1) {
     circuit_1.add_component(std::make_unique< constant_input>(true, 1));
     circuit_1.add_component(std::make_unique< constant_input>(true, 2));
-    circuit_1.add_component(std::make_unique< ANDgate>(1, 2, 3));
-    circuit_1.add_component(std::make_unique< ORgate>(1, 2, 4));
-    circuit_1.add_component(std::make_unique< XORgate>(1, 2, 5));
-    circuit_1.add_component(std::make_unique< NOTgate>(1, 7));
+    circuit_1.add_component(std::make_unique< and_gate>(1, 2, 3));
+    circuit_1.add_component(std::make_unique< or_gate>(1, 2, 4));
+    circuit_1.add_component(std::make_unique< xor_gate>(1, 2, 5));
+    circuit_1.add_component(std::make_unique< not_gate>(1, 7));
     circuit_1.add_component(std::make_unique< buffer>(1, 7));
     circuit_1.add_component(std::make_unique< majority_function>(1, 2, 7));
 }
@@ -93,13 +93,13 @@ int main()
     //print truth table for a logic gate
     //int gate_size = 2;
     std::wcout << "Truth table for a XOR gate: \n";
-    XORgate gate_1(0, 1, 0);
+    xor_gate gate_1(0, 1, 0);
     std::vector<bool> trutht_1 = truth_table(gate_1, 2);
     print_table(trutht_1, 2);
     std::wcout << "\n";
 
     std::wcout << "Truth table for a bigger XOR gate: \n";
-    XORgate gate_2(0, 2, 0);
+    xor_gate gate_2(0, 2, 0);
     std::vector<bool> trutht_2 = truth_table(gate_2, 3);
     print_state(trutht_2);
     std::wcout << "\n";
