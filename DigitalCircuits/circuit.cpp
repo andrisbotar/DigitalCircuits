@@ -171,7 +171,7 @@ bool circuit::acyclic()
 {
     std::vector<bool> visited(size(),false);
     for (int i = 0; i < components.size(); ++i) {
-        int output_of_component = components[i]->getoutput();
+        int output_of_component = components[i]->get_output();
         //std::wcout << visited.size() << " " << output_of_component << " - " << components.size() << " " << i << "\n";
         if (visited[output_of_component] and !vector_contains(output_of_component,hidden)) { 
             return false; 
@@ -189,7 +189,7 @@ bool circuit::acyclic()
 
 auto circuit::lambda_update()
 {
-    return [](auto const& x) { 
+    return [this](auto const& x) {
         circuit copy = *this;
         copy.set_state(x);
         copy.update();

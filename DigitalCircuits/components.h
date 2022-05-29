@@ -17,7 +17,7 @@ namespace digital_circuits {
 		virtual ~component();
 		virtual void info() = 0;
 		virtual std::vector<int> get_input() = 0;
-		virtual int getoutput()=0;
+		virtual int get_output()=0;
 		virtual std::wstring get_label()=0;
 		virtual std::wstring get_type()=0;
 		virtual void set_inversion(bool b)=0;
@@ -44,12 +44,12 @@ namespace digital_circuits {
 		virtual std::wstring get_type();
 		virtual std::vector<int> get_input();
 		virtual int get_output();
-		virtual std::wstring get_label() = 0;
+		virtual std::wstring get_label();
 		//virtual std::wstring getCNFsig();
 		virtual void set_inversion(bool b);
 		virtual void set_output(int new_value);
 		virtual void set_input(int input_index,int new_value);
-		virtual void set_label(std::wstring) = 0;
+		virtual void set_label(std::wstring);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		auto clone() const;

@@ -30,6 +30,9 @@
     <ClCompile Include="otherclasses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="drawing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="otherclasses.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="drawing.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
