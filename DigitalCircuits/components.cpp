@@ -233,9 +233,9 @@ void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& 
 majority_function* majority_function::clone_impl() const { return new majority_function(*this); };
 
 
-
+using bool_fn = std::function<bool(std::vector<int>)>;;
 sub_circuit_component::sub_circuit_component() {
-	boolean_function update_function_call = simplest_boolean_fn;
+	bool_fn update_function_call = [](std::vector<bool>) {return true; };
 }
 /*sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 {
@@ -249,13 +249,13 @@ sub_circuit_component::sub_circuit_component() {
 }*/
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"sub-circuit"); }
-digital_circuits::sub_circuit_component::sub_circuit_component(int i1, int i2, int o, boolean_function fn)
+sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn)
 {
 	this->update_function_call = fn;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-digital_circuits::sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, boolean_function fn)
+sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn fn)
 {
 	this->update_function_call = fn;
 	this->inputs = in;
