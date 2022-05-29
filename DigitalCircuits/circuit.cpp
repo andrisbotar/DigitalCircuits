@@ -2,6 +2,7 @@
 
 #include "circuit.h"
 #include <iostream>
+#include "utility.h"
 using namespace digitalc;
 
 //Circuit constructors and destructors first
@@ -43,7 +44,14 @@ void Circuit::update() {
     //new_state[0] = defaul_wire_state 
     state.swap(new_state);
 }
-
+void Circuit::printstate() {
+    //for (auto i : state) {        std::wcout << i << " ";    }
+    for (int i = 0; i < state.size(); ++i) {
+        if(vector_contains <int,std::vector<int>> (i,hidden)){ continue; }
+        std::wcout << state[i] << " ";
+    }
+    std::wcout << " \n";
+}
 //Reset circuit if needed
 void Circuit::reset_state()
 {
@@ -66,7 +74,38 @@ void Circuit::addwires(int wire_count) {
     size_t new_size = state.size() + wire_count;
     state.resize(new_size);
 }
-void Circuit::deletewires() {}
+void Circuit::deletewire(int n) {
+    //hidden.push_back(n);
+    for (int i = 0; i < components.size(); ++i) {
+        std::vector<int> v = components[i]->getinput();
+        std::wcout << i << ": ";
+        print_int_vector(v);
+        for(int j=0; j< v.size();++j){
+            if (v[j] == n) {
+                components[i]->setinput(n, 0);
+            }
+            if (v[j] > n) {
+                components[i]->setinput(j, v[j] -1);
+            }
+        }
+    }
+}
+void Circuit::deletewires(std::vector<int> wirestodelete) {
+    //hidden.push_back(n);
+    for (auto wireindex : wirestodelete) {
+        for (int i = 0; i < components.size(); ++i) {
+            std::vector<int> v = components[i]->getinput();
+            for (int j = 0; j < v.size(); ++j) {
+                if (v[j] == wireindex) {
+                    components[i]->setinput(wireindex, 0);
+                }
+                if (v[j] > wireindex) {
+                    components[i]->setinput(j, v[j] - 1);
+                }
+            }
+        }
+    }
+}
 bool Circuit::get_wire_state(int n) {
     return state[n];
 }
@@ -78,10 +117,10 @@ void Circuit::set_wire_state(int n, bool value) {
 void Circuit::addcomponent(std::unique_ptr<component> new_component) {
     components.push_back(std::move(new_component));
 }
-void Circuit::deletecomponent(){}
 void Circuit::replacecomponent(int n, std::unique_ptr<component> new_component) {
     components[n] = move(new_component);
 }
+void Circuit::deletecomponent(){}
 void Circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
@@ -95,20 +134,16 @@ std::wstring Circuit::component_info(int n) {
 size_t Circuit::size() {
     return state.size();
 }
-void Circuit::printstate() {
-    for (auto i : state) {
-        std::wcout << i << " ";
-    }
-    std::wcout << " \n";
-}
-
 
 //Simualtion
 void Circuit::simulate_cli(int steps) {
     std::wcout << "   ";
-    for (int i = 0; i < size(); ++i) { std::wcout << " " << i; }
+    for (int i = 0; i < size(); ++i) { 
+        if (vector_contains <int, std::vector<int>>(i, hidden)) { continue; }
+        std::wcout << " " << i; 
+    }
     std::wcout << "\n---";
-    for (int i = 0; i < size(); ++i) { std::wcout << "--"; }
+    for (int i = 0; i < size()-hidden.size()*2; ++i) { std::wcout << "--"; }
     std::wcout << "\n";
 
     for (int i = 0; i < steps; ++i) {

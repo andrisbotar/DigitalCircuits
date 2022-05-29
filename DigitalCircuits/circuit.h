@@ -15,26 +15,32 @@ namespace digitalc {
 		//int component_count = 0;
 		std::vector<bool> state;
 		std::vector<bool> new_state;
+		std::vector<int> hidden{0};
 		std::vector<std::unique_ptr<component>> components;
 	public:
 		Circuit();
 		Circuit(int number_of_wires, bool default_wire_state=false);
 		~Circuit();
 		//Circuit& operator=(Circuit other);
+		void update();
+		void printstate();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
+
 		void addwires(int wire_count);
-		virtual void deletewires();
+		virtual void deletewire(int n);
+		virtual void deletewires(std::vector<int> v);
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
+
 		void addcomponent(std::unique_ptr<component> new_component);
-		virtual void deletecomponent();
 		void replacecomponent(int n, std::unique_ptr<component> new_component);
+		virtual void deletecomponent();
 		std::wstring component_info(int n);
 		void set_invert(int n,bool inverted);
+
 		size_t size();
-		void printstate();
-		void update();
+
 		void simulate_cli(int steps);
 		void debug(int n);
 	};

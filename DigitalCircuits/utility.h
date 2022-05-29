@@ -6,12 +6,20 @@
 #include "components.h"
 
 namespace digitalc {
+	template <typename T, typename U>
+	bool vector_contains(T element, U v)
+	{
+		if (std::find(v.begin(), v.end(), element) != v.end())
+		{
+			return true;
+		}
+		return false;
+	}
 	std::wstring BoolToString(bool b);
 	//bool StringToBool(std::wstring);
 	std::vector<bool> int_to_bool_vector(int number, int len);
 	std::vector<bool> truth_table(LogicGate& comp, int n);
 	void printtable(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
-
 	void printstate(std::vector<bool> circuitstate);
 	void print_int_vector(std::vector<int> circuitstate);
 	std::wstring int_vector_to_string(std::vector<int> circuitstate);

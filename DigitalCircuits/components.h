@@ -15,7 +15,9 @@ namespace digitalc {
 		//component();
 		virtual ~component(){};
 		virtual void info() = 0;
+		virtual std::vector<int> getinput() = 0;
 		virtual void set_inversion(bool b)=0;
+		virtual void setinput(int input_index, int new_value)= 0;
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) = 0;
 		//virtual void update() = 0;
 	};
@@ -34,8 +36,11 @@ namespace digitalc {
 		LogicGate(int i1, int i2, int o);
 		~LogicGate();
 		virtual std::wstring gettype();
+		virtual std::vector<int> getinput();
+		virtual int getoutput();
 		//virtual std::wstring getCNFsig();
 		virtual void set_inversion(bool b);
+		virtual void setinput(int input_index,int new_value);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		auto clone() const;

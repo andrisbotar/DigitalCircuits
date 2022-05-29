@@ -9,6 +9,8 @@
 //various utility functions
 namespace digitalc {
 
+
+
     //convert boolean "0" or "1" into human firendly text
     std::wstring BoolToString(bool b)
     {

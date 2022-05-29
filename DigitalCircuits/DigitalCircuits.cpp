@@ -32,7 +32,7 @@ int setup() {
 
 //function to create and eample circuit with one of each logic gate type
 void example_circuit(Circuit& circuit1) {
-    circuit1.addcomponent(std::make_unique< constant_input>(false, 1));
+    circuit1.addcomponent(std::make_unique< constant_input>(true, 1));
     circuit1.addcomponent(std::make_unique< constant_input>(true, 2));
     circuit1.addcomponent(std::make_unique< ANDgate>(1, 2, 3));
     circuit1.addcomponent(std::make_unique< ORgate>(1, 2, 4));
@@ -59,6 +59,7 @@ int main()
 
     //Invert logic gate
     circuit1.set_invert(4,true);
+    
 
     //print current state of circuit
     std::wcout << "Intitial state: ";
@@ -74,6 +75,14 @@ int main()
     circuit1.reset_state();
     circuit1.simulate_cli(5);
     std::wcout << "\n\n";
+
+
+    circuit1.reset_state();
+    circuit1.deletewire(3);
+    //circuit1.deletewires(std::vector<int>{5, 8});
+    circuit1.simulate_cli(5);
+    std::wcout << "\n\n";
+
 
     //Print info for a specific component
     std::wcout << "Detailed information of component 3: \n";
@@ -93,6 +102,7 @@ int main()
     std::vector<bool> trutht2 = truth_table(gate2, 3);
     printstate(trutht2);
     std::wcout << "\n";
+
 
 
 
