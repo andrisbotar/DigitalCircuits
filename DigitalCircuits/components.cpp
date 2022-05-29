@@ -72,7 +72,12 @@ void digital_circuits::logic_gate::set_input(int input_index, int new_value)
 {
 	this->inputs[input_index] = new_value;
 }
-void logic_gate::set_label(std::wstring in) {
+void logic_gate:: set_inputs(std::vector<int> new_input_vector)
+{
+	this->inputs = new_input_vector;
+}
+void logic_gate::set_label(std::wstring in) 
+{
 	this->label = in;
 }
 void logic_gate::info() {
@@ -85,7 +90,8 @@ void logic_gate::info() {
 	//std::wcout << L"Inverting: " << bool_to_string(this->inverting);
 	//std::wcout << L"\n";
 }
-void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	//std::wcout << "inputs size: " << inputs.size() << "\n";
 	//std::wcout << "output: " << output << "\n";
 	out_vector[output] = in_vector[inputs[0]];
@@ -93,7 +99,8 @@ void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vec
 	//return input;
 }
 
-std::unique_ptr<component> digital_circuits::logic_gate::clone() const{
+std::unique_ptr<component> digital_circuits::logic_gate::clone() const
+{
 	return std::unique_ptr<logic_gate>(clone_impl());
 }
 
@@ -108,13 +115,15 @@ and_gate::and_gate(int i1, int i2, int o)
 	this->output = o;
 }
 
-and_gate::~and_gate() { 
+and_gate::~and_gate() 
+{ 
 	if (digital_circuits::verbose) { 
 		std::wcout << L"Destroying " << this->get_type() << std::endl; 
 	} 
 }
 std::wstring and_gate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
-void and_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
+void and_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
+{
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
 	//std::all_of(vec.begin(), vec.end(), [](bool x) { return x; });
 	bool result = true;

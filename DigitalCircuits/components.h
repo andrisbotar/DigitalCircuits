@@ -57,6 +57,7 @@ namespace digital_circuits {
 		virtual void set_inversion(bool b);
 		virtual void set_output(int new_value);
 		virtual void set_input(int input_index,int new_value);
+		virtual void set_inputs(std::vector<int> new_input_vector);
 		virtual void set_label(std::wstring);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);

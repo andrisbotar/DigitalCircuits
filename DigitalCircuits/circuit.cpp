@@ -80,7 +80,10 @@ circuit& circuit::operator=(circuit other)
     }
     return *this;
 }
-
+circuit& circuit::operator++()
+{  
+    this->update();
+}
 
 
 //Core updating logic
