@@ -1,10 +1,10 @@
-﻿//Digital Circuits
+﻿//Digital circuits
 //This is a program to represent, manipulate, simualate and display digital circuits
 //Written by Andras Botar
 //May 2022
 
 //Contained files:
-//DigitalCircuits.cpp : Central file containing main function, demonstration cases, etc..
+//Digitalcircuits.cpp : Central file containing main function, demonstration cases, etc..
 //circuit.cpp and circuit.h: Defines a class for storing a circuit with multiple inputs, outputs, update functionality..
 //Components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
 //utility.cpp and utility.h: Contains various utility functions for creating truth tables, printing tables,printing vectors...
@@ -19,7 +19,7 @@
 #include "components.h" //Contains AND Gates, XOR gates, buffers...
 #include "circuit.h" //Contains circuit class to collect and simualte components
 #include "utility.h" //A few miscelaneous utility functions
-using namespace digitalc; //"DigitalCircuit" namespace abbreviated
+using namespace digitalc; //"Digitalcircuit" namespace abbreviated
 
 //setup function to collect some start-up actions
 int setup() {
@@ -32,7 +32,7 @@ int setup() {
 }
 
 //function to create and eample circuit with one of each logic gate type
-void example_circuit(Circuit& circuit1) {
+void example_circuit(circuit& circuit1) {
     circuit1.addcomponent(std::make_unique< constant_input>(true, 1));
     circuit1.addcomponent(std::make_unique< constant_input>(true, 2));
     circuit1.addcomponent(std::make_unique< ANDgate>(1, 2, 3));
@@ -51,8 +51,8 @@ int main()
 
     //create a circuit
     
-    Circuit circuit2(9);
-    Circuit circuit1(9);
+    circuit circuit2(9);
+    circuit circuit1(9);
     example_circuit(circuit2);
     example_circuit(circuit1);
     //circuit1 = circuit2;
