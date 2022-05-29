@@ -15,7 +15,8 @@ namespace digital_circuits {
     }
 
     //convert a vector of ints to a single string
-    std::wstring int_vector_to_string(std::vector<int> circuit_state) {
+    std::wstring int_vector_to_string(std::vector<int> circuit_state) 
+    {
         std::wstringstream ss;
         for (auto i : circuit_state) {
             ss << std::to_wstring(i) << " ";
@@ -27,7 +28,8 @@ namespace digital_circuits {
 
     //Convert and integer into a bool vector representing the binary count for that number
     //A length option is used to pad the bool array to a desired length
-    std::vector<bool> int_to_bool_vector(int number, int len) {
+    std::vector<bool> int_to_bool_vector(int number, int len) 
+    {
         int i = number;
         std::vector<bool> vector;
         while (i) {
@@ -109,7 +111,7 @@ namespace digital_circuits {
 
     //print out a vector of booleans
     void print_state(std::vector<bool> circuit_state)
-{
+    {
         print_vector<bool>(circuit_state);
     }
 

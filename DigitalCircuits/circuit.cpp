@@ -83,9 +83,10 @@ circuit& circuit::operator=(circuit other)
     }
     return *this;
 }
-circuit& circuit::operator++()
+circuit& circuit::operator++(int)
 {  
     this->update();
+    return *this;
 }
 
 
@@ -183,13 +184,10 @@ std::wstring circuit::component_info(int n)
 }
 
 //Utility functions
-size_t circuit::size() {
-    return state.size();
-}
-size_t circuit::component_count() {
-    return components.size();
-}
-void circuit::print_info() {
+size_t circuit::size() {    return state.size();}
+size_t circuit::component_count() {    return components.size();}
+void circuit::print_info() 
+{
     std::wcout << "The circuit labelled '" << label << "' is currently in state: "; print_state();
 
     if (acyclic()) {
@@ -250,7 +248,8 @@ auto circuit::lambda_update()
 //Other is to define some inputs as external inputs, run the circuit until it doesn't change anymore,
 //or we reach some predefined amount of maximum updates, then copy an output
 using bool_v_fn = std::function<std::vector<bool>(std::vector<bool>)>;
-bool_v_fn circuit::lamda_terminal(int max_updates) {
+bool_v_fn circuit::lamda_terminal(int max_updates) 
+{
     //boolean_function fn{  };
     //bool_fn  func = [](std::vector<bool> in) {return true; };
     //func = [auto x]() {return true; }
@@ -284,7 +283,8 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
 }
 
 bool_v_fn simplest_boolean_v_fn = [](std::vector<bool> a) {return std::vector<bool>(2, 0); };
-bool_v_fn circuit::circuit_to_lambda(int max_updates) {
+bool_v_fn circuit::circuit_to_lambda(int max_updates) 
+{
     //int max_updates = 100;
     circuit circ = *this;
     bool_v_fn  func = [circ, max_updates](std::vector<bool> in) {
@@ -324,7 +324,8 @@ bool_v_fn circuit::circuit_to_lambda(int max_updates) {
 //It simulates runnign the circuit unitl it reaches "steady state", and a given wire is returned as output
 //Use max_updates=1 if you are only curious about only a single timestep update
 //If an oscillatory circuit is input, this may cause unpredictable or unexpected results
-std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port,int max_updates) {
+std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port,int max_updates)
+{
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
     bool_fn function;
@@ -351,7 +352,8 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
     return std::make_unique<sub_circuit_component>(inputs, output, function, this->size());
 }
-std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port, int max_updates) {
+std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port, int max_updates) 
+{
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
     bool_fn function;
@@ -385,18 +387,19 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
 //Simualtion
 //Basic simulation that steps through a given number of timesteps 
 //and prints results to console
-void circuit::simulate_cli(int steps) {
+void circuit::simulate_cli(int steps) 
+{
     std::wcout << "   ";
     for (int i = 0; i < size(); ++i) { 
         if (vector_contains <int, std::vector<int>>(i, hidden)) { continue; }
         std::wcout << " " << i; 
     }
-    std::wcout << "\n---";
-    for (int i = 0; i < size()-hidden.size() ; ++i) { std::wcout << "--"; }
+    std::wcout << L"\n\u2500\u252C\u2500";
+    for (int i = 0; i < size()-hidden.size() ; ++i) { std::wcout << L"\u2500\u2500"; }
     std::wcout << "\n";
 
     for (int i = 0; i < steps; ++i) {
-        std::wcout << i << "|  ";
+        std::wcout << i << L"\u2502  ";
         print_state();
         update();
     }
@@ -405,7 +408,8 @@ void circuit::simulate_cli(int steps) {
 
 
 //debug function
-void circuit::debug() {
+void circuit::debug() 
+{
 
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[4]->get_input();

@@ -30,7 +30,7 @@ namespace digital_circuits {
 		~circuit();
 
 		circuit& operator=(circuit other);
-		circuit& operator++();
+		circuit& operator++(int);
 
 		//Core update function
 		void update();

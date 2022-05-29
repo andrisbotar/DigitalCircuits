@@ -56,13 +56,12 @@ int main()
     //Invert logic gate
     circuit_1.set_invert(4,true);
     circuit_2.add_component(circuit_3.to_logic_gate(0,9,5,4));
-    circuit_2.update();
 
     //print current state of circuit
     std::wcout << "Intitial state: ";
     circuit_1.print_state();
     //simulate one time step and print new state
-    circuit_1.update();
+    circuit_1++; //equivalent to circuit_1.update();
     std::wcout << "New state:      ";
     circuit_1.print_state();
     std::wcout << "\n\n";
