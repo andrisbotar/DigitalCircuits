@@ -10,10 +10,10 @@ using namespace digitalc;
 int CIRCUITCOUNT{0};
 
 //circuit constructors and destructors first
-circuit::circuit() { label = L"circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++; }
+circuit::circuit() { label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++; }
 circuit::circuit(int number_of_wires, bool default_wire_state)
 {
-    label = L"circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++;
+    label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
 }
@@ -25,7 +25,7 @@ circuit::circuit(int number_of_wires, bool default_wire_state, std::wstring labe
 circuit::~circuit()
 {
     //Cleanup memory
-    std::wcout << "Destroying circuit of size " << size() <<" with " << componentcount() << " components\n";
+    std::wcout << "Destroying circuit of size " << size() <<" with " << component_count() << " components\n";
     //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)        delete vectorit;
     components.clear();
     state.clear();
@@ -117,13 +117,13 @@ void circuit::unhideallwires() {
 
 
 //acting on individual components
-void circuit::addcomponent(std::unique_ptr<component> new_component) {
+void circuit::add_component(std::unique_ptr<component> new_component) {
     components.push_back(std::move(new_component));
 }
-void circuit::replacecomponent(int n, std::unique_ptr<component> new_component) {
+void circuit::replace_component(int n, std::unique_ptr<component> new_component) {
     components[n] = move(new_component);
 }
-void circuit::deletecomponent(){}
+void circuit::delete_component(){}
 void circuit::set_invert(int n, bool inverted)
 {
     components[n]->set_inversion(inverted);
@@ -137,12 +137,12 @@ std::wstring circuit::component_info(int n) {
 size_t circuit::size() {
     return state.size();
 }
-size_t circuit::componentcount() {
+size_t circuit::component_count() {
     return components.size();
 }
 void circuit::print_info() {
     std::wcout << "The circuit labelled '" << label << "' is currently in state: "; printstate();
-    std::wcout << "It has " << size() << " wires and contains "<< componentcount() <<" components: \n";
+    std::wcout << "It has " << size() << " wires and contains "<< component_count() <<" components: \n";
     for (int i = 0; i < components.size(); ++i) { std::wcout << "- "; components[i]->info(); }
     //std::wcout<<"and has complexity: "<<complexity();
 }

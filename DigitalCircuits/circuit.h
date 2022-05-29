@@ -37,14 +37,14 @@ namespace digitalc {
 		void hidewire(int n);
 		void unhideallwires();
 
-		void addcomponent(std::unique_ptr<component> new_component);
-		void replacecomponent(int n, std::unique_ptr<component> new_component);
-		virtual void deletecomponent();
+		void add_component(std::unique_ptr<component> new_component);
+		void replace_component(int n, std::unique_ptr<component> new_component);
+		virtual void delete_component();
 		std::wstring component_info(int n);
-		void set_invert(int n,bool inverted);
+		void set_invert(int n, bool inverted);
 
 		size_t size();
-		size_t componentcount();
+		size_t component_count();
 		void print_info();
 
 		void simulate_cli(int steps);

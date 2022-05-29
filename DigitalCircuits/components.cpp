@@ -17,7 +17,7 @@ component::~component(){}
 logic_gate::logic_gate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
 logic_gate::logic_gate(int i1, int i2, int o) 
 {
-	label = L"circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
+	label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
