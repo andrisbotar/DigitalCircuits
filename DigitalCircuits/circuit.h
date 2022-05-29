@@ -24,6 +24,8 @@ namespace digital_circuits {
 		circuit(int number_of_wires, bool default_wire_state, std::wstring label);
 		~circuit();
 		//circuit& operator=(circuit other);
+
+		//Core update function
 		void update();
 
 		void print_state();
@@ -31,7 +33,6 @@ namespace digital_circuits {
 		void set_state(std::vector<bool> default_state);
 		void reset_state();
 		
-
 		void add_wires(int wire_count);
 		virtual void delete_wire(int n);
 		virtual void delete_wires(std::vector<int> v);
@@ -46,14 +47,22 @@ namespace digital_circuits {
 		std::wstring component_info(int n);
 		void set_invert(int n, bool inverted);
 
+		//utility functions
 		size_t size();
 		size_t component_count();
 		void print_info();
 		bool acyclic();
 
+		//export circuit as lambda function, single output logic-gate or multi output component
+		typedef bool (*boolean_function)(std::vector<bool> boolean_vector);
 		auto lambda_update();
-		auto to_logic_gate_update();
-
+		boolean_function lamda_terminal();
+		auto to_component_single_update();
+		auto to_component();
+		auto to_logic_gate(std::vector<int> inputs, int output);
+		auto to_logic_gate_single_update();
+		
+		//interactive simulation, combination of update(), some display functions and maybe user interaction
 		void simulate_cli(int steps);
 		void debug();
 	};

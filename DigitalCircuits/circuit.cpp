@@ -200,8 +200,40 @@ auto circuit::lambda_update()
         return copy.get_state();
     };  
 }
+boolean_function circuit::lamda_terminal() {
 
-auto circuit::to_logic_gate_update() {
+    boolean_function fn{
+
+    };
+    return [this](auto const& x) {
+        circuit copy = *this;
+        copy.set_state(x);
+        copy.update();
+        return copy.get_state();
+    };
+}
+
+//creates a component which represents a single state-udpate of this circuit
+auto circuit::to_component_single_update() {
+
+}
+//creates compoennt which represents runnign this circuit continously until it reaches some steady state
+//If an oscillatory circuit is input, this may cause unpredictable or unexpected results
+auto circuit::to_component() {
+    //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
+    
+}
+//creates single-output logic gate
+//It simulates runnign the circuit unitl it reaches "steady state", and a given wire is returned as output
+//If an oscillatory circuit is input, this may cause unpredictable or unexpected results
+auto circuit::to_logic_gate(std::vector<int> inputs, int output) {
+    //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
+
+    boolean_function function = this->lamda_terminal();
+    return sub_circuit_component(inputs, output, function);
+}
+//not very useful function, essentially selects single gate from subcircuit
+auto circuit::to_logic_gate_single_update() {
 
 }
 

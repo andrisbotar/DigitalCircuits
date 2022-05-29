@@ -235,7 +235,7 @@ majority_function* majority_function::clone_impl() const { return new majority_f
 
 
 sub_circuit_component::sub_circuit_component() {
-	function_call update_function_call = simplest_boolean_fn;
+	boolean_function update_function_call = simplest_boolean_fn;
 }
 /*sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 {
@@ -249,21 +249,21 @@ sub_circuit_component::sub_circuit_component() {
 }*/
 sub_circuit_component::~sub_circuit_component() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"sub-circuit"); }
-digital_circuits::sub_circuit_component::sub_circuit_component(int i1, int i2, int o, function_call fn)
+digital_circuits::sub_circuit_component::sub_circuit_component(int i1, int i2, int o, boolean_function fn)
 {
 	this->update_function_call = fn;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
+digital_circuits::sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, boolean_function fn)
+{
+	this->update_function_call = fn;
+	this->inputs = in;
+	this->output = o;
+}
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 
-
-	bool result = false;
-	for (auto index : inputs) {
-		if (index >= 0 && index < in_vector.size())
-			result = (!result != !in_vector[index]);
-	}
-	out_vector[output] = (inverting != result);
+	out_vector[output] = (inverting != update_function_call(in_vector));
 }
 sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
 

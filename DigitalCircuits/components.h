@@ -155,7 +155,7 @@ namespace digital_circuits {
 	};
 
 	//Define what we mean by "boolean function", so compielr knows what kind of function we can encapsualte
-	typedef bool (*function_call)(std::vector<bool> boolean_vector);
+	typedef bool (*boolean_function)(std::vector<bool> boolean_vector);
 
 	//Wrapper to package an entire circuit or arbitrary boolean function as a single component
 	class sub_circuit_component :public logic_gate
@@ -165,13 +165,14 @@ namespace digital_circuits {
 		//digital_circuits::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
 
-		function_call update_function_call{ simplest_boolean_fn };
+		boolean_function update_function_call{ simplest_boolean_fn };
 	public:
 		sub_circuit_component();
 		~sub_circuit_component();
 
 		//define constructor with an imput function
-		sub_circuit_component(int i1, int i2, int o, function_call fn);
+		sub_circuit_component(int i1, int i2, int o, boolean_function fn);
+		sub_circuit_component(std::vector<int> in, int o, boolean_function fn);
 		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
 		
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
