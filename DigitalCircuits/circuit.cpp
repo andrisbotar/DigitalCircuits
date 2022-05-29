@@ -283,6 +283,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
     bool_v_fn vfunction = this->lamda_terminal();
+    //bool_v_fn vfunction = this->lambda_update();
     bool_fn function = [vfunction, output_port](auto inputvalues) {
         std::vector<bool> temparr = vfunction(inputvalues);
         return temparr[output_port] ; 
@@ -293,6 +294,7 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
 std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
+    
     bool_v_fn vfunction = this->lamda_terminal();
     bool_fn function = [vfunction, output_port](auto inputvalues) {
         std::vector<bool> temparr = vfunction(inputvalues);

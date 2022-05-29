@@ -60,7 +60,7 @@ int main()
     
     //Invert logic gate
     circuit_1.set_invert(4,true);
-    circuit_2.add_component(circuit_3.to_logic_gate(1,2,9,4));
+    circuit_2.add_component(circuit_3.to_logic_gate(1,2,5,4));
     circuit_2.update();
 
     //print current state of circuit
