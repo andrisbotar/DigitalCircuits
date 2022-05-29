@@ -275,7 +275,8 @@ void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<boo
 		for (int i = 0; i < inputs.size(); ++i) {
 			input_to_function[i]=(in_vector[i]);
 		}
-		//std::wcout << L"asdf";
+		std::wcout << L"input_to_function size: "<< input_to_function.size()<<"\n";
+		std::wcout << "asdsd " << update_function_call(input_to_function);
 		out_vector[output] = (inverting != update_function_call(input_to_function));
 		std::wcout << out_vector.size() << " AAAAA: " << output;
 	}

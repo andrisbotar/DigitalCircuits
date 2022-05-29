@@ -287,7 +287,7 @@ bool_v_fn circuit_to_lambda(circuit circ) {
             circuit copy = circ;
             bool feedback = copy.acyclic();
             copy.set_state(in);
-            std::wcout << in.size();
+            //std::wcout << "IN SIZE:  " <<in.size() <<" \n";
             int update_counter{ 0 };
             bool continue_updating = true;
             while (continue_updating) {
@@ -295,6 +295,7 @@ bool_v_fn circuit_to_lambda(circuit circ) {
                 update_counter++;
                 continue_updating = update_counter < max_updates && (feedback || copy.stayed_the_same());
             }
+            //std::wcout << "aayayayayay"<< copy.get_state().size()<<"\n";
             return copy.get_state();
         }
         catch (...) {
@@ -320,19 +321,21 @@ auto circuit::to_component() {
 //It simulates runnign the circuit unitl it reaches "steady state", and a given wire is returned as output
 //If an oscillatory circuit is input, this may cause unpredictable or unexpected results
 
-std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port) {
+/*std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> inputs, int output, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
     //bool_v_fn vfunction = circuit_to_lambda(*this);
     bool_v_fn vfunction = this->lamda_terminal();
+    std::wcout << "aftre lambda terminal\n";
     //bool_v_fn vfunction = this->lambda_update();
     bool_fn function = [vfunction, output_port](auto inputvalues) {
+        //std::wcout << "before temparr\n";
         std::vector<bool> temparr = vfunction(inputvalues);
         return temparr[output_port] ; 
     };
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
     return std::make_unique<sub_circuit_component>(inputs, output, function, this->size());
-}
+}*/
 std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
@@ -340,10 +343,10 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, in
     try {
         //bool_v_fn vfunction = this->lamda_terminal();
         bool_v_fn vfunction = circuit_to_lambda(*this);
-        function = [vfunction, output_port](auto inputvalues) {
+        function = [vfunction, output_port](std::vector<bool> inputvalues) {
             try {
                 std::vector<bool> temparr = vfunction(inputvalues);
-                return temparr[output_port];
+                return !!temparr[output_port];   // <- Why this needs to be !!x isntead of x, is jsut black magic. I spent hours tryign to work it out
             }
             catch (...) {
                 std::wcout << "unable to calulate output";
