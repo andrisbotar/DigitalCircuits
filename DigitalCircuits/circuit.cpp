@@ -10,7 +10,10 @@ using namespace digital_circuits;
 int CIRCUITCOUNT{0};
 
 //circuit constructors and destructors first
-circuit::circuit() { label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++; }
+circuit::circuit() { 
+    label = L"Circuit " + std::to_wstring(CIRCUITCOUNT);
+    CIRCUITCOUNT++;
+}
 circuit::circuit(int number_of_wires, bool default_wire_state)
 {
     label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++;
@@ -142,12 +145,39 @@ size_t circuit::component_count() {
 }
 void circuit::print_info() {
     std::wcout << "The circuit labelled '" << label << "' is currently in state: "; print_state();
-    std::wcout << "It has " << size() << " wires and contains "<< component_count() <<" components: \n";
+
+    if (acyclic()) {
+        std::wcout << "It has no feedback/Is an acyclic circuit.\n";
+        //std::wcout<< "With total depth: ";
+    }
+    else {
+        std::wcout << "It has feedback/Is a cyclic circuit.\n";
+    }
+
+    std::wcout << "And t has " << size() << " wires and contains "<< component_count() <<" components: \n";
     for (int i = 0; i < components.size(); ++i) { std::wcout << "- "; components[i]->info(); }
     //std::wcout<<"and has complexity: "<<complexity();
 }
+//Checks wether the circuit has any feedback or "cycles"
+bool circuit::acyclic()
+{
+    std::vector<bool> visited(components.size(),false);
+    for (int i = 0; i < components.size(); ++i) {
+        int output_of_component = components[i]->getoutput();
+        if (visited[output_of_component] and !vector_contains(output_of_component,hidden)) { 
+            return true; 
+        }
+        for (auto j : components[i]->get_input()) {
+            visited[j] = true;
+        }
+    }
+    return false;
+}
+
 
 //Simualtion
+//Basic simulation that steps through a given number of timesteps 
+//and prints results to console
 void circuit::simulate_cli(int steps) {
     std::wcout << "   ";
     for (int i = 0; i < size(); ++i) { 
@@ -172,7 +202,7 @@ void circuit::debug() {
 
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[4]->get_input();
-        printvector<int>(v);
+        print_vector<int>(v);
     }
 
     //std::wcout << components.size() << " ";

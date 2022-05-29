@@ -46,6 +46,7 @@ namespace digital_circuits {
 		size_t size();
 		size_t component_count();
 		void print_info();
+		bool acyclic();
 
 		void simulate_cli(int steps);
 		void debug();
