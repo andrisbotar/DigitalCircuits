@@ -53,6 +53,7 @@ namespace digital_circuits {
 		virtual void delete_component(int n);
 		std::wstring component_info(int n);
 		void set_invert(int n, bool inverted);
+		
 
 		//utility functions
 		size_t size();
