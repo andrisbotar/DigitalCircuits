@@ -138,4 +138,11 @@ namespace digitalc {
         ss >> returnval;
         return returnval;
     }
+
+
+
+
+    /*	//init global variables for keepign track of total counts
+	int COMPONENTCOUNT{ 0 };
+	int CIRCUITCOUNT{ 0 };*/
 }

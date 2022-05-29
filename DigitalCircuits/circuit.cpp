@@ -1,20 +1,21 @@
 //Defines a class for storing a circuit with multiple inputs, outputs and update functionality
 
-#include "circuit.h"
 #include <iostream>
+#include "circuit.h"
 #include "utility.h"
 #include "otherclasses.h"
 using namespace digitalc;
 
 //Circuit constructors and destructors first
-Circuit::Circuit() {}
+Circuit::Circuit() { label = L"Circuit " + digitalc::CIRCUITCOUNT; digitalc::CIRCUITCOUNT++; }
 Circuit::Circuit(int number_of_wires, bool default_wire_state){
+    label = L"Circuit " + digitalc::CIRCUITCOUNT; digitalc::CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
 }
 Circuit::~Circuit(){
     //Cleanup memory
-    std::wcout << "Destroying Circuit of size " << size() <<" with " <<components.size() << " components\n";
+    std::wcout << "Destroying Circuit of size " << size() <<" with " << componentcount() << " components\n";
     //for (auto vectorit = components.begin(); vectorit < components.end(); ++vectorit)        delete vectorit;
     components.clear();
     state.clear();
@@ -117,6 +118,15 @@ std::wstring Circuit::component_info(int n) {
 //Utility functions
 size_t Circuit::size() {
     return state.size();
+}
+size_t Circuit::componentcount() {
+    return components.size();
+}
+void Circuit::print_info() {
+    std::wcout << "The circuit labelled '" << label << "' is currently in state: "; printstate();
+    std::wcout << "It has " << size() << " wires and contains "<< componentcount() <<" components: \n";
+    for (int i = 0; i < components.size(); ++i) { std::wcout << "- "; components[i]->info(); }
+    //std::wcout<<"and has complexity: "<<complexity();
 }
 
 //Simualtion

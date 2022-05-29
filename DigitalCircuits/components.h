@@ -10,11 +10,11 @@
 namespace digitalc {
 	
 	//Abstract base class for all circuit components
-	class component :digital_object
+	class component :public digital_object
 	{
 	public:
 		//component();
-		virtual ~component(){};
+		virtual ~component();
 		virtual void info() = 0;
 		virtual std::vector<int> getinput() = 0;
 		virtual void set_inversion(bool b)=0;

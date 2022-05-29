@@ -27,6 +27,7 @@ int setup() {
     //Using std::wcout and std::wstring
     int _ = _setmode(_fileno(stdout), _O_U16TEXT);
     //std::wcout << L"Testing unicode -- English -- Ελληνικά -- Español." << std::endl;
+
     return 0;
 }
 
@@ -46,7 +47,6 @@ void example_circuit(Circuit& circuit1) {
 int main()
 {   
     setup();
-
 
 
     //create a circuit
@@ -106,7 +106,7 @@ int main()
 
 
 
-
+    circuit1.print_info();
     //circuit1.debug();
 
     //Cleanup memory

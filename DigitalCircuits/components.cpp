@@ -1,18 +1,19 @@
 // components.cpp : Specific circuit components, AND gates, OR gates, buffers...
 #include <iostream>
-#include "components.h"
 #include <vector>
+#include "components.h"
 #include "utility.h"
+#include "otherclasses.h"
 //using namespace std::remove_cvref;
 using namespace digitalc;
 
+//component::component(){ label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++; }
+component::~component(){}
 
-
-//component::component(){}
-//component::~component(){}
-LogicGate::LogicGate(){} //:type("Generic Logic Gate") {}
+LogicGate::LogicGate(){ label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
 LogicGate::LogicGate(int i1, int i2, int o) //: type("Generic Logic Gate")
 {
+	label = L"Circuit " + COMPONENTCOUNT; COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -46,13 +47,14 @@ void digitalc::LogicGate::setinput(int input_index, int new_value)
 	this->inputs[input_index] = new_value;
 }
 void LogicGate::info() {
+	std::wcout << L"Label: " << label << "\n";
 	std::wcout << L"Type: " << this->gettype() << "\n";
 	std::wcout << L"Output: " << this->output << "\n";
 	std::wcout << L"Inputs: ";
 		for (auto i : this->inputs) { std::wcout << i <<","; }
 	std::wcout << L"\b \n"; //delete last comma
-	std::wcout << L"Inverting: " << BoolToString(this->inverting);
-	std::wcout << L"\n\n";
+	//std::wcout << L"Inverting: " << BoolToString(this->inverting);
+	//std::wcout << L"\n";
 }
 void LogicGate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
 	//std::wcout << "inputs size: " << inputs.size() << "\n";

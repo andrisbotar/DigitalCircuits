@@ -6,6 +6,9 @@
 #include "components.h"
 
 namespace digitalc {
+	int COMPONENTCOUNT;
+	int CIRCUITCOUNT;
+
 	template <typename T, typename U>
 	bool vector_contains(T element, U v)
 	{
@@ -15,6 +18,7 @@ namespace digitalc {
 		}
 		return false;
 	}
+
 	std::wstring BoolToString(bool b);
 	//bool StringToBool(std::wstring);
 	std::vector<bool> int_to_bool_vector(int number, int len);

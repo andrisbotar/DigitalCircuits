@@ -9,7 +9,7 @@
 
 //Define class for storign circuit with multiple inputs, outputs and update functionality
 namespace digitalc {
-	class Circuit:digital_object
+	class Circuit:public digital_object
 	{
 	protected:
 		//int wire_count = 0;
@@ -41,6 +41,8 @@ namespace digitalc {
 		void set_invert(int n,bool inverted);
 
 		size_t size();
+		size_t componentcount();
+		void print_info();
 
 		void simulate_cli(int steps);
 		void debug();
