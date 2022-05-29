@@ -248,19 +248,32 @@ bool_v_fn circuit::lamda_terminal(int max_updates) {
     //boolean_function fn{  };
     //bool_fn  func = [](std::vector<bool> in) {return true; };
     //func = [auto x]() {return true; }
-    bool_v_fn  func = [this, max_updates](std::vector<bool> in) {
-        circuit copy = *this;
-        bool feedback = copy.acyclic();
-        copy.set_state(in);
-        int update_counter{ 0 };
-        bool continue_updating = true;
-        while (continue_updating) {
-            copy.update();
-            update_counter++;
-            continue_updating = update_counter < max_updates && (feedback || copy.stayed_the_same());
-        }
-        return copy.get_state();
-    };
+    bool_v_fn func;
+    try {
+        std::wcout << "1";
+        bool_v_fn  func = [this, max_updates](std::vector<bool> in) {
+            try {
+                std::wcout << "here";
+                circuit copy = *this;
+                bool feedback = copy.acyclic();
+                copy.set_state(in);
+                int update_counter{ 0 };
+                bool continue_updating = true;
+                while (continue_updating) {
+                    copy.update();
+                    update_counter++;
+                    continue_updating = update_counter < max_updates && (feedback || copy.stayed_the_same());
+                }
+                return copy.get_state();
+            }
+            catch (...) {
+                std::wcout << "In lambda error.\n";
+            }
+        };
+    }
+    catch(...) {
+        std::wcout << "unable to calulate circuit output";
+    }
     return func;
    // return [](std::vector<bool> in) {return std::vector<bool>(true); };
 }
@@ -294,12 +307,23 @@ std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(std::vector<int> i
 std::unique_ptr<sub_circuit_component> circuit::to_logic_gate(int i1, int i2, int o, int output_port) {
     //if(acyclic){ std:stderr<<"Steady state of acyclic circuit cannot be found" }
 
-    
-    bool_v_fn vfunction = this->lamda_terminal();
-    bool_fn function = [vfunction, output_port](auto inputvalues) {
-        std::vector<bool> temparr = vfunction(inputvalues);
-        return temparr[output_port];
-    };
+    bool_fn function;
+    try {
+        bool_v_fn vfunction = this->lamda_terminal();
+        function = [vfunction, output_port](auto inputvalues) {
+            try {
+                std::vector<bool> temparr = vfunction(inputvalues);
+                return temparr[output_port];
+            }
+            catch (...) {
+                std::wcout << "unable to calulate output";
+            }
+        };
+    }
+    catch(...) {
+        std::wcout << "Error ocurred in turning circuit to logic gate";
+        function = simplest_boolean_fn;
+    }
     //sub_circuit_component subcircuit(inputs, output, function); return subcircuit;
     return std::make_unique<sub_circuit_component>(i1,i2,o, function);
 }

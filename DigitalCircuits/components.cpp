@@ -268,11 +268,18 @@ sub_circuit_component::sub_circuit_component(std::vector<int> in, int o, bool_fn
 	this->acyclic = acyc;
 }
 void sub_circuit_component::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
-	std::vector<bool> input_to_function;
-	for (auto i : inputs) {
-		input_to_function.push_back(in_vector[i]);
+	try {
+		std::vector<bool> input_to_function;
+		for (auto i : inputs) {
+			input_to_function.push_back(in_vector[i]);
+		}
+		//std::wcout << L"asdf";
+		out_vector[output] = (inverting != update_function_call(input_to_function));
+		std::wcout << out_vector.size() << " : " << output;
 	}
-	out_vector[output] = (inverting != update_function_call(input_to_function));
+	catch (...) {
+		std::cerr << "Was unable to update subcircuit component!";// << label;
+	}
 }
 sub_circuit_component* sub_circuit_component::clone_impl() const { return new sub_circuit_component(*this); };
 
