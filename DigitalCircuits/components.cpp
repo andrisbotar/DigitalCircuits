@@ -11,13 +11,13 @@ using namespace digitalc;
 //init global variables for keepign track of components
 int COMPONENTCOUNT{ 0 };
 
-//component::component(){ label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //wouldn't make component an abstract base class anymore
+//component::component(){ label = L"circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //wouldn't make component an abstract base class anymore
 component::~component(){}
 
 logic_gate::logic_gate(){ label = L"Component " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++; } //:type("Generic Logic Gate") {}
 logic_gate::logic_gate(int i1, int i2, int o) 
 {
-	label = L"Circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
+	label = L"circuit " + std::to_wstring(COMPONENTCOUNT); COMPONENTCOUNT++;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
@@ -229,7 +229,7 @@ sub_circuit_component::sub_circuit_component(int i1, int i2, int o)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*sub_circuit_component::sub_circuit_component(int i1, int i2, int o, Circuit subcircuit){
+/*sub_circuit_component::sub_circuit_component(int i1, int i2, int o, circuit subcircuit){
 	this->subcircuit = subcircuit;
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;

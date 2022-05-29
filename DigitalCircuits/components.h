@@ -151,12 +151,12 @@ namespace digitalc {
 	{
 	private:
 		std::wstring get_type();
-		//digitalc::Circuit subcirsdfdfcuit();
+		//digitalc::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
 	public:
 		sub_circuit_component();
 		sub_circuit_component(int i1, int i2, int o);
-		//sub_circuit_component(int i1, int i2, int o, Circuit subcircuit);
+		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
 		~sub_circuit_component();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};

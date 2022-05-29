@@ -9,7 +9,7 @@
 
 //Define class for storign circuit with multiple inputs, outputs and update functionality
 namespace digitalc {
-	class Circuit:public digital_object
+	class circuit:public digital_object
 	{
 	protected:
 		//int wire_count = 0;
@@ -19,11 +19,11 @@ namespace digitalc {
 		std::vector<int> hidden{0};
 		std::vector<std::unique_ptr<component>> components;
 	public:
-		Circuit();
-		Circuit(int number_of_wires, bool default_wire_state=false);
-		Circuit(int number_of_wires, bool default_wire_state, std::wstring label);
-		~Circuit();
-		//Circuit& operator=(Circuit other);
+		circuit();
+		circuit(int number_of_wires, bool default_wire_state=false);
+		circuit(int number_of_wires, bool default_wire_state, std::wstring label);
+		~circuit();
+		//circuit& operator=(circuit other);
 		void update();
 		void printstate();
 		void reset_state();
