@@ -4,20 +4,20 @@
 #include <sstream> 
 #include "utility.h"
 #include "circuit.h"
-//using namespace digitalc;
+//using namespace digital_circuits;
 
 //various utility functions
-namespace digitalc {
+namespace digital_circuits {
     //convert boolean "0" or "1" into human firendly text
-    std::wstring BoolToString(bool b)
+    std::wstring bool_to_string(bool b)
     {
         return b ? L"True" : L"False";
     }
 
     //convert a vector of ints to a single string
-    std::wstring int_vector_to_string(std::vector<int> circuitstate) {
+    std::wstring int_vector_to_string(std::vector<int> circuit_state) {
         std::wstringstream ss;
-        for (auto i : circuitstate) {
+        for (auto i : circuit_state) {
             ss << std::to_wstring(i) << " ";
         }
         std::wstring returnval;
@@ -57,7 +57,7 @@ namespace digitalc {
     }
 
     //prints table of booleans with column and row indecies, and unicode box drawing characters
-    void printtable(std::vector<bool> table, int width, bool indecies, bool frame)
+    void print_table(std::vector<bool> table, int width, bool indecies, bool frame)
     {
         //indecies argument allows for the option to print indecies or not
         //frame can print a frame or box around the table for readabiltiy
@@ -108,23 +108,23 @@ namespace digitalc {
 
 
     //print out a vector of booleans
-    void printstate(std::vector<bool> circuitstate)
+    void print_state(std::vector<bool> circuit_state)
 {
-        printvector<bool>(circuitstate);
+        print_vector<bool>(circuit_state);
     }
 
-    /*void printstate(std::vector<bool> circuitstate)
+    /*void print_state(std::vector<bool> circuit_state)
     {
-        for (auto i : circuitstate) {
+        for (auto i : circuit_state) {
             std::wcout << i << " ";
         }
         std::wcout << " \n";
     }
 
     //print out a vector of ints
-    void print_int_vector(std::vector<int> circuitstate)
+    void print_int_vector(std::vector<int> circuit_state)
     {
-        for (auto i : circuitstate) {
+        for (auto i : circuit_state) {
             std::wcout << i << " ";
         }
         std::wcout << " \n";

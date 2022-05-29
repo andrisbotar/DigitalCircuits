@@ -5,7 +5,7 @@
 #include <vector>
 #include "components.h"
 
-namespace digitalc {
+namespace digital_circuits {
 	//template to check if some element is in a vector
 	template <typename T, typename U> //has to be in header for linking to wokr
 	bool vector_contains(T element, U v)
@@ -17,19 +17,19 @@ namespace digitalc {
 		return false;
 	}
 
-	std::wstring BoolToString(bool b);
-	std::wstring int_vector_to_string(std::vector<int> circuitstate);
+	std::wstring bool_to_string(bool b);
+	std::wstring int_vector_to_string(std::vector<int> circuit_state);
 	//bool StringToBool(std::wstring);
 	std::vector<bool> int_to_bool_vector(int number, int len);
 	std::vector<bool> truth_table(logic_gate& comp, int n);
-	void printtable(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
-	void printstate(std::vector<bool> circuitstate);
+	void print_table(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
+	void print_state(std::vector<bool> circuit_state);
 
-	//void print_int_vector(std::vector<int> circuitstate);
+	//void print_int_vector(std::vector<int> circuit_state);
 	template<typename S> //template function to print out vector of some templated type
-	void printvector(std::vector<S> circuitstate)
+	void print_vector(std::vector<S> circuit_state)
 	{
-		for (S i : circuitstate) {
+		for (S i : circuit_state) {
 			std::wcout << i << " ";
 		}
 		std::wcout << " \n";

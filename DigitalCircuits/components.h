@@ -7,7 +7,7 @@
 
 #ifndef __COMPONENTS__
 #define __COMPONENTS__
-namespace digitalc {
+namespace digital_circuits {
 	
 	//Abstract base class for all circuit components
 	class component :public digital_object
@@ -151,7 +151,7 @@ namespace digitalc {
 	{
 	private:
 		std::wstring get_type();
-		//digitalc::circuit subcirsdfdfcuit();
+		//digital_circuits::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
 	public:
 		sub_circuit_component();

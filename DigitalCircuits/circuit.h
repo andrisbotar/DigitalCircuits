@@ -8,7 +8,7 @@
 #define __CIRCUIT__
 
 //Define class for storign circuit with multiple inputs, outputs and update functionality
-namespace digitalc {
+namespace digital_circuits {
 	class circuit:public digital_object
 	{
 	protected:
@@ -25,17 +25,17 @@ namespace digitalc {
 		~circuit();
 		//circuit& operator=(circuit other);
 		void update();
-		void printstate();
+		void print_state();
 		void reset_state();
 		void reset_state(std::vector<bool> default_state);
 
-		void addwires(int wire_count);
-		virtual void deletewire(int n);
-		virtual void deletewires(std::vector<int> v);
+		void add_wires(int wire_count);
+		virtual void delete_wire(int n);
+		virtual void delete_wires(std::vector<int> v);
 		bool get_wire_state(int n);
 		void set_wire_state(int n, bool value);
-		void hidewire(int n);
-		void unhideallwires();
+		void hide_wire(int n);
+		void un_hide_all_wires();
 
 		void add_component(std::unique_ptr<component> new_component);
 		void replace_component(int n, std::unique_ptr<component> new_component);

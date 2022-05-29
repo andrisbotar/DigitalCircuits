@@ -4,7 +4,7 @@
 //May 2022
 
 //Contained files:
-//Digitalcircuits.cpp : Central file containing main function, demonstration cases, etc..
+//digital_circuitsircuits.cpp : Central file containing main function, demonstration cases, etc..
 //circuit.cpp and circuit.h: Defines a class for storing a circuit with multiple inputs, outputs, update functionality..
 //Components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
 //utility.cpp and utility.h: Contains various utility functions for creating truth tables, printing tables,printing vectors...
@@ -19,7 +19,7 @@
 #include "components.h" //Contains AND Gates, XOR gates, buffers...
 #include "circuit.h" //Contains circuit class to collect and simualte components
 #include "utility.h" //A few miscelaneous utility functions
-using namespace digitalc; //"Digitalcircuit" namespace abbreviated
+using namespace digital_circuits; //namespace for own code
 
 //setup function to collect some start-up actions
 int setup() {
@@ -63,11 +63,11 @@ int main()
 
     //print current state of circuit
     std::wcout << "Intitial state: ";
-    circuit_1.printstate();
+    circuit_1.print_state();
     //simulate one time step and print new state
     circuit_1.update();
     std::wcout << "New state:      ";
-    circuit_1.printstate();
+    circuit_1.print_state();
     std::wcout << "\n\n";
 
     //reset circuit and run proper simulation
@@ -78,8 +78,8 @@ int main()
 
     std::wcout << "Delete wires and re-run simulation.\n";
     circuit_1.reset_state();
-    circuit_1.deletewires(std::vector<int>{2, 8});
-    //circuit_1.deletewires(std::vector<int>{5, 8});
+    circuit_1.delete_wires(std::vector<int>{2, 8});
+    //circuit_1.delete_wires(std::vector<int>{5, 8});
     circuit_1.simulate_cli(5);
     std::wcout << "\n\n";
 
@@ -95,13 +95,13 @@ int main()
     std::wcout << "Truth table for a XOR gate: \n";
     XORgate gate_1(0, 1, 0);
     std::vector<bool> trutht_1 = truth_table(gate_1, 2);
-    printtable(trutht_1, 2);
+    print_table(trutht_1, 2);
     std::wcout << "\n";
 
     std::wcout << "Truth table for a bigger XOR gate: \n";
     XORgate gate_2(0, 2, 0);
     std::vector<bool> trutht_2 = truth_table(gate_2, 3);
-    printstate(trutht_2);
+    print_state(trutht_2);
     std::wcout << "\n";
 
 

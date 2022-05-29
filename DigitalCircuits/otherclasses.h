@@ -7,7 +7,7 @@
 #include <string>
 //#include "utility.h"
 
-namespace digitalc {
+namespace digital_circuits {
 
 	class digital_object {
 	protected:

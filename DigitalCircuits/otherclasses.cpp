@@ -3,9 +3,9 @@
 #include <iostream>
 #include "circuit.h"
 #include "utility.h"
-using namespace digitalc;
+using namespace digital_circuits;
 
-namespace digitalc {
+namespace digital_circuits {
 
 
 }

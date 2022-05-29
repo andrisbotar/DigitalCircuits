@@ -4,7 +4,7 @@
 #include "circuit.h"
 #include "utility.h"
 #include "otherclasses.h"
-using namespace digitalc;
+using namespace digital_circuits;
 
 ////init global variables for keepign track of circuits
 int CIRCUITCOUNT{0};
@@ -51,7 +51,7 @@ void circuit::update() {
     //new_state[0] = defaul_wire_state 
     state.swap(new_state);
 }
-void circuit::printstate() {
+void circuit::print_state() {
     //for (auto i : state) {        std::wcout << i << " ";    }
     for (int i = 0; i < state.size(); ++i) {
         if(vector_contains <int,std::vector<int>> (i,hidden))
@@ -74,7 +74,7 @@ void circuit::reset_state(std::vector<bool> default_state)
 }
 
 //acting on individual wires
-void circuit::addwires(int wire_count) {
+void circuit::add_wires(int wire_count) {
     if (wire_count < 0) {
         std::wcout << "Cannot add negative number of wires.";
         return;
@@ -82,7 +82,7 @@ void circuit::addwires(int wire_count) {
     size_t new_size = state.size() + wire_count;
     state.resize(new_size);
 }
-void circuit::deletewire(int n) {
+void circuit::delete_wire(int n) {
     hidden.push_back(n);
     for (int i = 0; i < components.size(); ++i) {
         std::vector<int> v = components[i]->get_input();
@@ -97,9 +97,9 @@ void circuit::deletewire(int n) {
         }
     }
 }
-void circuit::deletewires(std::vector<int> wirestodelete) {
+void circuit::delete_wires(std::vector<int> wirestodelete) {
     for (auto wireindex : wirestodelete) {
-        this->deletewire(wireindex);
+        this->delete_wire(wireindex);
     }
 }
 bool circuit::get_wire_state(int n) {
@@ -108,10 +108,10 @@ bool circuit::get_wire_state(int n) {
 void circuit::set_wire_state(int n, bool value) {
     state[n] = value;
 }
-void circuit::hidewire(int n) {
+void circuit::hide_wire(int n) {
     hidden.push_back(n);
 }
-void circuit::unhideallwires() {
+void circuit::un_hide_all_wires() {
     hidden.clear();
 }
 
@@ -141,7 +141,7 @@ size_t circuit::component_count() {
     return components.size();
 }
 void circuit::print_info() {
-    std::wcout << "The circuit labelled '" << label << "' is currently in state: "; printstate();
+    std::wcout << "The circuit labelled '" << label << "' is currently in state: "; print_state();
     std::wcout << "It has " << size() << " wires and contains "<< component_count() <<" components: \n";
     for (int i = 0; i < components.size(); ++i) { std::wcout << "- "; components[i]->info(); }
     //std::wcout<<"and has complexity: "<<complexity();
@@ -160,7 +160,7 @@ void circuit::simulate_cli(int steps) {
 
     for (int i = 0; i < steps; ++i) {
         std::wcout << i << "|  ";
-        printstate();
+        print_state();
         update();
     }
 }

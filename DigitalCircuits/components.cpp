@@ -5,7 +5,7 @@
 #include "utility.h"
 #include "otherclasses.h"
 //using namespace std::remove_cvref;
-using namespace digitalc;
+using namespace digital_circuits;
 
 
 //init global variables for keepign track of components
@@ -27,7 +27,7 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*digitalc::logic_gate::logic_gate(std::wstring type_string, int i1, int i2, int o)
+/*digital_circuits::logic_gate::logic_gate(std::wstring type_string, int i1, int i2, int o)
 {
 	const std::wstring empty = L"";
 	std::wstring type(empty);
@@ -43,20 +43,20 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 }*/
 logic_gate::~logic_gate() {}//std::wcout << "Destroying " << this->get_type() << std::endl; }
 std::wstring logic_gate::get_type() { 	return std::wstring(L"Generic Logic Gate"); }
-std::vector<int> digitalc::logic_gate::get_input()
+std::vector<int> digital_circuits::logic_gate::get_input()
 {
 	return inputs;
 }
-int digitalc::logic_gate::getoutput()
+int digital_circuits::logic_gate::getoutput()
 {
 	return this->output;
 }
 void logic_gate::set_inversion(bool b) {	inverting = b; }
-void digitalc::logic_gate::set_output(int new_value)
+void digital_circuits::logic_gate::set_output(int new_value)
 {
 	this->output = new_value;
 }
-void digitalc::logic_gate::set_input(int input_index, int new_value)
+void digital_circuits::logic_gate::set_input(int input_index, int new_value)
 {
 	this->inputs[input_index] = new_value;
 }
@@ -67,7 +67,7 @@ void logic_gate::info() {
 		for (auto i : this->inputs) { std::wcout << i <<","; }
 	std::wcout << L"\b \n"; //delete last comma
 	std::wcout << L"Output wire: " << this->output << "\n";
-	//std::wcout << L"Inverting: " << BoolToString(this->inverting);
+	//std::wcout << L"Inverting: " << bool_to_string(this->inverting);
 	//std::wcout << L"\n";
 }
 void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) {
@@ -78,7 +78,7 @@ void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vec
 	//return input;
 }
 
-auto digitalc::logic_gate::clone() const{
+auto digital_circuits::logic_gate::clone() const{
 	return std::unique_ptr<logic_gate>(clone_impl());
 }
 
@@ -182,7 +182,7 @@ constant_input::constant_input(bool val, int out)
 	this->output = out;
 }
 constant_input::~constant_input() { std::wcout << L"Destroying " << this->get_type() << std::endl; }
-std::wstring constant_input::get_type() { return std::wstring(L"Constant " + BoolToString(inverting) + L" input"); }
+std::wstring constant_input::get_type() { return std::wstring(L"Constant " + bool_to_string(inverting) + L" input"); }
 void constant_input::info() {
 	std::wcout << L"type: " << this->get_type() << "\n";
 	std::wcout << L"value: " << this->inverting << "\n";
