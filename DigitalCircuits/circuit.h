@@ -20,6 +20,7 @@ namespace digital_circuits {
 		std::vector<std::unique_ptr<component>> components;
 	public:
 		circuit();
+		circuit(const circuit& other);
 		circuit(int number_of_wires, bool default_wire_state=false);
 		circuit(int number_of_wires, bool default_wire_state, std::wstring label);
 		~circuit();

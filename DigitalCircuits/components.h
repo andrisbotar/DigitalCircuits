@@ -26,6 +26,7 @@ namespace digital_circuits {
 		virtual void set_input(int input_index, int new_value)= 0;
 		virtual void set_label(std::wstring) = 0;
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) = 0;
+		virtual std::unique_ptr<component> clone() const=0;
 		//virtual void update() = 0;
 	};
 
@@ -42,6 +43,7 @@ namespace digital_circuits {
 		//logic_gate(logic_gate L);
 		logic_gate(int i1, int i2, int o);
 		logic_gate(int i1, int i2, int o, std::wstring label);
+		logic_gate(const logic_gate& other)=default;
 		~logic_gate();
 		virtual std::wstring get_type();
 		virtual std::vector<int> get_input();
@@ -54,7 +56,7 @@ namespace digital_circuits {
 		virtual void set_label(std::wstring);
 		virtual void info(); //virtual?
 		virtual void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
-		auto clone() const;
+		std::unique_ptr<component> clone() const;
 		//virtual void update() = 0; 
 		//std::vector<bool> truth_table();
 	};

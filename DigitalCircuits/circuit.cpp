@@ -14,12 +14,26 @@ circuit::circuit() {
     label = L"Circuit " + std::to_wstring(CIRCUITCOUNT);
     CIRCUITCOUNT++;
 }
+//Copy cosntructor
+circuit::circuit(const circuit& other) {
+    label = L"Circuit " + std::to_wstring(CIRCUITCOUNT);
+    CIRCUITCOUNT++;
+    this->state = other.state;
+    this->new_state = other.new_state;
+    this->hidden = other.hidden;
+
+    //need to make copy cosntructor becuase unique_ptr-s cannot be simply copied
+    for (const auto& item : other.components) {
+        this->components.push_back(std::move(item.get()->clone()));
+    }
+}
 circuit::circuit(int number_of_wires, bool default_wire_state)
 {
     label = L"Circuit " + std::to_wstring(CIRCUITCOUNT); CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);
     this->new_state = std::vector<bool>(number_of_wires, default_wire_state);
 }
+//alow labeling of cricuit
 circuit::circuit(int number_of_wires, bool default_wire_state, std::wstring label) {
     label = label; CIRCUITCOUNT++;
     this->state = std::vector<bool>(number_of_wires, default_wire_state);

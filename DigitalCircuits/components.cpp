@@ -32,6 +32,9 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
+/*logic_gate::logic_gate(const logic_gate& other) {
+
+}*/
 /*digital_circuits::logic_gate::logic_gate(std::wstring type_string, int i1, int i2, int o)
 {
 	const std::wstring empty = L"";
@@ -89,7 +92,7 @@ void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vec
 	//return input;
 }
 
-auto digital_circuits::logic_gate::clone() const{
+std::unique_ptr<component> digital_circuits::logic_gate::clone() const{
 	return std::unique_ptr<logic_gate>(clone_impl());
 }
 
