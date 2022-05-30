@@ -106,7 +106,12 @@ namespace digital_circuits {
         }
         std::wcout << "\n";
     }
-
+    //Just ocmbines truth_table and print_table for conveniance
+    void print_truth_table(logic_gate& comp, int n, int width, bool indecies = true, bool frame = true) {
+        std::vector<bool> t_table;
+        t_table = truth_table(comp, n);
+        print_table(t_table, width,  indecies , frame);
+    }
 
 
     //print out a vector of booleans

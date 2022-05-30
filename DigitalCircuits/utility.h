@@ -37,6 +37,7 @@ namespace digital_circuits {
 	std::vector<bool> int_to_bool_vector(int number, int len);
 	std::vector<bool> truth_table(logic_gate& comp, int n);
 	void print_table(std::vector<bool> table, int width, bool indecies=true, bool frame=true);
+	void print_truth_table(logic_gate& comp, int n, int width, bool indecies = true, bool frame = true);
 	void print_state(std::vector<bool> circuit_state);
 	//void print_int_vector(std::vector<int> circuit_state);
 }

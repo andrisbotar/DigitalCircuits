@@ -53,16 +53,18 @@ void tutorial() {
 
     std::wcout << "First, the two main classes in this program are components and circuits made of components.\n";
     std::wcout << "Let us create a circuit, and add some components to it: \n";
-    std::wcout << "circuit circuit_1(10);\n";
-    std::wcout << "circuit_1.add_component(std::make_unique<and_gate>(0, 1, 2));\n";
-   
+    std::wcout << "circuit circuit_1(10)\n";// example_circuit(circuit_1);\n";
+
     //create a circuit and add gate
-    circuit circuit_1(10);
-    circuit_1.add_component(std::make_unique<and_gate>(0, 1, 2));
+    circuit circuit_1(5);
+    circuit_1.add_component(std::make_unique< constant_input>(true, 1));
+    circuit_1.add_component(std::make_unique< constant_input>(true, 2));
+
+    //example_circuit(circuit_1);
     std::wcin >> response;
 
-    std::wcout << "Here the \"10\" indicates the number of wires in the circuit. \n";
-    std::wcout << "Each wire can be in a true or false state, and can be connected to multiple components.\n";
+    std::wcout << "Here the \"5\" indicates the number of wires in the circuit (minus one). \n";
+    std::wcout << "Wires mke up the state of a circuit. Each can be in a true or false state, and can be connected to multiple components.\n";
     std::wcin >> response;
 
     std::wcout << "Using circuit_1.print_state() we can see that all the wires are initialized to 0. \n";
@@ -71,13 +73,84 @@ void tutorial() {
     circuit_1.print_state();
     std::wcin >> response;
 
+    std::wcout << "We have added some components to the circuit, so by calling circuit_1++ we can see those components act on the circuit state. \n";
+    //simulate one time step and print new state
+    circuit_1++; //equivalent to circuit_1.update();
+    std::wcout << "New state:      ";
+    circuit_1.print_state();
+    std::wcout << "\n";
+    std::wcin >> response;
+
+    std::wcout << "Updates are carried out in discrete timesteps. Using component circuit_1.get_component_type()\n";
+    std::wcout << "First component: " << circuit_1.get_component_type(0) << "\n";
+    std::wcout << "Second component: " <<  circuit_1.get_component_type(1) << "\n";
+    std::wcout << "We can see that these are cosntant inputs, which have set their respective wires to true, and will keep them so.\n";
+    std::wcout << "\n";
+    std::wcin >> response;
+
+    std::wcout << "We now add an AND gate and an OR gate \n";
+    //std::wcout << ", using:\n";
+    circuit_1.add_component(std::make_unique< and_gate>(1, 2, 3));
+    circuit_1.add_component(std::make_unique< or_gate>(1, 2, 4));
+    std::wcout << "And if we do an additional update: \n";
+    circuit_1++; 
+    std::wcout << "New state:      ";
+    circuit_1.print_state();
+    std::wcin >> response;
+
+    std::wcout << "And we can now add more wires and components to the circuit: \n";
+    std::wcout << "circuit_1.add_wires(3) adds 3 wires to the circuit;\n";
+    std::wcout << "And we use circuit_1.add_component(std::make_unique< xor_gate>(3, 4, 5));\n";
+    std::wcout << "To add a XOR gate taking inputs 3,4 and outputtign to wire 5.\n";
+    circuit_1.add_wires(3);
+    circuit_1.add_component(std::make_unique< xor_gate>(3, 4, 5));
+    circuit_1.add_component(std::make_unique< not_gate>(1, 6));
+    circuit_1.add_component(std::make_unique< buffer>(1, 7));
+    circuit_1.print_state();
+    std::wcout << "And we can even invert an existing gate, for example the first AND gate we added! \n";
+    circuit_1.set_invert(2, true);
+    std::wcout << "\n";
+    std::wcin >> response;
+
+    std::wcout << "If we run forward another timestep: \n";
+    circuit_1++;
+    std::wcout << "New state:      ";
+    circuit_1.print_state();
+    std::wcout << "\n";
+    std::wcout << "We see all the gates took their effect.\n";
+    std::wcin >> response;
+
+
+    std::wcout << "We can reset the state of the circuit using circuit_1.reset_state(); \n";
+    std::wcout << "And we can run forward some given number of timesteps.\n";
+    std::wcout << "(Please enter a positive integer (default 10)):\n";
+    std::wcin >> response;
+    int timesteps = 10;
+    try {
+        timesteps = std::stoi(response);
+    }
+    catch (...) {  }
+    //reset circuit and run proper simulation
+    std::wcout << "Simulation over "<< timesteps<<" timesteps: \n";
+    circuit_1.reset_state();
+    circuit_1.simulate_cli(timesteps);
+    std::wcout << "\n\n";
+    std::wcin >> response;
+
+    std::wcout << "\n";
+    std::wcout << "\n";
+    std::wcout << "\n";
+    std::wcout << "\n";
+    std::wcout << "\n";
+    std::wcout << "\n";
     std::wcout << "\n";
     std::wcout << "\n";
     std::wcout << "\n";
 
+
+
     //create a circuit and fill it with example data
-    circuit circuit_2(10);
-    example_circuit(circuit_2);
+    std::wcout << "The example cicuit also has an AND gate, an OR gate and \n";
 
     //copy-create two more circuits
     circuit circuit_2(circuit_1); //copy constructor
@@ -85,21 +158,7 @@ void tutorial() {
     circuit_3 = circuit_1;
 
     //Invert logic gate
-    circuit_1.set_invert(4, true);
     circuit_2.add_component(circuit_3.to_logic_gate(0, 9, 5, 4));
-
-
-    //simulate one time step and print new state
-    circuit_1++; //equivalent to circuit_1.update();
-    std::wcout << "New state:      ";
-    circuit_1.print_state();
-    std::wcout << "\n\n";
-
-    //reset circuit and run proper simulation
-    std::wcout << "Simulation over several timesteps: \n";
-    circuit_1.reset_state();
-    circuit_1.simulate_cli(5);
-    std::wcout << "\n\n";
 
     std::wcout << "Delete wires and re-run simulation.\n";
     circuit_1.reset_state();
@@ -149,7 +208,7 @@ int main()
 {   
     setup();
 
-
+    tutorial();
 
 
     

@@ -139,6 +139,7 @@ void circuit::add_wires(int wire_count)
     }
     size_t new_size = state.size() + wire_count;
     state.resize(new_size);
+    new_state.resize(new_size);
 }
 void circuit::delete_wire(int n) 
 {
