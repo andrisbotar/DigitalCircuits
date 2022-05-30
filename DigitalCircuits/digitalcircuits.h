@@ -33,6 +33,7 @@ namespace digital_circuits {
 	std::string diagram_format{"png"}; //svg, png or pdf
 	bool print_indecies{ true };
 	bool print_frame{ true };
+	bool math_symbols{ false };
 }
 
 

@@ -5,7 +5,7 @@
 #define __COMMON__
 
 namespace digital_circuits {
-	//extern bool verbose;
+	//declare global variables used as settings
 	extern bool verbose;
 	extern bool draw_symbols;
 	extern bool draw_names;
@@ -13,7 +13,7 @@ namespace digital_circuits {
 	extern std::string diagram_format; //svg, png or pdf
 	extern bool print_indecies;
 	extern bool print_frame;
-
+	extern bool math_symbols;
 }
 
 #endif

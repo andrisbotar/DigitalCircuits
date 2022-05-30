@@ -252,20 +252,26 @@ void UI()
     //declare variables
     std::wstring response; //user response
     std::wstring response2;
+    circuit circ;
+
     std::wifstream f("README.txt");
+    int output_port;
+    sub_circuit_component gate_circ;
+    int n;
 
     while (state != 0) {
         //cin.clear();
         switch (state)
         {
         default:
-            //break;
+            state = 0;
+            break;
         case 0:
             break;
         case 1: //Main menu
             std::wcout << "Welcome to the digital circuit simualtor!\n";
             std::wcout << "Please select what you would like to do: \n";
-            std::wcout << "(press the associated number on you keyboard, then enter to cinfirm your choice)";
+            std::wcout << "(press the associated number on you keyboard, then enter to cinfirm your choice)\n";
 
             std::wcout << "1-See tutorial\n";
             std::wcout << "2-Load existing circuit\n";
@@ -273,8 +279,6 @@ void UI()
             std::wcout << "4-Settings\n";
             std::wcout << "5-Help\n";
             std::wcout << "6-Exit\n";
-            std::wcout << "";
-            //crete component
 
             std::wcout << "\n";
             std::wcout << "-made by AND(ras, Botar)\n";
@@ -287,7 +291,8 @@ void UI()
             else if (response == L"4") { state = 40; }
             else if (response == L"5") { state = 50; }
             else if (response == L"6") { state = 60; } //Exit
-            else if (response == L"9") { state = 99; } //Debug
+            else if (response == L"8") { state = 99; } //Debug
+            else if (response == L"9") { state = 0;  } //Maintain 9-exit convention
             break;
 
         case 10: // Tutorial Code
@@ -303,16 +308,110 @@ void UI()
             state = 1;
             break;
 
-        case 20:
+        case 20: //Loading circuit
             std::wcout << "Please select which circuit you would like to load: \n";
             std::wcout << "1- Example tutorial circuit. \n";
 
             std::wcin >> response;
-
+            if (response == L"1") { circ = circuit(10); example_circuit(circ); }
+            //else if (response == L"2") { draw_symbols = !draw_symbols; }
+            state = 21;
 
             break;
 
+        case 21: //Handling circuit
+
+            std::wcout << "Please select which circuit you would like to do with the circuit: \n";
+            std::wcout << "1- Print circuit information. \n";
+            std::wcout << "2- Simulate. \n";
+            std::wcout << "3- Logic analysis. \n";
+            std::wcout << "4- Modify. \n";
+            std::wcout << "5- Draw. \n";
+            std::wcout << "6- Exit to main menu. \n";
+            std::wcin >> response;
+            if (response == L"1") { circ.print_info(); std::wcin >> response; }
+            else if (response == L"2") { state = 22; }
+            else if (response == L"3") { state = 23; }
+            else if (response == L"4") { state = 24; }
+            else if (response == L"5") { state = 25; }
+            else if (response == L"6") { state = 1; }
+            else if (response == L"7") {}
+            else if (response == L"8") {}
+            else if (response == L"9") { state = 1; }
+            state = 21;
+
+
+            break;
+        case 22: // Simualation menu
+            std::wcout << "Please select which circuit you would like to do with the circuit: \n";
+            std::wcout << "1- Print circuit state. \n";
+            std::wcout << "2- Update by one timestep. \n";
+            std::wcout << "3- Update by N timesteps. \n";
+            std::wcout << "4- Silently update by N timesteps. \n";
+            std::wcout << "5- Print circuit information. \n";
+            //std::wcout << "5- Draw. \n";
+            //std::wcout << "6- . \n";
+            std::wcout << "6- Exit to main menu. \n";
+            std::wcin >> response;
+            if (response == L"1") { circ.print_state(); std::wcin >> response; }
+            else if (response == L"2") { circ++; }
+            else if (response == L"3") { 
+                try {
+                    n = std::stoi(response);
+                }
+                catch (...) { n = 10; }
+                circ.simulate_cli(n);
+                state = 22;
+            }
+            else if (response == L"4") {
+                try {
+                    n = std::stoi(response);
+                }
+                catch (...) { n = 10; }
+                for (int k = 0; k < n; ++k) {
+                    circ++;
+                }
+                state = 22;
+            }
+            else if (response == L"5") { circ.print_info(); std::wcin >> response; }
+            else if (response == L"6") { state = 1; }
+            else if (response == L"6") {}
+            else if (response == L"7") {}
+            else if (response == L"8") {}
+            else if (response == L"9") { state = 1; }
+
+            state = 22;
+            break;
+        case 23: //logical analysis
+
+            output_port = 1;
+            std::wcout << "Truth table of wire " << output_port << " is: \n";
+            //sub_circuit_component gate_circ;
+            gate_circ = *circ.to_logic_gate(1, 2, 0, output_port);
+            print_truth_table(gate_circ, 2, 2);
+            std::wcout << "\n";
+            std::wcout << "\n";
+
+            break;
+        case 24: // Modification
+
+            break;
+        case 25: //drawing
+            try {
+                write_diag_file(circ);
+                std::wcout << "A circuit diagram has now been created named circuit_diagram, in the program folder.\n";
+                std::wcout << "\n";
+            }
+            catch (...) {
+                std::wcout << "The program was unable to create a circuit diagram.\n";
+            }
+
+            std::wcin >> response;
+            state = 21;
+            break;
         case 30: //Create new circuit
+
+
 
             break;
 
@@ -325,8 +424,8 @@ void UI()
             std::wcout << "5- file format to export circuti diagram. Must be one of: png, svg or pdf. \n";
             std::wcout << "6- for truth tables print column and row indecies: " << print_indecies << " \n";
             std::wcout << "7- whether to print a frame around truth table: " << print_frame << "  \n";
-            //std::wcout << "8- ";
-            std::wcout << "8- return to main menu.\n";
+            std::wcout << "8- math symbols (^,ˇ... instead of AND,OR...)" << math_symbols << "  \n";
+            std::wcout << "9- return to main menu.\n";
             std::wcout << "\n";
 
 
@@ -348,12 +447,13 @@ void UI()
             }
             else if (response == L"6") { print_indecies = !print_indecies; }
             else if (response == L"7") { print_frame = !print_frame; }
-            else if (response == L"8") { state = 1; }
+            else if (response == L"8") { math_symbols = !math_symbols; }
+            else if (response == L"9") { state = 1; }
             break;
 
         case 50:
             if (f.is_open())
-                while (!f.fail() && !f.eof() && !f.peek() != EOF)
+                while (!f.fail() && !f.eof() && !(f.peek() == EOF))
                 {
                     std::wcout << f.rdbuf();
                 }
@@ -364,7 +464,7 @@ void UI()
             break;
 
         case 99: // Debug
-            std::wcout << "Text \n";
+            std::wcout << "Debug \n";
             std::wcout << "\n";
 
             std::wcin >> response;
@@ -406,8 +506,3 @@ int main()
     clean_up();
     return 0;
 }
-
-
-
-
-
