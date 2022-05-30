@@ -8,7 +8,7 @@
 //circuit.cpp and circuit.h: Defines a class for storing a circuit with multiple inputs, outputs, update functionality..
 //components.cpp and Components.h: Contains digital circuit components such as AND gates, OR gates, buffers...
 //utility.cpp and utility.h: Contains various utility functions for creating truth tables, printing tables,printing vectors...
-
+//draw.cpp and draw.h Uses the "blockdiag" program to output images of the circuits
 
 //import dependencies
 #include "digitalcircuits.h"
@@ -74,7 +74,7 @@ int main()
 
     std::wcout << "Delete wires and re-run simulation.\n";
     circuit_1.reset_state();
-    circuit_1.delete_wires(std::vector<int>{2, 8});
+    circuit_1.delete_wires(std::vector<int>{3, 8});
     //circuit_1.delete_wires(std::vector<int>{5, 8});
     circuit_1.simulate_cli(5);
     std::wcout << "\n\n";
@@ -100,6 +100,9 @@ int main()
     std::vector<bool> trutht_2 = truth_table(gate_2, 3);
     print_state(trutht_2);
     std::wcout << "\n";
+
+
+    write_diag_file(circuit_3);
 
 
 
