@@ -14,14 +14,15 @@ using namespace digital_circuits;
 
 namespace digital_circuits
 {
-
-	void circuit_to_diag(circuit circ)
+	//function to create circuit diagram ftrom circuit object
+	void circuit_to_diag(circuit circ) 
 	{
 		if (check_blockdiag()) {
-			write_diag_file(circ);
+			write_diag_file(circ); 
 		}
 	}
 
+	//check if neccesary software is installed on system
 	bool check_blockdiag()
 	{
 		bool found_blockdiag = false;
@@ -61,8 +62,8 @@ namespace digital_circuits
 		return true;
 	}
 
-	//Writes a .diag fiel that blaockiag can udnerstand
-	void write_diag_file(circuit circ, bool show_labels)
+	//Writes a .diag file that blaockiag can understand
+	void write_diag_file(circuit circ, bool show_labels) //, std::wstring filename
 	{
 		size_t count = circ.component_count();
 		size_t size = circ.size();
@@ -116,17 +117,20 @@ namespace digital_circuits
 
 		//try to write out to file
 		try {
-			std::wofstream outFile("diag_print.diag");
+			std::wofstream outFile("circuit_diagram.diag");
 			outFile << ss.rdbuf();
 			outFile.close();
 		}
 		catch (...) {
-			std::wcout << "Unalbe to write .diag file";
+			std::wcout << "Unable to write .diag file";
 		}
 
 		//try to call external block_diag to convert .diag into image
 		try {
-			system("blockdiag diag_print.diag");
+			std::string command("blockdiag circuit_diagram.diag");
+			if (diagram_format != "") { command.append(" -T").append(diagram_format); }
+			const char* c = command.c_str();
+			system(c);
 		}
 		catch (...) {
 			std::wcout << "Unable to call BlockDiag to create image";

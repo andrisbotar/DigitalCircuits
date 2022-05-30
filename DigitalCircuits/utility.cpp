@@ -59,8 +59,10 @@ namespace digital_circuits {
     }
 
     //prints table of booleans with column and row indecies, and unicode box drawing characters
-    void print_table(std::vector<bool> table, int width, bool indecies, bool frame)
+    void print_table(std::vector<bool> table, int width, bool indecies_arg, bool frame_arg)
     {
+        bool indecies = print_indecies;
+        bool frame = print_frame;
         //indecies argument allows for the option to print indecies or not
         //frame can print a frame or box around the table for readabiltiy
         std::wstring framechar(frame ? L"\u2502" : L"");
@@ -107,7 +109,7 @@ namespace digital_circuits {
         std::wcout << "\n";
     }
     //Just ocmbines truth_table and print_table for conveniance
-    void print_truth_table(logic_gate& comp, int n, int width, bool indecies = true, bool frame = true) {
+    void print_truth_table(logic_gate& comp, int n, int width, bool indecies, bool frame) {
         std::vector<bool> t_table;
         t_table = truth_table(comp, n);
         print_table(t_table, width,  indecies , frame);

@@ -13,6 +13,8 @@
 #include <sstream> 
 #include <io.h>
 #include <fcntl.h>
+#include <iostream>
+#include <fstream>
 #include "components.h" //Contains AND Gates, XOR gates, buffers...
 #include "circuit.h" //Contains circuit class to collect and simualte components
 #include "utility.h" //A few miscelaneous utility functions
@@ -28,7 +30,9 @@ namespace digital_circuits {
 	bool draw_symbols{false};
 	bool draw_names{ true };
 	bool draw_labels{ false };
-
+	std::string diagram_format{"png"}; //svg, png or pdf
+	bool print_indecies{ true };
+	bool print_frame{ true };
 }
 
 

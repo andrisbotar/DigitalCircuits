@@ -10,7 +10,9 @@ namespace digital_circuits {
 	extern bool draw_symbols;
 	extern bool draw_names;
 	extern bool draw_labels;
-
+	extern std::string diagram_format; //svg, png or pdf
+	extern bool print_indecies;
+	extern bool print_frame;
 
 }
 
