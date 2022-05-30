@@ -182,9 +182,17 @@ std::wstring circuit::component_info(int n)
     components[n]->info();
     return L"";
 }
+std::wstring circuit::get_component_type(int n){      return components[n]->get_type(); }
+std::wstring circuit::get_component_label(int n){     return components[n]->get_label(); }
+int circuit::get_component_output(int n) {            return components[n]->get_output(); }
+std::vector<int> circuit::get_component_inputs(int n){return components[n]->get_input(); }
+/*std::unique_ptr<component> circuit::get_component_copy(int n)
+{
+    return std::make_unique<component>(components[n]->clone());
+}*/
 
 //Utility functions
-size_t circuit::size() {    return state.size();}
+size_t circuit::size() {               return state.size();}
 size_t circuit::component_count() {    return components.size();}
 void circuit::print_info() 
 {
@@ -231,6 +239,7 @@ bool digital_circuits::circuit::stayed_the_same()
     }
     return false;
 }
+std::wstring circuit::get_label() { return this->label; }
 
 //conversions to lambda functions adn circuits
 //One option is to output function that represents only one timestep, one update of the circuit state

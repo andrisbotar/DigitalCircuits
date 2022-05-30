@@ -34,8 +34,14 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 	this->inputs = std::vector<int>{ i1,i2 };
 	this->output = o;
 }
-/*logic_gate::logic_gate(const logic_gate& other) {
-
+/*logic_gate::logic_gate(const logic_gate& other)
+{
+	label = L"Component " + std::to_wstring(COMPONENTCOUNT);
+	COMPONENTCOUNT++;
+	this->inputs = other.inputs;
+	this->output = other.output;
+	this->inverting = other.inverting;
+	this->label = other.label;
 }*/
 /*digital_circuits::logic_gate::logic_gate(std::wstring type_string, int i1, int i2, int o)
 {
@@ -52,33 +58,17 @@ logic_gate::logic_gate(int i1, int i2, int o, std::wstring label)
 	}
 }*/
 logic_gate::~logic_gate() {}//std::wcout << "Destroying " << this->get_type() << std::endl; }
-std::wstring logic_gate::get_type() { 	return std::wstring(L"Generic Logic Gate"); }
-std::vector<int> digital_circuits::logic_gate::get_input()
-{
-	return inputs;
-}
-int digital_circuits::logic_gate::get_output()
-{
-	return this->output;
-}
-std::wstring logic_gate::get_label() {	return this->label;}
+
+//getters and setters. One line style for compactness. each function is self exmplanatory. 
+std::wstring logic_gate::get_type(){ 	return std::wstring(L"Generic Logic Gate"); }
+std::wstring logic_gate::get_label(){	return this->label; }
+std::vector<int> digital_circuits::logic_gate::get_input(){		return inputs;}
+int logic_gate::get_output(){	return this->output;}
 void logic_gate::set_inversion(bool b) {	inverting = b; }
-void digital_circuits::logic_gate::set_output(int new_value)
-{
-	this->output = new_value;
-}
-void digital_circuits::logic_gate::set_input(int input_index, int new_value)
-{
-	this->inputs[input_index] = new_value;
-}
-void logic_gate:: set_inputs(std::vector<int> new_input_vector)
-{
-	this->inputs= new_input_vector;
-}
-void logic_gate::set_label(std::wstring in) 
-{
-	this->label = in;
-}
+void logic_gate::set_output(int new_value){	this->output = new_value;}
+void logic_gate::set_input(int input_index, int new_value){	this->inputs[input_index] = new_value;}
+void logic_gate::set_inputs(std::vector<int> new_input_vector){	this->inputs= new_input_vector;}
+void logic_gate::set_label(std::wstring in) {	this->label = in;}
 void logic_gate::info() 
 {
 	std::wcout << L"Label: " << label << "\n";
@@ -98,7 +88,6 @@ void logic_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vec
 	//std::wcout << "updated!\n";
 	//return input;
 }
-
 std::unique_ptr<component> digital_circuits::logic_gate::clone() const
 {
 	return std::unique_ptr<logic_gate>(clone_impl());
@@ -122,6 +111,7 @@ and_gate::~and_gate()
 	} 
 }
 std::wstring and_gate::get_type(){ return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"AND Gate"); }
+std::vector<int> and_gate::get_input(){	return inputs; }
 void and_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	//out_vector[output] = in_vector[inputs[0]] && in_vector[inputs[1]];
@@ -148,6 +138,7 @@ or_gate::~or_gate()
 	}
 }
 std::wstring or_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"OR Gate"); }
+std::vector<int> or_gate::get_input() { return inputs; }
 void or_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	//out_vector[output] = in_vector[inputs[0]] || in_vector[inputs[1]];
@@ -176,6 +167,7 @@ xor_gate::~xor_gate()
 	}
 }
 std::wstring xor_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"XOR Gate"); }
+std::vector<int> xor_gate::get_input() { return inputs; }
 void xor_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	bool result = false;
@@ -201,6 +193,7 @@ not_gate::~not_gate()
 	}
 }
 std::wstring not_gate::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"NOT Gate"); }
+std::vector<int> not_gate::get_input() { return inputs; }
 void not_gate::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	out_vector[output] = (inverting != (!in_vector[inputs[0]]));
@@ -221,6 +214,7 @@ buffer::~buffer()
 	}
 }
 std::wstring buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Buffer"); }
+std::vector<int> buffer::get_input() { return inputs; }
 void buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	out_vector[output] = (inverting != in_vector[inputs[0]]);
@@ -241,6 +235,7 @@ constant_input::~constant_input()
 	}
 }
 std::wstring constant_input::get_type() { return std::wstring(L"Constant " + bool_to_string(inverting) + L" input"); }
+std::vector<int> constant_input::get_input() { return inputs; }
 void constant_input::info() {
 	std::wcout << L"type: " << this->get_type() << "\n";
 	std::wcout << L"value: " << this->inverting << "\n";
@@ -267,6 +262,7 @@ majority_function::~majority_function()
 	}
 }
 std::wstring majority_function::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Majority Function"); }
+std::vector<int> majority_function::get_input() { return inputs; }
 void majority_function::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector) 
 {
 	int true_count = 0;
@@ -308,6 +304,7 @@ sub_circuit_component::~sub_circuit_component()
 }
 std::wstring sub_circuit_component::get_type() { return std::wstring(inverting ? L"Inverting " : L"")
 + std::wstring(acyclic ? L"acyclic ":L"") + std::wstring(L"sub-circuit"); }
+std::vector<int> sub_circuit_component::get_input() { return inputs; }
 sub_circuit_component::sub_circuit_component(int i1, int i2, int o, bool_fn fn, size_t circuit_size, bool acyc)
 {
 	this->update_function_call = fn;
@@ -341,7 +338,7 @@ sub_circuit_component* sub_circuit_component::clone_impl() const { return new su
 
 
 
-//multi output compoennts
+//multi output components
 digital_circuits::multi_not::multi_not() {}
 digital_circuits::multi_not::multi_not(std::vector<int> in, std::vector<int> o)
 {
@@ -356,6 +353,7 @@ digital_circuits::multi_not::~multi_not()
 	}
 }
 std::wstring multi_not::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-input NOT"); }
+std::vector<int> multi_not::get_input() { return inputs; }
 void digital_circuits::multi_not::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {
 	for (int i = 0; i < std::min(inputs.size(),out.size()); ++i) {
@@ -366,7 +364,6 @@ void digital_circuits::multi_not::update(std::vector<bool>& in_vector, std::vect
 	}
 }
 multi_not* multi_not::clone_impl() const { return new multi_not(*this); };
-
 
 digital_circuits::big_buffer::big_buffer() {}
 digital_circuits::big_buffer::big_buffer(std::vector<int> in, std::vector<int> o)
@@ -382,6 +379,7 @@ digital_circuits::big_buffer::~big_buffer()
 	}
 }
 std::wstring big_buffer::get_type() { return std::wstring(inverting ? L"Inverting " : L"") + std::wstring(L"Multi-buffer"); }
+std::vector<int> big_buffer::get_input() { return inputs; }
 void digital_circuits::big_buffer::update(std::vector<bool>& in_vector, std::vector<bool>& out_vector)
 {
 	for (int i = 1; i < std::min(inputs.size(), out.size()); ++i) {

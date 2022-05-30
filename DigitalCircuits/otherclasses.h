@@ -15,7 +15,7 @@ namespace digital_circuits {
 	protected:
 		
 	public:
-		std::wstring label;
+		virtual std::wstring get_label()=0;
 		~digital_object() {};
 	};
 

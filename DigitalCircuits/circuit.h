@@ -22,6 +22,8 @@ namespace digital_circuits {
 		std::vector<bool> new_state;
 		std::vector<int> hidden{0};
 		std::vector<std::unique_ptr<component>> components;
+		std::wstring label;
+		//std::wstring usr_label{ L"" };
 	public:
 		circuit();
 		circuit(const circuit& other);
@@ -52,6 +54,12 @@ namespace digital_circuits {
 		void replace_component(int n, std::unique_ptr<component> new_component);
 		virtual void delete_component(int n);
 		std::wstring component_info(int n);
+		std::wstring get_component_type(int n);
+		std::wstring get_component_label(int n);
+		int get_component_output(int n);
+		std::vector<int> get_component_inputs(int n);
+		//std::unique_ptr<component> get_component_copy(int n);
+
 		void set_invert(int n, bool inverted);
 		
 
@@ -61,6 +69,7 @@ namespace digital_circuits {
 		void print_info();
 		bool acyclic();
 		bool stayed_the_same();
+		std::wstring get_label();
 
 		//export circuit as lambda function, single output logic-gate or multi output component
 		typedef bool (*boolean_function)(std::vector<bool> boolean_vector);

@@ -9,11 +9,10 @@ using namespace digital_circuits;
 
 namespace digital_circuits {
 
-	
-	bool check_diagdraw();
 	void circuit_to_diag(circuit circ);
-	void write_diag_file(circuit circ);
-
+	bool check_blockdiag();
+	void write_diag_file(circuit circ, bool show_labels=false);
+	//std::wstring get_backgrdound(std::wstring);
 
 
 

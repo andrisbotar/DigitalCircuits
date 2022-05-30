@@ -4,6 +4,7 @@
 #define __UTILITY__
 
 #include <vector>
+#include <iostream>
 #include "components.h"
 #include "common.h"
 

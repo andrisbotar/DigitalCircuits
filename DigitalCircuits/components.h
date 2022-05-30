@@ -42,6 +42,7 @@ namespace digital_circuits {
 		int output{ 0 };
 		bool inverting{ false };
 		virtual logic_gate* clone_impl() const = 0;
+		std::wstring label;
 	public:
 		logic_gate();
 		//logic_gate(logic_gate L);
@@ -50,9 +51,9 @@ namespace digital_circuits {
 		logic_gate(const logic_gate& other)=default;
 		~logic_gate();
 		virtual std::wstring get_type();
+		virtual std::wstring get_label();
 		virtual std::vector<int> get_input();
 		virtual int get_output();
-		virtual std::wstring get_label();
 		//virtual std::wstring getCNFsig();
 		virtual void set_inversion(bool b);
 		virtual void set_output(int new_value);
@@ -76,6 +77,7 @@ namespace digital_circuits {
 		and_gate(int i1,int i2,int o);
 		~and_gate();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 		//using logic_gate::logic_gate;
 	};
@@ -89,18 +91,20 @@ namespace digital_circuits {
 		or_gate(int i1, int i2, int o);
 		~or_gate();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 	class xor_gate : public logic_gate
 	{
 	private:
-		std::wstring get_type();
 		virtual xor_gate* clone_impl() const override;
 	public:
 		xor_gate();
 		xor_gate(int i1, int i2, int o);
 		~xor_gate();
+		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -115,6 +119,7 @@ namespace digital_circuits {
 		not_gate(int i1, int o);
 		~not_gate();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -128,6 +133,7 @@ namespace digital_circuits {
 		buffer(int i1, int o);
 		~buffer();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -142,6 +148,7 @@ namespace digital_circuits {
 		constant_input(bool value, int output);
 		~constant_input();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void info();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
@@ -158,6 +165,7 @@ namespace digital_circuits {
 		majority_function(int i1, int i2, int o);
 		~majority_function();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -170,7 +178,6 @@ namespace digital_circuits {
 	class sub_circuit_component :public logic_gate
 	{
 	private:
-		std::wstring get_type();
 		//digital_circuits::circuit subcirsdfdfcuit();
 		virtual sub_circuit_component* clone_impl() const override;
 		bool acyclic{ true };
@@ -185,6 +192,8 @@ namespace digital_circuits {
 		sub_circuit_component(std::vector<int> in, int o, bool_fn fn, size_t circuit_size, bool acyclic = true);
 		//sub_circuit_component(int i1, int i2, int o, circuit subcircuit);
 		
+		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
@@ -201,12 +210,14 @@ namespace digital_circuits {
 		multi_not(std::vector<int> in, std::vector<int> out);
 		~multi_not();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 
 
 
 	//Big buffer for more than jsut 1 tck delay
+	//A large buffer that can use multiple wires, just shifts everything over by one and uses its input to fill the first slot
 	class big_buffer :public logic_gate
 	{
 	private:
@@ -217,6 +228,7 @@ namespace digital_circuits {
 		big_buffer(std::vector<int> in, std::vector<int> out);
 		~big_buffer();
 		std::wstring get_type();
+		std::vector<int> get_input();
 		void update(std::vector<bool>& in_vector, std::vector<bool>& out_vector);
 	};
 

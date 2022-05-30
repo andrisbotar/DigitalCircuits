@@ -7,6 +7,10 @@
 namespace digital_circuits {
 	//extern bool verbose;
 	extern bool verbose;
+	extern bool draw_symbols;
+	extern bool draw_names;
+	extern bool draw_labels;
+
 
 }
 
