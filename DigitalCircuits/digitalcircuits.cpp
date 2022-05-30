@@ -38,28 +38,57 @@ void example_circuit(circuit& circuit_1)
     circuit_1.add_component(std::make_unique< majority_function>(1, 2, 9));
 }
 
-//Main function of program, start-point
-int main()
-{   
-    setup();
 
+void tutorial() {
+    std::wstring response;
+
+    std::wcout << "Welcome to the  \n";
+    std::wcout << "The attached Readme file and the project report the functionality and background of this program,\n";
+    std::wcout << "This tutorial will be an active demonstarion. Press enter to move along and input values. \n";
+    std::wcout << "Following along in the code may be insightful, just search for \"Tutorial " << "Code\". \n";
+    std::wcout << "\n";
+    std::wcin >> response;
+    //std::cin.ignore();
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::wcout << "First, the two main classes in this program are components and circuits made of components.\n";
+    std::wcout << "Let us create a circuit, and add some components to it: \n";
+    std::wcout << "circuit circuit_1(10);\n";
+    std::wcout << "circuit_1.add_component(std::make_unique<and_gate>(0, 1, 2));\n";
+   
+    //create a circuit and add gate
+    circuit circuit_1(10);
+    circuit_1.add_component(std::make_unique<and_gate>(0, 1, 2));
+    std::wcin >> response;
+
+    std::wcout << "Here the \"10\" indicates the number of wires in the circuit. \n";
+    std::wcout << "Each wire can be in a true or false state, and can be connected to multiple components.\n";
+    std::wcin >> response;
+
+    std::wcout << "Using circuit_1.print_state() we can see that all the wires are initialized to 0. \n";
+    //print current state of circuit
+    std::wcout << "Intitial state: ";
+    circuit_1.print_state();
+    std::wcin >> response;
+
+    std::wcout << "\n";
+    std::wcout << "\n";
+    std::wcout << "\n";
 
     //create a circuit and fill it with example data
-    circuit circuit_1(10);
-    example_circuit(circuit_1);
+    circuit circuit_2(10);
+    example_circuit(circuit_2);
 
     //copy-create two more circuits
     circuit circuit_2(circuit_1); //copy constructor
     circuit circuit_3; //copy assignment operator
     circuit_3 = circuit_1;
-    
-    //Invert logic gate
-    circuit_1.set_invert(4,true);
-    circuit_2.add_component(circuit_3.to_logic_gate(0,9,5,4));
 
-    //print current state of circuit
-    std::wcout << "Intitial state: ";
-    circuit_1.print_state();
+    //Invert logic gate
+    circuit_1.set_invert(4, true);
+    circuit_2.add_component(circuit_3.to_logic_gate(0, 9, 5, 4));
+
+
     //simulate one time step and print new state
     circuit_1++; //equivalent to circuit_1.update();
     std::wcout << "New state:      ";
@@ -102,11 +131,106 @@ int main()
     std::wcout << "\n";
 
 
-    write_diag_file(circuit_3);
-
-
-
+    //write_diag_file(circuit_3);
     circuit_1.print_info();
+
+
+
+    std::wcin >> response;
+    if (response == L"1") {}
+    //else if (response == L"2") { state = 98; }
+
+
+
+}
+
+//Main function of program, start-point
+int main()
+{   
+    setup();
+
+
+
+
+    
+
+
+    //cin.clear();
+
+    //A menu sysem is created as a state machine
+    int state = 1; //Use int to represent states, since unfortunately string cannto be used for switch
+    std::wstring response; //user response
+    while (state!=0) {
+        //cin.clear();
+        switch (state)
+        {
+        default:
+            break;
+        case 0:
+            break;
+        case 1: //Main menu
+            std::wcout << "Welcome to the digital circuit simualtor!\n";
+            std::wcout << "Please select what you would like to do: \n";
+            std::wcout << "(press the associated number on you keyboard, then enter to cinfirm your choice)";
+            
+            std::wcout << "1-See tutorial\n";
+            std::wcout << "2-Load existing circuit\n";
+            std::wcout << "3-Create new circuit\n";
+            std::wcout << "4-Settings\n";
+            std::wcout << "5-Help\n";
+            std::wcout << "6-Exit\n";
+            std::wcout << "";
+            //crete component
+
+            std::wcout << "\n";
+            std::wcout << "-made by AND(ras, Botar)\n";
+
+            std::wcin >> response;
+            if (response == L"1"){ state = 10; }
+            else if (response == L"2") { state = 20; }
+            else if (response == L"3") { state = 30; }
+            else if (response == L"4") { state = 40; }
+            else if (response == L"5") { state = 50; }
+            else if (response == L"6") { state = 60; }
+            else if (response == L"9") { state = 99; }
+
+        case 10: // Tutorial Code
+            tutorial();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        case 99: // Debug
+            std::wcout << "Text \n";
+            std::wcout << "\n";
+
+            std::wcin >> response;
+            if (response == L"1") {            }
+            else if (response == L"2") { state = 98; }
+
+        
+
+        }
+        //std::wcin >> response;
+    }
+
+
+
+    
     //circuit_1.debug();
 
     //Cleanup memory
