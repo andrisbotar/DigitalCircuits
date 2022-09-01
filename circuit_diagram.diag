@@ -1,0 +1,21 @@
+{
+gate0 [label="Constant True input"];
+gate1 [label="Constant True input"];
+gate2 [label="Inverting AND Gate"];
+gate3 [label="OR Gate"];
+gate4 [label="XOR Gate"];
+gate5 [label="NOT Gate"];
+gate6 [label="Buffer"];
+gate7 [label="acyclic sub-circuit"];
+gate0 -> gate2;
+gate0 -> gate3;
+gate0 -> gate5;
+gate0 -> gate6;
+gate0 -> gate7;
+gate1 -> gate2;
+gate1 -> gate3;
+gate1 -> gate7;
+gate2 -> gate4;
+gate3 -> gate4;
+
+}
