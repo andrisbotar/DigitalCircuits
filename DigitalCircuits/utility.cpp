@@ -4,20 +4,32 @@
 #include <sstream> 
 #include "utility.h"
 #include "circuit.h"
-//using namespace digitalc;
+//using namespace digital_circuits;
 
 //various utility functions
-namespace digitalc {
-
+namespace digital_circuits {
     //convert boolean "0" or "1" into human firendly text
-    std::wstring BoolToString(bool b)
+    std::wstring bool_to_string(bool b)
     {
         return b ? L"True" : L"False";
     }
 
+    //convert a vector of ints to a single string
+    std::wstring int_vector_to_string(std::vector<int> circuit_state) 
+    {
+        std::wstringstream ss;
+        for (auto i : circuit_state) {
+            ss << std::to_wstring(i) << " ";
+        }
+        std::wstring returnval;
+        ss >> returnval;
+        return returnval;
+    }
+
     //Convert and integer into a bool vector representing the binary count for that number
     //A length option is used to pad the bool array to a desired length
-    std::vector<bool> int_to_bool_vector(int number, int len) {
+    std::vector<bool> int_to_bool_vector(int number, int len) 
+    {
         int i = number;
         std::vector<bool> vector;
         while (i) {
@@ -29,13 +41,13 @@ namespace digitalc {
         return vector;
     }
     
-    //Creates a truth table for a LogicGate
-    std::vector<bool> truth_table(LogicGate& comp, int n)
+    //Creates a truth table for a logic_gate
+    std::vector<bool> truth_table(logic_gate& comp, int n)
     {
         //int output_wire = 0;
         int numtable = (int)pow(2, n);
         std::vector<bool> input(n, 0);
-        std::vector<bool> output(8, 0);
+        std::vector<bool> output(1, 0);
         std::vector<bool> table(numtable, 0);
 
         for (int i = 0; i < numtable;++i) {
@@ -46,19 +58,21 @@ namespace digitalc {
         return table;
     }
 
-    //prints atable of booleans with column and row indecies, and unicode box drawing characters
-    void printtable(std::vector<bool> table, int width, bool indecies = true, bool frame = true)
+    //prints table of booleans with column and row indecies, and unicode box drawing characters
+    void print_table(std::vector<bool> table, int width, bool indecies_arg, bool frame_arg)
     {
-        //indecies argument allow for the option to print indecies or not
-        //frame decides wether to print a frame or box around the table for readabiltiy
+        bool indecies = print_indecies;
+        bool frame = print_frame;
+        //indecies argument allows for the option to print indecies or not
+        //frame can print a frame or box around the table for readabiltiy
         std::wstring framechar(frame ? L"\u2502" : L"");
         if (frame) {
             std::wcout << L'\u250C';
-            std::wcout << std::wstring(2*width+1, L'\u2500');
+            std::wcout << std::wstring(2 * width + 1, L'\u2500');
             if (indecies) { std::wcout << L'\u2500'; }
             std::wcout << L'\u2510';
         }
-        
+
         if (indecies) {
             //print columns indecies
             std::wcout << "\n" << framechar << L" \u2502";
@@ -79,12 +93,12 @@ namespace digitalc {
             std::wcout << framechar;
             if (indecies) { std::wcout << j << L"\u2502"; };
             for (int i = 0; i < width; ++i) {
-                std::wcout << " " << table[i+j* width];
+                std::wcout << " " << table[i + j * width];
             }
             if (!indecies) { std::wcout << L' '; }
-            std::wcout << framechar<<"\n";
+            std::wcout << framechar << "\n";
         }
-        
+
         //if frame bool is true, print bottom of frame box
         if (frame) {
             std::wcout << L'\u2514';
@@ -94,46 +108,37 @@ namespace digitalc {
         }
         std::wcout << "\n";
     }
+    //Just ocmbines truth_table and print_table for conveniance
+    void print_truth_table(logic_gate& comp, int n, int width, bool indecies, bool frame) {
+        std::vector<bool> t_table;
+        t_table = truth_table(comp, n);
+        print_table(t_table, width,  indecies , frame);
+    }
 
-
-
-
-
-    /*template<typename T, typename A>
-    void printstate(std::vector<T, A> circuitstate)
-    {
-        for (T i : circuitstate) {
-            std::wcout << i << " ";
-        }
-        std::wcout << " \n";
-    }*/
 
     //print out a vector of booleans
-    void printstate(std::vector<bool> circuitstate)
+    void print_state(std::vector<bool> circuit_state)
     {
-        for (auto i : circuitstate) {
+        print_vector<bool>(circuit_state);
+    }
+
+    /*void print_state(std::vector<bool> circuit_state)
+    {
+        for (auto i : circuit_state) {
             std::wcout << i << " ";
         }
         std::wcout << " \n";
     }
 
     //print out a vector of ints
-    void print_int_vector(std::vector<int> circuitstate)
+    void print_int_vector(std::vector<int> circuit_state)
     {
-        for (auto i : circuitstate) {
+        for (auto i : circuit_state) {
             std::wcout << i << " ";
         }
         std::wcout << " \n";
     }
+    */
 
-    //convert a vector of ints to a single string
-    std::wstring int_vector_to_string(std::vector<int> circuitstate) {
-        std::wstringstream ss;
-        for (auto i : circuitstate) {
-            ss << std::to_wstring(i) << " ";
-        }
-        std::wstring returnval;
-        ss >> returnval;
-        return returnval;
-    }
+
 }
