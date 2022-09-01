@@ -253,11 +253,16 @@ void UI()
     std::wstring response; //user response
     std::wstring response2;
     circuit circ;
+    circuit circ2;
+    example_circuit(circ2);
 
     std::wifstream f("README.txt");
     int output_port;
     sub_circuit_component gate_circ;
     int n;
+    int i;
+    int j;
+    int k;
 
     while (state != 0) {
         //cin.clear();
@@ -275,7 +280,7 @@ void UI()
 
             std::wcout << "1-See tutorial\n";
             std::wcout << "2-Load existing circuit\n";
-            std::wcout << "3-Create new circuit\n";
+            std::wcout << "3-Create empty circuit\n"; //create new circuit
             std::wcout << "4-Settings\n";
             std::wcout << "5-Help\n";
             std::wcout << "6-Exit\n";
@@ -391,9 +396,96 @@ void UI()
             print_truth_table(gate_circ, 2, 2);
             std::wcout << "\n";
             std::wcout << "\n";
+            std::wcin >> response;
 
+            state = 21;
             break;
         case 24: // Modification
+
+
+            std::wcout << "Please select which circuit you would like to do with the circuit: \n";
+            std::wcout << "1- Print circuit state. \n";
+            std::wcout << "2- Add component. \n";
+            std::wcout << "3- Wire component. \n";
+            std::wcout << "4- Invert component. \n";
+            //std::wcout << "5- Print circuit information. \n";
+            //std::wcout << "5- Draw. \n";
+            //std::wcout << "6- . \n";
+            std::wcout << "5- Exit to main menu. \n";
+
+            std::wcin >> response;
+            if (response == L"1") { circ.print_state(); std::wcin >> response; }
+            else if (response == L"2") { 
+                std::wcout << "Which wire should be input 1: ";
+                try {
+                    i = std::stoi(response);
+                }
+                catch (...) { i = 0; }
+                std::wcout << "Which wire should be input 2: ";
+                try {
+                    j = std::stoi(response);
+                }
+                catch (...) { j = 0; }
+                std::wcout << "Which wire should be output: ";
+                try {
+                    k = std::stoi(response);
+                }
+                catch (...) { k = 0; }
+
+                std::wcout << "Which type would you like to add: ";
+                std::wcin >> response;
+
+                for (int q = 0; q < circ2.component_count(); ++q) {
+                    if (response == L"and") {
+                        circ.add_component(std::make_unique<and_gate>(i, j, k));
+                    }
+                    if (response == L"or") {
+                        circ.add_component(std::make_unique<or_gate>(i, j, k));
+                    }
+                    if (response == L"xor") {
+                        circ.add_component(std::make_unique<xor_gate>(i, j, k));
+                    }
+                    if (response == L"not") {
+                        circ.add_component(std::make_unique<not_gate>(i, k));
+                    }
+                    if (response == L"buffer") {
+                        circ.add_component(std::make_unique<buffer>(i, k));
+                    }
+                    if (response == L"majoirty") {
+                        circ.add_component(std::make_unique<majority_function>(i, j, k));
+                    }
+                }
+                
+
+
+            
+            }
+            else if (response == L"3") {
+                std::wcout << "Which compoennt would you like to delete: ";
+                try {
+                    n = std::stoi(response);
+                }
+                catch (...) { n = 0; }
+                circ.delete_component(n);
+                std::wcout << "Which gate would you like to rewire: ";
+   
+                state = 24;
+            }
+            else if (response == L"4") {
+                std::wcout << "Which compoennt would you like to invert: ";
+                try {
+                    n = std::stoi(response);
+                }
+                catch (...) { n = 0; }
+                circ.set_invert(n, false); 
+            }
+            else if (response == L"5") { state = 1; }
+            else if (response == L"6") {}
+            else if (response == L"7") {}
+            else if (response == L"8") {}
+            else if (response == L"9") { state = 1; }
+
+            state = 24;
 
             break;
         case 25: //drawing
@@ -411,7 +503,9 @@ void UI()
             break;
         case 30: //Create new circuit
 
-
+            circ = circuit();
+            std::wcout << "New empty circuit has been created.";
+            state = 24;
 
             break;
 

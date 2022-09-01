@@ -29,7 +29,6 @@ namespace digital_circuits
 		std::string command("blockdiag --version");
 
 		//Call system call of blockdiag and check if it is installed
-		//Code until "compare with.." copied from https://stackoverflow.com/questions/44610978/popen-writes-output-of-command-executed-to-cout
 		std::array<char, 128> buffer;
 		std::string result;
 		FILE* pipe = _popen(command.c_str(), "r");

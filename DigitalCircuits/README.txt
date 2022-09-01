@@ -7,6 +7,12 @@ May 2022
 REQUIRES:
 C++ 14 at least
 blockdiag for drawing circuit_diagrams: http://blockdiag.com/en/
+to install use "sudo isntall dnf blockdiag"
+this requires and will isntall the follwing: 
+-Python 2.6, 2.7, 3.2, 3.3 or later
+-Pillow 2.2.1 or later.
+-funcparserlib 0.3.6 or later.
+-setuptools or distribute.
 
 CONTAINED FILES:
 digital_circuits.cpp and digitalcircuits.h: Central file containing main function, demonstration cases, etc..
